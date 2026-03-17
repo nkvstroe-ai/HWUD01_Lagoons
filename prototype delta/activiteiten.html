@@ -1,0 +1,693 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Activiteiten Lagoon Tourist Centre</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  :root {
+    --mint:#BEE9E8; --aqua:#62B6CB; --deep:#1B4965;
+    --sky:#CAE9FF; --steel:#5FA8D3; --sand:#F6FAFD;
+    --white:#ffffff; --muted:rgba(27,73,101,.65);
+    --border:rgba(98,182,203,.28);
+    --shadow:0 24px 64px rgba(27,73,101,.16);
+    --shadow-sm:0 8px 24px rgba(27,73,101,.12);
+    --container:1140px;
+    --font-display:'Playfair Display',Georgia,serif;
+    --font-body:'DM Sans',sans-serif;
+    --radius:20px;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font-body);color:var(--deep);background:var(--sand);line-height:1.6;min-height:100vh;display:flex;flex-direction:column;}
+  a{color:inherit;text-decoration:none;}
+  img{display:block;width:100%;height:100%;object-fit:cover;}
+  .container{width:min(var(--container),calc(100% - 40px));margin:0 auto;}
+
+  /* NAV */
+  .nav{position:sticky;top:0;z-index:100;backdrop-filter:blur(14px) saturate(1.4);background:rgba(27,73,101,.82);border-bottom:1px solid rgba(190,233,232,.18);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:15px 0;gap:16px;}
+  .brand{display:flex;align-items:center;gap:12px;color:var(--white);}
+  .brand-text-main{font-family:var(--font-display);font-size:16px;color:var(--white);}
+  .brand-text-sub{font-size:11px;color:rgba(202,233,255,.75);font-weight:400;margin-top:2px;}
+  .nav-links{display:flex;align-items:center;gap:4px;}
+  .dd{position:relative;}
+  .dd>a,.nav-plain{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;font-size:13.5px;font-weight:500;color:rgba(202,233,255,.90);border:1px solid transparent;transition:.2s;white-space:nowrap;}
+  .dd>a:hover,.dd>a.active,.nav-plain:hover,.nav-plain.active{background:rgba(190,233,232,.14);border-color:rgba(190,233,232,.25);color:var(--white);}
+  .caret{font-size:10px;opacity:.7;}
+  .dd-menu{position:absolute;top:calc(100% + 10px);left:0;min-width:220px;background:rgba(27,73,101,.97);border:1px solid rgba(190,233,232,.22);border-radius:18px;padding:8px;display:none;box-shadow:var(--shadow);backdrop-filter:blur(20px);}
+  .dd-menu a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;font-size:13.5px;font-weight:500;color:rgba(202,233,255,.85);border:1px solid transparent;transition:.15s;}
+  .dd-menu a:hover{background:rgba(190,233,232,.12);border-color:rgba(190,233,232,.20);color:var(--white);}
+  .dd:hover .dd-menu{display:block;}
+
+  /* HERO */
+  .hero{position:relative;height:68vh;min-height:420px;overflow:hidden;}
+  .hero-img{position:absolute;inset:0;}
+  .hero-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.55);}
+  .hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(27,73,101,.1) 0%,rgba(27,73,101,.55) 100%);}
+  .hero-content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 20px;}
+  .hero-eyebrow{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mint);margin-bottom:14px;}
+  .hero-title{font-family:var(--font-display);font-size:clamp(32px,6vw,68px);font-weight:900;color:var(--white);line-height:1.08;margin-bottom:18px;}
+  .hero-title span{color:var(--mint);}
+  .hero-sub{font-size:clamp(14px,1.8vw,18px);color:rgba(202,233,255,.88);max-width:580px;font-weight:300;}
+  .hero-scroll{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(202,233,255,.55);font-size:12px;letter-spacing:.1em;text-transform:uppercase;}
+  .hero-scroll::after{content:'';display:block;width:1px;height:36px;background:rgba(202,233,255,.30);animation:scrollpulse 1.8s ease-in-out infinite;}
+  @keyframes scrollpulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+  /* SECTION CHROME */
+  section{padding:96px 0;}
+  section:nth-child(even){background:var(--white);}
+  .section-label{font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--aqua);margin-bottom:10px;}
+  .section-title{font-family:var(--font-display);font-size:clamp(28px,4vw,44px);font-weight:900;line-height:1.12;margin-bottom:14px;color:var(--deep);}
+  .section-sub{font-size:16px;color:var(--muted);max-width:540px;font-weight:300;margin-bottom:52px;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+  @media(max-width:768px){.two-col{grid-template-columns:1fr;}}
+
+  /* DESTINATION CARD */
+  .dest-card{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid var(--border);}
+  section:nth-child(even) .dest-card{background:var(--sand);}
+  .dest-card-img{height:240px;overflow:hidden;position:relative;}
+  .dest-card-img img{transition:transform .5s ease;}
+  .dest-card:hover .dest-card-img img{transform:scale(1.04);}
+  .dest-card-body{padding:24px;}
+  .dest-card-title{font-family:var(--font-display);font-size:22px;font-weight:700;margin-bottom:6px;}
+  .dest-card-desc{font-size:14px;color:var(--muted);margin-bottom:18px;}
+  .btn-group{display:flex;gap:10px;flex-wrap:wrap;}
+  .btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border-radius:999px;font-size:13.5px;font-weight:600;border:2px solid var(--aqua);color:var(--deep);background:transparent;cursor:pointer;transition:.2s;font-family:var(--font-body);}
+  .btn:hover,.btn.active{background:var(--aqua);color:var(--white);}
+  .btn-solid{background:var(--deep);color:var(--white);border-color:var(--deep);}
+  .btn-solid:hover{background:var(--steel);border-color:var(--steel);}
+
+  /* SLIDER PANEL */
+  .slider-panel{margin-top:20px;border-radius:16px;overflow:hidden;background:var(--sand);border:1px solid var(--border);display:none;}
+  .slider-panel.open{display:block;}
+  .slider-wrap{position:relative;}
+  .slider-track{display:flex;transition:transform .45s cubic-bezier(.4,0,.2,1);}
+  .slide{min-width:100%;position:relative;}
+  .slide-img{height:260px;overflow:hidden;}
+  .slide-body{padding:20px 24px;}
+  .slide-title{font-family:var(--font-display);font-size:18px;font-weight:700;margin-bottom:5px;}
+  .slide-desc{font-size:14px;color:var(--muted);}
+  .slider-nav{position:absolute;top:50%;transform:translateY(-50%);display:flex;justify-content:space-between;width:100%;padding:0 12px;pointer-events:none;}
+  .slider-btn{pointer-events:all;background:rgba(27,73,101,.78);border:none;color:var(--white);width:38px;height:38px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;backdrop-filter:blur(6px);}
+  .slider-btn:hover{background:var(--deep);}
+  .slider-dots{display:flex;justify-content:center;gap:6px;padding:12px 0 16px;}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--border);transition:.2s;cursor:pointer;}
+  .dot.active{background:var(--aqua);transform:scale(1.3);}
+
+  /* MUST DO */
+  .vscroll-wrap{position:relative;}
+  .vscroll-viewport{height:560px;overflow:hidden;display:flex;flex-direction:column;gap:16px;padding:4px;}
+  .vscroll-inner{display:flex;flex-direction:column;gap:16px;transition:transform .4s cubic-bezier(.4,0,.2,1);}
+  .vscroll-card{border-radius:16px;overflow:hidden;background:var(--white);box-shadow:var(--shadow-sm);border:1px solid var(--border);flex-shrink:0;}
+  section:nth-child(even) .vscroll-card{background:var(--sand);}
+  .vscroll-card-img{height:180px;}
+  .vscroll-card-caption{padding:12px 16px;font-size:14px;font-weight:500;color:var(--deep);}
+  .vscroll-caption-sub{font-size:12px;color:var(--muted);font-weight:400;}
+  .vscroll-arrows{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:16px;}
+  .vscroll-btn{background:var(--deep);border:none;color:var(--white);width:44px;height:44px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;}
+  .vscroll-btn:hover{background:var(--steel);}
+  .vscroll-arrows-top{display:flex;justify-content:center;margin-bottom:10px;}
+  .vscroll-arrows-bot{display:flex;justify-content:center;margin-top:10px;}
+
+  /* STRAND */
+  .beach-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-bottom:40px;}
+  .beach-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .beach-item{border-radius:14px;overflow:hidden;height:180px;position:relative;cursor:pointer;}
+  .beach-item img{transition:transform .4s ease;}
+  .beach-item:hover img{transform:scale(1.06);}
+  .beach-label{position:absolute;bottom:0;left:0;right:0;padding:10px 14px;background:linear-gradient(transparent,rgba(27,73,101,.75));color:var(--white);font-size:13px;font-weight:500;}
+  .beach-info{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+  .beach-info-block{padding:28px;background:var(--deep);border-radius:var(--radius);color:var(--white);}
+  .beach-info-block h3{font-family:var(--font-display);font-size:20px;margin-bottom:10px;color:var(--mint);}
+  .beach-info-block p{font-size:14px;line-height:1.7;color:rgba(202,233,255,.80);}
+  @media(max-width:768px){.beach-grid{grid-template-columns:1fr;}.beach-info{grid-template-columns:1fr;}}
+
+  /* NATURE SLIDER */
+  .hslider-wrap{position:relative;overflow:hidden;border-radius:var(--radius);}
+  .hslider-track{display:flex;gap:20px;transition:transform .45s cubic-bezier(.4,0,.2,1);padding:4px;}
+  .hslide{min-width:300px;border-radius:16px;overflow:hidden;background:var(--white);box-shadow:var(--shadow-sm);border:1px solid var(--border);flex-shrink:0;}
+  section:nth-child(even) .hslide{background:var(--sand);}
+  .hslide-img{height:200px;}
+  .hslide-body{padding:16px 18px;}
+  .hslide-title{font-family:var(--font-display);font-size:16px;font-weight:700;margin-bottom:4px;}
+  .hslide-desc{font-size:13px;color:var(--muted);}
+  .hslider-nav{display:flex;justify-content:center;gap:12px;margin-top:18px;}
+  .hslider-btn{background:var(--deep);border:none;color:var(--white);width:42px;height:42px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;}
+  .hslider-btn:hover{background:var(--steel);}
+
+  /* KIDS MAP */
+  .map-container{height:420px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow-sm);}
+  .map-title{font-family:var(--font-display);font-size:20px;font-weight:700;margin-bottom:12px;color:var(--deep);}
+
+  /* POPUP */
+  .leaflet-popup-content-wrapper{border-radius:14px!important;padding:0!important;overflow:hidden;}
+  .leaflet-popup-content{margin:0!important;width:220px!important;}
+  .popup-inner{padding:14px 16px;}
+  .popup-title{font-weight:700;font-size:14px;color:var(--deep);margin-bottom:4px;}
+  .popup-desc{font-size:12.5px;color:var(--muted);margin-bottom:8px;}
+  .popup-stars{color:#f59e0b;font-size:14px;}
+
+  /* DIVIDER */
+  .dest-divider{display:flex;align-items:center;gap:16px;margin:40px 0 8px;}
+  .dest-divider-line{flex:1;height:1px;background:var(--border);}
+  .dest-divider-label{font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--deep);}
+
+  /* FOOTER */
+  footer{background:var(--deep);color:rgba(202,233,255,.75);padding:48px 0 36px;}
+  .footer-inner{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:36px;}
+  .footer-brand-name{font-family:var(--font-display);font-size:20px;color:var(--white);margin-bottom:6px;}
+  .footer-brand-sub{font-size:13px;color:rgba(202,233,255,.50);}
+  .footer-links{display:flex;gap:28px;flex-wrap:wrap;}
+  .footer-links a{font-size:13.5px;color:rgba(202,233,255,.65);transition:color .15s;}
+  .footer-links a:hover{color:var(--mint);}
+  .footer-bottom{border-top:1px solid rgba(190,233,232,.12);padding-top:24px;text-align:center;font-size:13px;color:rgba(202,233,255,.40);}
+  @media(max-width:640px){.nav-links{display:none;}.footer-inner{flex-direction:column;}.two-col{grid-template-columns:1fr;}.beach-col{grid-template-columns:1fr 1fr;}}
+
+  /* Anchor offset for sticky nav */
+  .anchor-offset{scroll-margin-top:70px;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="brand">
+      <div>
+        <div class="brand-text-main">Lagoon Tourist Centre</div>
+        <div class="brand-text-sub">Venetië × Galveston</div>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <div class="dd">
+        <a href="lagoons.html">Lagoons <span class="caret">▾</span></a>
+        <div class="dd-menu">
+          <a href="lagoons.html#ligging">Ligging</a>
+          <a href="lagoons.html#klimaat">Klimaat</a>
+          <a href="lagoons.html#economie">Economie</a>
+        </div>
+      </div>
+      <div class="dd">
+        <a href="activiteiten.html" class="active">Activiteiten <span class="caret">▾</span></a>
+        <div class="dd-menu">
+          <a href="#citytrip">Citytrip</a>
+          <a href="#mustdo">Must Do</a>
+          <a href="#strand">Strand</a>
+          <a href="#natuur">Natuur</a>
+          <a href="#kids">Kids</a>
+        </div>
+      </div>
+      <a href="over-ons.html" class="nav-plain">Over ons</a>
+    </nav>
+  </div>
+</div>
+
+<main>
+
+<!-- HERO -->
+<section class="hero" style="padding:0;">
+  <div class="hero-img">
+    <img src=img alt="Lagoon activiteiten" />
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Jouw Avontuur Begint Hier</div>
+    <h1 class="hero-title"><br><span>Ontdek Lagoon</span><br>Activiteiten</h1>
+    <p class="hero-sub">Van historische stadswandelingen in Venetië tot zonnige stranden in Galveston Bay vind de perfecte activiteit voor jouw reis.</p>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- CITY TRIPS -->
+<section id="citytrip" class="anchor-offset">
+  <div class="container">
+    <div class="section-label">Stedentrips</div>
+    <h2 class="section-title">City Trips Verkennen</h2>
+    <p class="section-sub">Duik in de cultuur en culinaire wereld van twee iconische lagunegebieden.</p>
+
+    <div class="two-col">
+
+      <!-- VENICE CITYTRIP -->
+      <div>
+        <div class="dest-card">
+          <div class="dest-card-img">
+            <img src=img alt="Venetië" />
+          </div>
+          <div class="dest-card-body">
+            <div class="dest-card-title">Venetië</div>
+            <div class="dest-card-desc">Verken de iconische grachten, kunstschatten en historische pleinen van de Serenissima.</div>
+            <div class="btn-group">
+              <button class="btn" onclick="toggleSlider('ven-cultuur', this)">Cultuur</button>
+              <button class="btn" onclick="toggleSlider('ven-eten', this)">Eten</button>
+            </div>
+          </div>
+        </div>
+        <!-- Venice Cultuur Slider -->
+        <div class="slider-panel" id="ven-cultuur">
+          <div class="slider-wrap" data-slider>
+            <div class="slider-track">
+              <div class="slide">
+                <div class="slide-img"><img src=img alt="San Marco" /></div>
+                <div class="slide-body"><div class="slide-title">Basilica di San Marco</div><div class="slide-desc">De schitterende basiliek op het Piazza San Marco, een meesterwerk van Byzantijnse architectuur met gouden mozaïeken.</div></div>
+              </div>
+              <div class="slide">
+                <div class="slide-img"><img src=img alt="Dogenpaleis" /></div>
+                <div class="slide-body"><div class="slide-title">Palazzo Ducale</div><div class="slide-desc">Het machtige Dogenpaleis, eeuwenlang het politieke hart van de Republiek Venetië, nu een world-class museum.</div></div>
+              </div>
+              <div class="slide">
+                <div class="slide-img"><img src=img alt="Rialtobrug" /></div>
+                <div class="slide-body"><div class="slide-title">Ponte di Rialto</div><div class="slide-desc">De oudste en meest iconische brug over het Canal Grande, omringd door marktkramen en panoramisch uitzicht.</div></div>
+              </div>
+              <div class="slide">
+                <div class="slide-img"><img src=img alt="Gallerie dell Accademia" /></div>
+                <div class="slide-body"><div class="slide-title">Gallerie dell'Accademia</div><div class="slide-desc">Het belangrijkste kunstmuseum van Venetië met werken van Titiaan, Tintoretto, Bellini en Veronese.</div></div>
+              </div>
+            </div>
+            <div class="slider-nav">
+              <button class="slider-btn" onclick="prevSlide(this)">‹</button>
+              <button class="slider-btn" onclick="nextSlide(this)">›</button>
+            </div>
+          </div>
+          <div class="slider-dots"></div>
+        </div>
+        <!-- Venice Eten Slider -->
+        <div class="slider-panel" id="ven-eten">
+          <div class="slider-wrap" data-slider>
+            <div class="slider-track">
+              <div class="slide">
+                <div class="slide-img"><img src=img alt="Cicchetti bar" /></div>
+                <div class="slide-body"><div class="slide-title">Bacaro – Cicchetti & Ombra</div><div class="slide-desc">Proef de Venetiaanse tapas (cicchetti) met een glaasje wijn in een van de gezellige bacaro-wijnbars in de Cannaregio wijk.</div></div>
+              </div>
+              <div class="slide">
+                <div class="slide-img"><img src=img alt="Vismarkt" /></div>
+                <div class="slide-body"><div class="slide-title">Pescheria – Verse Vismarkt</div><div class="slide-desc">De beroemde vismarkt bij de Rialtobrug waar de versste zeevruchten van de lagune elke ochtend worden verkocht.</div></div>
+              </div>
+              <div class="slide">
+                <div class="slide-img"><img src=img alt="Restaurant Venetië" /></div>
+                <div class="slide-body"><div class="slide-title">Osteria Alle Testiere</div><div class="slide-desc">Een intiem restaurant in Castello, befaamd om zijn uitzonderlijke zeevruchten en minimalistische Venetiaanse keuken.</div></div>
+              </div>
+              <div class="slide">
+                <div class="slide-img"><img src=img alt="Gelato Venetië" /></div>
+                <div class="slide-body"><div class="slide-title">Suso Gelatoteca</div><div class="slide-desc">Ambachtelijk gelato met unieke smaken als pistacchio di Bronte en tiramisù, vlakbij de Rialtobrug.</div></div>
+              </div>
+            </div>
+            <div class="slider-nav">
+              <button class="slider-btn" onclick="prevSlide(this)">‹</button>
+              <button class="slider-btn" onclick="nextSlide(this)">›</button>
+            </div>
+          </div>
+          <div class="slider-dots"></div>
+        </div>
+      </div>
+
+      <!-- GALVESTON CITYTRIP -->
+      <div>
+        <div class="dest-card">
+          <div class="dest-card-img">
+            <img src=img alt="Galveston Bay" />
+          </div>
+          <div class="dest-card-body">
+            <div class="dest-card-title">Galveston Bay</div>
+            <div class="dest-card-desc">Ontdek het rijke verleden, de victoriaanse architectuur en de verse zeevruchten van de Golf van Mexico.</div>
+            <div class="btn-group">
+              <button class="btn" onclick="toggleSlider('gal-cultuur', this)">Cultuur</button>
+              <button class="btn" onclick="toggleSlider('gal-eten', this)">Eten</button>
+            </div>
+          </div>
+        </div>
+        <!-- Galveston Cultuur Slider -->
+        <div class="slider-panel" id="gal-cultuur">
+          <div class="slider-wrap" data-slider>
+            <div class="slider-track">
+              <div class="slide">
+                <div class="slide-img"><img src=img alt="Galveston Seawall" /></div>
+                <div class="slide-body"><div class="slide-title">Galveston Seawall Boulevard</div><div class="slide-desc">De historische zeewering van 16 km, gebouwd na de orkaan van 1900, nu een levendige promenade met winkels en restaurants.</div></div>
+              </div>
+              <div class="slide">
+                <div class="slide-img"><img src=img  alt="Strand Galveston" /></div>
+                <div class="slide-body"><div class="slide-title">1900 Storm Memorial</div><div class="slide-desc">Indrukwekkend monument ter herdenking van de dodelijkste ramp in de Amerikaanse geschiedenis – de orkaan die 8.000 levens eiste.</div></div>
+              </div>
+              <div class="slide">
+                <div class="slide-img"><img src=img alt="Moody Mansion" /></div>
+                <div class="slide-body"><div class="slide-title">Moody Mansion</div><div class="slide-desc">Een prachtig gerestaureerd victoriaans herenhuis uit 1895 met originele meubelen en kunstschatten van de welvarende Moody familie.</div></div>
+              </div>
+              <div class="slide">
+                <div class="slide-img"><img src=img alt="Galveston History Museum" /></div>
+                <div class="slide-body"><div class="slide-title">Galveston Railroad Museum</div><div class="slide-desc">Het spoorwegmuseum met historische locomotieven en rijtuigen vertelt het verhaal van de gouden spoorwegjaren van Texas.</div></div>
+              </div>
+            </div>
+            <div class="slider-nav">
+              <button class="slider-btn" onclick="prevSlide(this)">‹</button>
+              <button class="slider-btn" onclick="nextSlide(this)">›</button>
+            </div>
+          </div>
+          <div class="slider-dots"></div>
+        </div>
+        <!-- Galveston Eten Slider -->
+        <div class="slider-panel" id="gal-eten">
+          <div class="slider-wrap" data-slider>
+            <div class="slider-track">
+              <div class="slide">
+                <div class="slide-img"><img src="img alt="Zeevruchten" /></div>
+                <div class="slide-body"><div class="slide-title">Shrimp 'n Stuff</div><div class="slide-desc">Een Galveston icoon voor verse garnalen en vis, geserveerd in de authentieke Texaanse stijl van de Golf van Mexico.</div></div>
+              </div>
+              <div class="slide">
+                <div class="slide-img"><img src=img alt="Cajun eten" /></div>
+                <div class="slide-body"><div class="slide-title">The Spot Restaurant</div><div class="slide-desc">Gelegen aan de zeewering met uitzicht op de Golf, behalve voor de beste burgers en cocktails bij zonsondergang.</div></div>
+              </div>
+              <div class="slide">
+                <div class="slide-img"><img src=img alt="BBQ Texas" /></div>
+                <div class="slide-body"><div class="slide-title">Gaido's Seafood Restaurant</div><div class="slide-desc">Galveston's oudste seafoodrestaurant (1911), met verse oesters, kreeft en klassieke Gulf Coast gerechten in een nostalgische sfeer.</div></div>
+              </div>
+              <div class="slide">
+                <div class="slide-img"><img src=img alt="Strand café" /></div>
+                <div class="slide-body"><div class="slide-title">La King's Confectionery</div><div class="slide-desc">Een historische snoepwinkel op The Strand waar ambachtelijk snoep en handgemaakte ijsjes worden gemaakt voor je ogen.</div></div>
+              </div>
+            </div>
+            <div class="slider-nav">
+              <button class="slider-btn" onclick="prevSlide(this)">‹</button>
+              <button class="slider-btn" onclick="nextSlide(this)">›</button>
+            </div>
+          </div>
+          <div class="slider-dots"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MUST DO -->
+<section id="mustdo" class="anchor-offset">
+  <div class="container">
+    <div class="section-label">Hoogtepunten</div>
+    <h2 class="section-title">Must Do</h2>
+    <p class="section-sub">Mis deze ervaringen niet de absolute hoogtepunten van elke bestemming.</p>
+    <div class="two-col">
+
+      <!-- Venice Must Do -->
+      <div>
+        <div class="dest-divider"><div class="dest-divider-line"></div><div class="dest-divider-label">Venetië</div><div class="dest-divider-line"></div></div>
+        <div class="vscroll-arrows-top"><button class="vscroll-btn" onclick="vscroll('ven-must', -1)">▲</button></div>
+        <div class="vscroll-viewport">
+          <div class="vscroll-inner" id="ven-must">
+            <div class="vscroll-card"><div class="vscroll-card-img"><img src=img alt="Gondola" /></div><div class="vscroll-card-caption">Gondola vaart door de grachten<div class="vscroll-caption-sub">Klassieke Venetiaanse ervaring door eeuwenoude kanalen</div></div></div>
+            <div class="vscroll-card"><div class="vscroll-card-img"><img src=img alt="Vaporetto" /></div><div class="vscroll-card-caption">Vaporetto over het Canal Grande<div class="vscroll-caption-sub">Geniet van het uitzicht vanuit de Venetiaanse waterbus</div></div></div>
+            <div class="vscroll-card"><div class="vscroll-card-img"><img src=img alt="Murano" /></div><div class="vscroll-card-caption">Glasblazers op Murano<div class="vscroll-caption-sub">Bewonder het eeuwenoude ambacht op het eiland Murano</div></div></div>
+            <div class="vscroll-card"><div class="vscroll-card-img"><img src=img alt="Zonsondergang Venetië" /></div><div class="vscroll-card-caption">Zonsondergang bij Punta della Dogana<div class="vscroll-caption-sub">Het mooiste uitzicht op de lagune bij avondschemering</div></div></div>
+            <div class="vscroll-card"><div class="vscroll-card-img"><img src=img alt="Burano" /></div><div class="vscroll-card-caption">Kleurrijke huisjes op Burano<div class="vscroll-caption-sub">Een tocht naar het kleurrijkste eiland van de Venetiaanse lagune</div></div></div>
+            <div class="vscroll-card"><div class="vscroll-card-img"><img src=img alt="Carnaval" /></div><div class="vscroll-card-caption">Venetiaans Carnaval<div class="vscroll-caption-sub">Prachtige maskers en kostuums tijdens het jaarlijkse carnaval in februari</div></div></div>
+          </div>
+        </div>
+        <div class="vscroll-arrows-bot"><button class="vscroll-btn" onclick="vscroll('ven-must', 1)">▼</button></div>
+      </div>
+
+      <!-- Galveston Must Do -->
+      <div>
+        <div class="dest-divider"><div class="dest-divider-line"></div><div class="dest-divider-label">Galveston Bay</div><div class="dest-divider-line"></div></div>
+        <div class="vscroll-arrows-top"><button class="vscroll-btn" onclick="vscroll('gal-must', -1)">▲</button></div>
+        <div class="vscroll-viewport">
+          <div class="vscroll-inner" id="gal-must">
+            <div class="vscroll-card"><div class="vscroll-card-img"><img src=img alt="Strand Galveston" /></div><div class="vscroll-card-caption">Zonnen op het strand<div class="vscroll-caption-sub">Ontspan op de brede stranden langs de Golf van Mexico</div></div></div>
+            <div class="vscroll-card"><div class="vscroll-card-img"><img src=img alt="Pelican Island" /></div><div class="vscroll-card-caption">Pelican Island boottocht<div class="vscroll-caption-sub">Vogelkijk-tochten naar het beschermde eiland vol zeevogels</div></div></div>
+            <div class="vscroll-card"><div class="vscroll-card-img"><img src=img alt="Pier vissen" /></div><div class="vscroll-card-caption">Vissen vanaf de pier<div class="vscroll-caption-sub">Hengel uit aan een van de vele vispieren over de baai</div></div></div>
+            <div class="vscroll-card"><div class="vscroll-card-img"><img src=img alt="Dolphin tour" /></div><div class="vscroll-card-caption">Dolfijnen spotten in de baai<div class="vscroll-caption-sub">Boottochten door de baai voor dolfijn- en vogelspotting</div></div></div>
+            <div class="vscroll-card"><div class="vscroll-card-img"><img src=img alt="Galveston Ferry" /></div><div class="vscroll-card-caption">Gratis veerboot over de baai<div class="vscroll-caption-sub">De gratis staatsveerboot biedt panoramisch uitzicht op de hele baai</div></div></div>
+            <div class="vscroll-card"><div class="vscroll-card-img"><img src=img alt="Kayak Galveston" /></div><div class="vscroll-card-caption">Kajakken in de bayou's<div class="vscroll-caption-sub">Verken de rustige waterloopjes en mangrovebossen per kajak</div></div></div>
+          </div>
+        </div>
+        <div class="vscroll-arrows-bot"><button class="vscroll-btn" onclick="vscroll('gal-must', 1)">▼</button></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- STRAND -->
+<section id="strand" class="anchor-offset">
+  <div class="container">
+    <div class="section-label">Zon &amp; Zee</div>
+    <h2 class="section-title">Stranden</h2>
+    <p class="section-sub">Van rustieke Adriatische kuststroken tot brede Golf-stranden hier zijn de mooiste plekken om te ontspannen.</p>
+
+    <div class="beach-grid">
+      <!-- Venice beaches -->
+      <div>
+        <div class="dest-divider"><div class="dest-divider-line"></div><div class="dest-divider-label">Venetië</div><div class="dest-divider-line"></div></div>
+        <div class="beach-col" style="margin-top:16px;">
+          <div class="beach-item"><img src=img alt="Lido di Venezia" /><div class="beach-label">Lido di Venezia</div></div>
+          <div class="beach-item"><img src=img alt="Jesolo strand" /><div class="beach-label">Jesolo Strand</div></div>
+          <div class="beach-item"><img src=img alt="Pellestrina" /><div class="beach-label">Pellestrina</div></div>
+          <div class="beach-item"><img src=img alt="Cavallino strand" /><div class="beach-label">Cavallino</div></div>
+        </div>
+      </div>
+      <!-- Galveston beaches -->
+      <div>
+        <div class="dest-divider"><div class="dest-divider-line"></div><div class="dest-divider-label">Galveston Bay</div><div class="dest-divider-line"></div></div>
+        <div class="beach-col" style="margin-top:16px;">
+          <div class="beach-item"><img src=img alt="Stewart Beach" /><div class="beach-label">Stewart Beach</div></div>
+          <div class="beach-item"><img src=img alt="East Beach" /><div class="beach-label">East Beach</div></div>
+          <div class="beach-item"><img src=img alt="Seawall Beach" /><div class="beach-label">Seawall Beach</div></div>
+          <div class="beach-item"><img src=img alt="Bolivar Peninsula" /><div class="beach-label">Bolivar Peninsula</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="beach-info">
+      <div class="beach-info-block">
+        <h3>Venetiaanse Stranden</h3>
+        <p>De stranden rondom de Venetiaanse lagune zijn uniek door hun ligging: fijn zand, rustig water en spectaculair uitzicht op de eilanden. Het Lido di Venezia, bereikbaar per vaporetto, is het bekendst een lang strandboulevard met stijlvolle badcabines. Pellestrina biedt een meer authentieke Italiaanse strandbeleving, weg van de toeristische drukte.</p>
+      </div>
+      <div class="beach-info-block">
+        <h3>Galveston Bay Stranden</h3>
+        <p>Galveston biedt ruim 50 km aan stranden langs de Golf van Mexico. Stewart Beach is ideaal voor families, terwijl East Beach bekendstaat om zijn festivals en muziekevenementen. Het warme Golfwater maakt Galveston een populaire bestemming voor surfers en watersporten. De Bolivar Peninsula, bereikbaar per veerboot, is rustiger en biedt prachtige natuur.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NATUUR -->
+<section id="natuur" class="anchor-offset">
+  <div class="container">
+    <div class="section-label">In de Natuur</div>
+    <h2 class="section-title">Natuur Plekken</h2>
+    <p class="section-sub">Ontdek de adembenemende natuur van de lagune-ecosystemen van rietvelden tot mangrovebossen.</p>
+
+    <div class="dest-divider"><div class="dest-divider-line"></div><div class="dest-divider-label">Venetiaanse Lagune Natuur</div><div class="dest-divider-line"></div></div>
+    <div style="margin-top:20px;">
+      <div class="hslider-wrap" id="ven-nature-wrap">
+        <div class="hslider-track" id="ven-nature-track">
+          <div class="hslide"><div class="hslide-img"><img src=img alt="Venetiaanse lagune" /></div><div class="hslide-body"><div class="hslide-title">Laguna di Venezia</div><div class="hslide-desc">Het grootste wetland van Europa – thuis voor paling, kreeft en honderden vogelsoorten.</div></div></div>
+          <div class="hslide"><div class="hslide-img"><img src=img alt="Torcello" /></div><div class="hslide-body"><div class="hslide-title">Eiland Torcello</div><div class="hslide-desc">Een bijna verlaten eiland vol moerasland en vroegmiddeleeuwse overblijfselen, de oudste nederzetting van de lagune.</div></div></div>
+          <div class="hslide"><div class="hslide-img"><img src=img alt="Po-delta" /></div><div class="hslide-body"><div class="hslide-title">Po-delta Nationaal Park</div><div class="hslide-desc">Dichtbij Venetië: Europa's grootste deltagebied met roze flamingo's, reigers en uitgestrekte rietvelden.</div></div></div>
+          <div class="hslide"><div class="hslide-img"><img src=img alt="Vogels Venetië" /></div><div class="hslide-body"><div class="hslide-title">Valle da Pesca – Vogelkijken</div><div class="hslide-desc">Traditionele visvijvers omgevormd tot vogelreservaat – ideaal voor vogelaars en stiltezoekers.</div></div></div>
+          <div class="hslide"><div class="hslide-img"><img src=img alt="Lido natuur" /></div><div class="hslide-body"><div class="hslide-title">Lido Natuur Reservaat</div><div class="hslide-desc">Het zuidelijke puntje van het Lido herbergt zeldzame duinvegetatie en beschermde zeevogelbiotopen.</div></div></div>
+        </div>
+      </div>
+      <div class="hslider-nav">
+        <button class="hslider-btn" onclick="hscroll('ven-nature-track', -1)">‹</button>
+        <button class="hslider-btn" onclick="hscroll('ven-nature-track', 1)">›</button>
+      </div>
+    </div>
+
+    <div class="dest-divider" style="margin-top:56px;"><div class="dest-divider-line"></div><div class="dest-divider-label">Galveston Bay Natuur</div><div class="dest-divider-line"></div></div>
+    <div style="margin-top:20px;">
+      <div class="hslider-wrap" id="gal-nature-wrap">
+        <div class="hslider-track" id="gal-nature-track">
+          <div class="hslide"><div class="hslide-img"><img src=img alt="Galveston Bay natuur" /></div><div class="hslide-body"><div class="hslide-title">Galveston Bay Estuary</div><div class="hslide-desc">Een van de produktiefste estuaria van Noord-Amerika – broedplaats voor oesters, garnalen en zeegrasvelden.</div></div></div>
+          <div class="hslide"><div class="hslide-img"><img src=img alt="Anahuac NWR" /></div><div class="hslide-body"><div class="hslide-title">Anahuac National Wildlife Refuge</div><div class="hslide-desc">Een uitgestrekt moerasgebied voor overwinterende ganzen, sneeuwganzen en alligators.</div></div></div>
+          <div class="hslide"><div class="hslide-img"><img src=img alt="Bolivar Flats" /></div><div class="hslide-body"><div class="hslide-title">Bolivar Flats Shorebird Sanctuary</div><div class="hslide-desc">Wereldberoemd vogelparadijs voor trekvogels – een absolute must voor vogelaars in het voorjaar.</div></div></div>
+          <div class="hslide"><div class="hslide-img"><img src=img alt="Sea Rim State Park" /></div><div class="hslide-body"><div class="hslide-title">Sea Rim State Park</div><div class="hslide-desc">Uniek park waar strand en moerasland samenkomen – kajak-, wandel- en vogelroutes door rietvelden.</div></div></div>
+          <div class="hslide"><div class="hslide-img"><img src=img alt="Dolfijnen baai" /></div><div class="hslide-body"><div class="hslide-title">Dolfijnenspotten in de Baai</div><div class="hslide-desc">Gestreepte dolfijnen, bruinvissen en zelfs walvissen zijn regelmatig te zien vanuit boottochten op de baai.</div></div></div>
+        </div>
+      </div>
+      <div class="hslider-nav">
+        <button class="hslider-btn" onclick="hscroll('gal-nature-track', -1)">‹</button>
+        <button class="hslider-btn" onclick="hscroll('gal-nature-track', 1)">›</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KIDS -->
+<section id="kids" class="anchor-offset">
+  <div class="container">
+    <div class="section-label">Gezinsplezier</div>
+    <h2 class="section-title">Kids Activiteiten</h2>
+    <p class="section-sub">Avontuur voor de kleintjes de beste kinderactiviteiten in beide lagunegebieden op de kaart.</p>
+    <div class="two-col">
+      <div>
+        <div class="map-title">Venetië Kids Kaart</div>
+        <div class="map-container" id="map-ven"></div>
+      </div>
+      <div>
+        <div class="map-title">Galveston Bay Kids Kaart</div>
+        <div class="map-container" id="map-gal"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand-name">Lagoon Tourist Centre</div>
+        <div class="footer-brand-sub">Venetiaanse Lagune & Galveston Bay</div>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="lagoons.html">Lagoons</a>
+        <a href="activiteiten.html">Activiteiten</a>
+        <a href="over-ons.html">Over ons</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2025 Lagoon Tourist Centre · Alle rechten voorbehouden</div>
+  </div>
+</footer>
+
+<script>
+// ─── CITY TRIP SLIDERS ──────────────────────────────────────────────────────
+
+function toggleSlider(id, btn) {
+  const panel = document.getElementById(id);
+  const allBtns = btn.closest('.btn-group').querySelectorAll('.btn');
+
+  btn.closest('.dest-card-body').parentElement.querySelectorAll('.slider-panel').forEach(p => {
+    if (p.id !== id) { p.classList.remove('open'); }
+  });
+  allBtns.forEach(b => b.classList.remove('active'));
+
+  const isOpen = panel.classList.contains('open');
+  if (isOpen) {
+    panel.classList.remove('open');
+  } else {
+    panel.classList.add('open');
+    btn.classList.add('active');
+    initSlider(panel);
+  }
+}
+
+function initSlider(panel) {
+  const wrap = panel.querySelector('[data-slider]');
+  if (wrap._initialized) return;
+  wrap._initialized = true;
+  wrap._idx = 0;
+  const slides = wrap.querySelectorAll('.slide');
+  const dotsContainer = panel.querySelector('.slider-dots');
+  dotsContainer.innerHTML = '';
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goSlide(wrap, i);
+    dotsContainer.appendChild(d);
+  });
+}
+
+function goSlide(wrap, idx) {
+  const slides = wrap.querySelectorAll('.slide');
+  idx = (idx + slides.length) % slides.length;
+  wrap._idx = idx;
+  wrap.querySelector('.slider-track').style.transform = `translateX(-${idx * 100}%)`;
+  const panel = wrap.closest('.slider-panel');
+  panel.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+}
+
+function nextSlide(btn) {
+  const wrap = btn.closest('[data-slider]');
+  goSlide(wrap, (wrap._idx || 0) + 1);
+}
+
+function prevSlide(btn) {
+  const wrap = btn.closest('[data-slider]');
+  goSlide(wrap, (wrap._idx || 0) - 1);
+}
+
+// ─── VERTICAL SCROLL (MUST DO) ──────────────────────────────────────────────
+
+const vscrollState = {};
+
+function vscroll(id, dir) {
+  const inner = document.getElementById(id);
+  if (!vscrollState[id]) vscrollState[id] = { offset: 0 };
+  const cards = inner.querySelectorAll('.vscroll-card');
+  const cardH = cards[0].offsetHeight + 16;
+  const totalH = cards.length * cardH;
+  const viewport = inner.closest('.vscroll-viewport').offsetHeight;
+  const maxOffset = Math.max(0, totalH - viewport);
+
+  vscrollState[id].offset = Math.min(Math.max(0, vscrollState[id].offset + dir * cardH), maxOffset);
+  inner.style.transform = `translateY(-${vscrollState[id].offset}px)`;
+}
+
+// ─── HORIZONTAL SLIDERS (NATUUR) ─────────────────────────────────────────────
+
+const hsliderState = {};
+
+function hscroll(trackId, dir) {
+  const track = document.getElementById(trackId);
+  if (!hsliderState[trackId]) hsliderState[trackId] = { offset: 0 };
+  const slide = track.querySelector('.hslide');
+  const slideW = slide.offsetWidth + 20;
+  const visibleW = track.parentElement.offsetWidth;
+  const totalW = track.scrollWidth;
+  const maxOffset = Math.max(0, totalW - visibleW + 8);
+
+  hsliderState[trackId].offset = Math.min(Math.max(0, hsliderState[trackId].offset + dir * slideW), maxOffset);
+  track.style.transform = `translateX(-${hsliderState[trackId].offset}px)`;
+}
+
+// ─── LEAFLET MAPS ──────────────────────────────────────────────────────────
+
+function starRating(n) {
+  return '★'.repeat(n) + '☆'.repeat(5 - n);
+}
+
+function popupHtml(title, desc, stars) {
+  return `<div class="popup-inner"><div class="popup-title">${title}</div><div class="popup-desc">${desc}</div><div class="popup-stars">${starRating(stars)} (${stars}/5)</div></div>`;
+}
+
+// Venice map
+const mapVen = L.map('map-ven', { scrollWheelZoom: false }).setView([45.434, 12.338], 13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(mapVen);
+
+const kidsIconVen = L.divIcon({ className: '', html: '<div style="background:#1B4965;color:#fff;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 4px 12px rgba(0,0,0,.3);">🎠</div>', iconSize: [36,36], iconAnchor:[18,18] });
+
+const venKidsSpots = [
+  { lat: 45.4344, lng: 12.3388, name: 'Giardini Reali', desc: 'Mooie koninklijke tuinen naast het Dogenpaleis, perfect voor een picknick.', stars: 4 },
+  { lat: 45.4374, lng: 12.3372, name: 'Museo di Storia Naturale', desc: 'Natuurhistorisch museum met dinosauruskarkassen – kinderen zijn dol op het fossielgedeelte.', stars: 5 },
+  { lat: 45.4455, lng: 12.3190, name: 'Giardini della Biennale', desc: 'Grote tuinen met speelplaatsen en ruimte om rond te rennen, naast het Biennale-terrein.', stars: 4 },
+  { lat: 45.4296, lng: 12.3413, name: 'Gondola Tocht – Traghetto', desc: 'Een goedkope gondola-overtocht over het Canal Grande – kinderen vinden het geweldig.', stars: 5 },
+  { lat: 45.4512, lng: 12.2526, name: 'Glazen Muzeum Murano', desc: 'Fascinerend glasblazers-museum op Murano met live demonstraties voor kinderen.', stars: 4 },
+];
+
+venKidsSpots.forEach(s => {
+  L.marker([s.lat, s.lng], { icon: kidsIconVen }).addTo(mapVen).bindPopup(popupHtml(s.name, s.desc, s.stars), { maxWidth: 240 });
+});
+
+// Galveston map
+const mapGal = L.map('map-gal', { scrollWheelZoom: false }).setView([29.301, -94.797], 12);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(mapGal);
+
+const kidsIconGal = L.divIcon({ className: '', html: '<div style="background:#5FA8D3;color:#fff;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 4px 12px rgba(0,0,0,.3);">🎡</div>', iconSize: [36,36], iconAnchor:[18,18] });
+
+const galKidsSpots = [
+  { lat: 29.2875, lng: -94.8064, name: 'Moody Gardens', desc: 'Drie pyramiden vol aquarium, regenwoud en ijsbaan – dé familieplek van Galveston.', stars: 5 },
+  { lat: 29.2991, lng: -94.7882, name: 'Galveston Island Historic Pleasure Pier', desc: 'Een klassieke attractiepark op de pier met achtbaan, reuzenrad en spellen.', stars: 5 },
+  { lat: 29.3140, lng: -94.7977, name: 'Schlitterbahn Waterpark', desc: 'Een van de beste waterpretparken van Texas met glijbanen en lazy rivers.', stars: 4 },
+  { lat: 29.3067, lng: -94.8135, name: 'Stewart Beach Park', desc: 'Gezinsvriendelijk strand met speelplaats, verhuur van strandstoelen en veilig zwemwater.', stars: 4 },
+  { lat: 29.3510, lng: -94.8961, name: 'Galveston State Park', desc: 'Natuur en strand gecombineerd – ideaal voor fietsen, vogels spotten en zandkastelen bouwen.', stars: 4 },
+];
+
+galKidsSpots.forEach(s => {
+  L.marker([s.lat, s.lng], { icon: kidsIconGal }).addTo(mapGal).bindPopup(popupHtml(s.name, s.desc, s.stars), { maxWidth: 240 });
+});
+</script>
+</body>
+</html>

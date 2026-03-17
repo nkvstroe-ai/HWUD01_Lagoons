@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Lagoons — Lagoon Tourist Centre</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --mint:#BEE9E8; --aqua:#62B6CB; --deep:#1B4965;
+    --sky:#CAE9FF; --steel:#5FA8D3; --sand:#F6FAFD;
+    --white:#ffffff; --muted:rgba(27,73,101,.65);
+    --border:rgba(98,182,203,.28);
+    --shadow:0 24px 64px rgba(27,73,101,.16);
+    --container:1140px;
+    --font-display:'Playfair Display',Georgia,serif;
+    --font-body:'DM Sans',sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font-body);color:var(--deep);background:var(--sand);line-height:1.6;min-height:100vh;display:flex;flex-direction:column;}
+  a{color:inherit;text-decoration:none;}
+  .container{width:min(var(--container),calc(100% - 40px));margin:0 auto;}
+
+  /* NAV */
+  .nav{position:sticky;top:0;z-index:100;backdrop-filter:blur(14px) saturate(1.4);background:rgba(27,73,101,.82);border-bottom:1px solid rgba(190,233,232,.18);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:15px 0;gap:16px;}
+  .brand{display:flex;align-items:center;gap:12px;color:var(--white);}
+  .brand-text-main{font-family:var(--font-display);font-size:16px;color:var(--white);}
+  .brand-text-sub{font-size:11px;color:rgba(202,233,255,.75);font-weight:400;margin-top:2px;}
+  .nav-links{display:flex;align-items:center;gap:4px;}
+  .dd{position:relative;}
+  .dd>a,.nav-plain{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;font-size:13.5px;font-weight:500;color:rgba(202,233,255,.90);border:1px solid transparent;transition:.2s;white-space:nowrap;}
+  .dd>a:hover,.dd>a.active,.nav-plain:hover,.nav-plain.active{background:rgba(190,233,232,.14);border-color:rgba(190,233,232,.25);color:var(--white);}
+  .caret{font-size:10px;opacity:.7;}
+  .dd-menu{position:absolute;top:calc(100% + 10px);left:0;min-width:220px;background:rgba(27,73,101,.97);border:1px solid rgba(190,233,232,.22);border-radius:18px;padding:8px;display:none;box-shadow:var(--shadow);backdrop-filter:blur(20px);}
+  .dd-menu a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;font-size:13.5px;font-weight:500;color:rgba(202,233,255,.85);border:1px solid transparent;transition:.15s;}
+  .dd-menu a:hover{background:rgba(190,233,232,.12);border-color:rgba(190,233,232,.20);color:var(--white);}
+  .dd:hover .dd-menu{display:block;}
+
+  /* HERO */
+  .hero{position:relative;height:88vh;min-height:520px;max-height:820px;overflow:hidden;display:flex;align-items:flex-end;}
+  .hero-bg{position:absolute;inset:0;background:
+    linear-gradient(to bottom, rgba(27,73,101,.18) 0%, rgba(27,73,101,.72) 65%, rgba(27,73,101,.94) 100%),
+    url() center/cover no-repeat;
+  }
+  .hero-content{position:relative;z-index:2;padding:0 0 72px;width:100%;}
+  .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(190,233,232,.15);border:1px solid rgba(190,233,232,.35);border-radius:999px;padding:6px 16px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--mint);margin-bottom:20px;}
+  .hero-title{font-family:var(--font-display);font-size:clamp(42px,7vw,88px);font-weight:900;color:var(--white);line-height:1.0;margin-bottom:24px;}
+  .hero-title em{font-style:italic;color:var(--mint);}
+  .hero-desc{font-size:clamp(15px,2vw,18px);color:rgba(202,233,255,.85);max-width:580px;font-weight:300;line-height:1.7;margin-bottom:36px;}
+  .hero-pills{display:flex;gap:12px;flex-wrap:wrap;}
+  .pill{display:inline-flex;align-items:center;gap:8px;background:rgba(202,233,255,.10);border:1px solid rgba(202,233,255,.25);border-radius:999px;padding:9px 20px;font-size:13px;font-weight:500;color:rgba(202,233,255,.90);}
+  .pill-dot{width:7px;height:7px;border-radius:50%;}
+  .pill-dot.venice{background:#62B6CB;}
+  .pill-dot.galveston{background:#F4A261;}
+  .hero-scroll{position:absolute;bottom:28px;right:0;display:flex;align-items:center;gap:10px;font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:rgba(202,233,255,.55);}
+  .scroll-line{width:40px;height:1px;background:rgba(202,233,255,.35);}
+
+  /* SECTION SHARED */
+  section{padding:96px 0;}
+  .section-label{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--aqua);margin-bottom:12px;}
+  .section-label::before{content:'';display:block;width:24px;height:2px;background:var(--aqua);border-radius:2px;}
+  .section-title{font-family:var(--font-display);font-size:clamp(30px,4vw,46px);font-weight:700;color:var(--deep);line-height:1.1;margin-bottom:16px;}
+  .section-sub{font-size:16px;color:var(--muted);max-width:620px;line-height:1.7;}
+
+  /* CLIMATE CARDS */
+  #klimaat{background:var(--white);}
+  .klimaat-intro{text-align:center;margin-bottom:64px;}
+  .klimaat-intro .section-label{justify-content:center;}
+  .klimaat-intro .section-label::before{display:none;}
+  .klimaat-intro .section-sub{margin:0 auto;}
+  .klimaat-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+  .kcard{border-radius:28px;overflow:hidden;box-shadow:0 12px 40px rgba(27,73,101,.10);transition:transform .3s,box-shadow .3s;}
+  .kcard:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(27,73,101,.18);}
+  .kcard-img{position:relative;height:300px;overflow:hidden;}
+  .kcard-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
+  .kcard:hover .kcard-img img{transform:scale(1.04);}
+  .kcard-badge{position:absolute;top:18px;left:18px;background:rgba(27,73,101,.88);backdrop-filter:blur(8px);border:1px solid rgba(190,233,232,.30);border-radius:999px;padding:6px 16px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mint);}
+  .kcard-body{padding:32px;}
+  .kcard-title{font-family:var(--font-display);font-size:24px;font-weight:700;color:var(--deep);margin-bottom:6px;}
+  .kcard-loc{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);margin-bottom:20px;}
+  .kcard-loc svg{width:14px;height:14px;flex-shrink:0;}
+  .kcard-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px;}
+  .stat{background:var(--sand);border-radius:16px;padding:14px 16px;}
+  .stat-val{font-size:22px;font-weight:700;color:var(--deep);line-height:1;}
+  .stat-unit{font-size:12px;font-weight:400;color:var(--muted);}
+  .stat-label{font-size:11.5px;color:var(--muted);margin-top:4px;font-weight:500;}
+  .kcard-text{font-size:14.5px;color:var(--muted);line-height:1.75;}
+  .kcard-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;}
+  .tag{background:rgba(98,182,203,.12);border:1px solid rgba(98,182,203,.25);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:500;color:var(--aqua);}
+  .tag.warm{background:rgba(244,162,97,.12);border-color:rgba(244,162,97,.30);color:#D4671B;}
+
+  /* CHARTS SECTION */
+  #klimaat-grafiek{background:linear-gradient(160deg, #EFF9FF 0%, var(--sand) 100%);}
+  #economie{background:var(--white);}
+  .chart-layout{display:grid;grid-template-columns:1fr 1.4fr;gap:56px;align-items:start;}
+  .chart-layout.flip{grid-template-columns:1.4fr 1fr;}
+  .chart-text{}
+  .chart-text .section-title{font-size:clamp(26px,3vw,36px);}
+  .chart-text p{font-size:15px;color:var(--muted);line-height:1.8;margin-top:16px;}
+  .chart-text p+p{margin-top:12px;}
+  .chart-fact{display:flex;gap:14px;align-items:flex-start;margin-top:24px;padding:18px 20px;background:rgba(98,182,203,.07);border:1px solid rgba(98,182,203,.20);border-radius:18px;}
+  .chart-fact-body{font-size:13.5px;color:var(--deep);line-height:1.65;}
+  .chart-fact-body strong{font-weight:600;display:block;margin-bottom:3px;}
+  .chart-wrap{background:var(--white);border-radius:24px;padding:28px;box-shadow:0 8px 32px rgba(27,73,101,.09);border:1px solid var(--border);}
+  .chart-wrap canvas{width:100%!important;}
+  .chart-legend{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:18px;}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--deep);}
+  .legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+
+  /* DIVIDER */
+  .wave-divider{width:100%;overflow:hidden;line-height:0;margin-bottom:-2px;}
+  .wave-divider svg{display:block;width:100%;}
+
+  /* FOOTER */
+  footer{background:var(--deep);color:rgba(202,233,255,.75);padding:48px 0 36px;}
+  .footer-inner{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:36px;}
+  .footer-brand-name{font-family:var(--font-display);font-size:20px;color:var(--white);margin-bottom:6px;}
+  .footer-brand-sub{font-size:13px;color:rgba(202,233,255,.50);}
+  .footer-links{display:flex;gap:28px;flex-wrap:wrap;}
+  .footer-links a{font-size:13.5px;color:rgba(202,233,255,.65);transition:color .15s;}
+  .footer-links a:hover{color:var(--mint);}
+  .footer-bottom{border-top:1px solid rgba(190,233,232,.12);padding-top:24px;text-align:center;font-size:13px;color:rgba(202,233,255,.40);}
+
+  /* RESPONSIVE */
+  @media(max-width:860px){
+    .klimaat-grid,.chart-layout,.chart-layout.flip{grid-template-columns:1fr;}
+    .chart-layout.flip .chart-wrap{order:-1;}
+  }
+  @media(max-width:640px){
+    .nav-links{display:none;}
+    .footer-inner{flex-direction:column;}
+    .hero-content{padding-bottom:56px;}
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+  .hero-eyebrow{animation:fadeUp .7s ease both;}
+  .hero-title{animation:fadeUp .7s .15s ease both;}
+  .hero-desc{animation:fadeUp .7s .28s ease both;}
+  .hero-pills{animation:fadeUp .7s .40s ease both;}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="brand">
+      <div>
+        <div class="brand-text-main">Lagoon Tourist Centre</div>
+        <div class="brand-text-sub">Venetië × Galveston</div>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <div class="dd">
+        <a href="index.html#plan">Ontdek de werled van Lagoons <span class="caret">▾</span></a>
+        <div class="dd-menu">
+          <a href="index.html#bedreigingen">Bedreigingen</a>
+          <a href="index.html#venetie">Venetiaanse Lagune</a>
+          <a href="index.html#galveston">Galveston Bay</a>
+          <a href="index.html#galerij">Foto Galerij</a>
+        </div>
+      </div>
+      <div class="dd">
+        <a href="lagoons.html" class="active">Lagoons <span class="caret">▾</span></a>
+        <div class="dd-menu">
+          <a href="#klimaat">Ligging & Klimaat</a>
+          <a href="#klimaat-grafiek">Klimaatvergelijking</a>
+          <a href="#economie">Economie</a>
+        </div>
+      </div>
+      <div class="dd">
+        <a href="activiteiten.html">Activiteiten <span class="caret">▾</span></a>
+        <div class="dd-menu">
+          <a href="activiteiten.html#citytrip">Citytrip</a>
+          <a href="activiteiten.html#indoor">Indoor</a>
+          <a href="activiteiten.html#water-strand">Water & Strand</a>
+          <a href="activiteiten.html#natuur">Natuur</a>
+          <a href="activiteiten.html#kids">Kids</a>
+        </div>
+      </div>
+      <a href="over-ons.html" class="nav-plain">Over ons</a>
+    </nav>
+  </div>
+</div>
+
+<main>
+
+  <!-- ─── HERO ─────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="container hero-content">
+      <div class="hero-eyebrow">Venetiaanse Lagune × Galveston Bay</div>
+      <h1 class="hero-title">Een vergelijking<br>van <em>twee lagunes</em></h1>
+      <p class="hero-desc">Ontdek de fascinerende overeenkomsten én verschillen tussen de iconische Venetiaanse Lagune en Galveston Bay twee unieke kustecosystemen aan weerszijden van de wereld.</p>
+      <div class="hero-pills">
+        <span class="pill"><span class="pill-dot venice"></span> Venetiaanse Lagune, Italië</span>
+        <span class="pill"><span class="pill-dot galveston"></span> Galveston Bay, Texas, VS</span>
+      </div>
+    </div>
+    <div class="hero-scroll container"><span class="scroll-line"></span>Scroll om te ontdekken</div>
+  </section>
+
+  <!-- ─── KLIMAAT KAARTEN ───────────────────────────── -->
+  <section id="klimaat">
+    <div class="container">
+      <div class="klimaat-intro">
+        <div class="section-label">Ligging & Klimaat</div>
+        <h2 class="section-title">Twee lagunes, twee klimaten</h2>
+        <p class="section-sub">Van de gematigde Adriatische kust tot de subtropische Golf van Mexico elke lagune heeft zijn eigen karakter gevormd door geografie en klimaat.</p>
+      </div>
+
+      <div class="klimaat-grid">
+
+        <!-- Galveston Bay -->
+        <div class="kcard">
+          <div class="kcard-img">
+            <img src=img alt="Galveston Bay, Texas">
+            <div class="kcard-badge">Galveston Bay</div>
+          </div>
+          <div class="kcard-body">
+            <div class="kcard-title">Galveston Bay</div>
+            <div class="kcard-loc">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+              Texas, Gulf Coast, Verenigde Staten (29°N)
+            </div>
+            <div class="kcard-stats">
+              <div class="stat">
+                <div class="stat-val">28°C <span class="stat-unit">zomer</span></div>
+                <div class="stat-label">Gem. luchttemp.</div>
+              </div>
+              <div class="stat">
+                <div class="stat-val">13°C <span class="stat-unit">winter</span></div>
+                <div class="stat-label">Gem. luchttemp.</div>
+              </div>
+              <div class="stat">
+                <div class="stat-val">1.270mm</div>
+                <div class="stat-label">Jaarlijkse neerslag</div>
+              </div>
+              <div class="stat">
+                <div class="stat-val">25°C <span class="stat-unit">aug</span></div>
+                <div class="stat-label">Watertemperatuur</div>
+              </div>
+            </div>
+            <p class="kcard-text">Galveston Bay ligt aan de Texaanse Golfkust, beschermd door Galveston Island. Het gebied heeft een <strong>vochtig subtropisch klimaat</strong> met hete, vochtige zomers en milde winters. Zware tropische stormen en orkanen zijn een reëel risico van juni tot november. De hoge luchtvochtigheid en warmte maken het gebied bijzonder rijk aan biodiversiteit.</p>
+            <div class="kcard-tags">
+              <span class="tag warm">Subtropisch</span>
+              <span class="tag warm">Orkaanrisico</span>
+              <span class="tag warm">Hoge vochtigheid</span>
+              <span class="tag warm">Zilte kust</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Venetiaanse Lagune -->
+        <div class="kcard">
+          <div class="kcard-img">
+            <img src=img alt="Venetiaanse Lagune">
+            <div class="kcard-badge">Venetiaanse Lagune</div>
+          </div>
+          <div class="kcard-body">
+            <div class="kcard-title">Venetiaanse Lagune</div>
+            <div class="kcard-loc">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+              Veneto, Noord-Italië, Adriatische Zee (45°N)
+            </div>
+            <div class="kcard-stats">
+              <div class="stat">
+                <div class="stat-val">27°C <span class="stat-unit">zomer</span></div>
+                <div class="stat-label">Gem. luchttemp.</div>
+              </div>
+              <div class="stat">
+                <div class="stat-val">4°C <span class="stat-unit">winter</span></div>
+                <div class="stat-label">Gem. luchttemp.</div>
+              </div>
+              <div class="stat">
+                <div class="stat-val">780mm</div>
+                <div class="stat-label">Jaarlijkse neerslag</div>
+              </div>
+              <div class="stat">
+                <div class="stat-val">24°C <span class="stat-unit">aug</span></div>
+                <div class="stat-label">Watertemperatuur</div>
+              </div>
+            </div>
+            <p class="kcard-text">De Venetiaanse Lagune strekt zich uit over 550 km² aan de Adriatische kust van Noord-Italië. Het klimaat is <strong>gematigd mediterraan</strong> met warme zomers en koude, vochtige winters. Berucht is het fenomeen <em>acqua alta</em> seizoensgebonden overstromingen door springvloed en wind. De lagune grenst aan het Alpengebied, wat voor onverwachte kou in de winter zorgt.</p>
+            <div class="kcard-tags">
+              <span class="tag">Gematigd</span>
+              <span class="tag">Acqua Alta</span>
+              <span class="tag">Vier seizoenen</span>
+              <span class="tag">Brak water</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── KLIMAAT GRAFIEK ───────────────────────────── -->
+  <section id="klimaat-grafiek">
+    <div class="container">
+      <div class="chart-layout">
+        <div class="chart-text">
+          <div class="section-label">Klimaatvergelijking</div>
+          <h2 class="section-title">Temperatuur door het jaar</h2>
+          <p>Hoewel beide lagunes vergelijkbare zomertemperaturen bereiken, is het winterverschil dramatisch. Venetië ervaart koude, gure winters soms met nacht­vorst terwijl Galveston mild blijft dankzij de warmte van de Golf van Mexico.</p>
+          <p>De neerslag is in Galveston bijna tweemaal zo hoog als in Venetië, verdeeld over hevige zomerse onweersbuien en orkaanseizoen. In Venetië valt regen meer gespreid, met opvallend droge zomers.</p>
+          <div class="chart-fact">
+            <div class="chart-fact-body">
+              <strong>Koudste maand: Venetië vs Galveston</strong>
+              Venetië (januari): gem. 4°C Galveston (januari): gem. 13°C. Een verschil van maar liefst 9 graden in de koudste maand, voornamelijk door de ligging op 16 breedtegraden verschil.
+            </div>
+          </div>
+          <div class="chart-fact">
+            <div class="chart-fact-body">
+              <strong>Neerslag en stormrisico</strong>
+              Galveston Bay ontvangt gemiddeld 1.270 mm regen per jaar, waarbij hevige tropische stormen grote waterstandsstijgingen veroorzaken. In Venetië is acqua alta een bijzonder fenomeen waarbij springvloed en sirocco-winden samenvallen.
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="chart-wrap">
+            <div class="chart-legend">
+              <div class="legend-item"><span class="legend-dot" style="background:#62B6CB;"></span>Venetiaanse Lagune</div>
+              <div class="legend-item"><span class="legend-dot" style="background:#F4A261;"></span>Galveston Bay</div>
+            </div>
+            <canvas id="klimaatChart" height="320"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── ECONOMIE GRAFIEK ──────────────────────────── -->
+  <section id="economie">
+    <div class="container">
+      <div class="chart-layout flip">
+        <div>
+          <div class="chart-wrap">
+            <div class="chart-legend">
+              <div class="legend-item"><span class="legend-dot" style="background:#62B6CB;"></span>Venetiaanse Lagune</div>
+              <div class="legend-item"><span class="legend-dot" style="background:#F4A261;"></span>Galveston Bay</div>
+            </div>
+            <canvas id="econChart" height="340"></canvas>
+          </div>
+        </div>
+        <div class="chart-text">
+          <div class="section-label">Economische vergelijking</div>
+          <h2 class="section-title">Economie van de lagunes</h2>
+          <p>De economische structuur van beide lagunes is sterk bepaald door hun geografische ligging, historische achtergrond en ecologische kenmerken. Venetië bouwt voor een groot deel op toerisme en cultureel erfgoed, terwijl Galveston Bay een industrieel-economisch hart vormt.</p>
+          <p>De haven van Houston direct verbonden met Galveston Bay via het Houston Ship Channel is een van de drukste ter wereld. De petrochemische industrie, raffinage en internationale handel domineren de regionale economie. Toerisme speelt een kleinere maar groeiende rol.</p>
+          <div class="chart-fact">
+            <div class="chart-fact-body">
+              <strong>Haven van Houston</strong>
+              De haven verwerkt jaarlijks meer dan 270 miljoen ton lading, goed voor ruim 1 miljoen banen in de regio. De petrochemische corridor langs Ship Channel is een van de grootste industrieclusters ter wereld.
+            </div>
+          </div>
+          <div class="chart-fact">
+            <div class="chart-fact-body">
+              <strong>Venetië: toerisme als tweesnijdend zwaard</strong>
+              Venetië trekt jaarlijks circa 20 miljoen bezoekers aan die samen zo'n €3 miljard besteden. Tegelijkertijd drijft massatoerisme de lokale bevolking weg en bedreigt het de fragiele lagune-ecologie.
+            </div>
+          </div>
+          <div class="chart-fact">
+            <div class="chart-fact-body">
+              <strong>Visteelt & ecologie</strong>
+              Beiden lagunes hebben een rijke visserijtraditie. In Venetië zijn de vismandjes en mosselpercelen al eeuwen onderdeel van het cultuurlandschap. In Galveston Bay is de garnalenvisserij en oesterkweek economisch van groot belang voor de lokale gemeenschap.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand-name">Lagoon Tourist Centre</div>
+        <div class="footer-brand-sub">Venetiaanse Lagune & Galveston Bay</div>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="lagoons.html">Lagoons</a>
+        <a href="activiteiten.html">Activiteiten</a>
+        <a href="over-ons.html">Over ons</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2025 Lagoon Tourist Centre · Alle rechten voorbehouden</div>
+  </div>
+</footer>
+
+<script>
+// ─── KLIMAAT CHART ────────────────────────────────────
+const maanden = ['Jan','Feb','Mrt','Apr','Mei','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];
+
+new Chart(document.getElementById('klimaatChart'), {
+  type: 'line',
+  data: {
+    labels: maanden,
+    datasets: [
+      {
+        label: 'Venetiaanse Lagune (°C)',
+        data: [4, 5, 9, 14, 19, 24, 27, 27, 23, 17, 11, 6],
+        borderColor: '#62B6CB',
+        backgroundColor: 'rgba(98,182,203,0.12)',
+        fill: true,
+        tension: 0.4,
+        pointBackgroundColor: '#62B6CB',
+        pointRadius: 4,
+        borderWidth: 2.5,
+      },
+      {
+        label: 'Galveston Bay (°C)',
+        data: [13, 15, 19, 23, 27, 30, 32, 32, 29, 24, 18, 14],
+        borderColor: '#F4A261',
+        backgroundColor: 'rgba(244,162,97,0.10)',
+        fill: true,
+        tension: 0.4,
+        pointBackgroundColor: '#F4A261',
+        pointRadius: 4,
+        borderWidth: 2.5,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: 'rgba(27,73,101,0.92)',
+        titleColor: '#BEE9E8',
+        bodyColor: '#CAE9FF',
+        borderColor: 'rgba(190,233,232,0.25)',
+        borderWidth: 1,
+        padding: 12,
+        callbacks: {
+          label: ctx => ` ${ctx.dataset.label.split('(')[0].trim()}: ${ctx.parsed.y}°C`
+        }
+      }
+    },
+    scales: {
+      x: {
+        grid: { color: 'rgba(27,73,101,0.06)' },
+        ticks: { color: '#5FA8D3', font: { size: 12 } }
+      },
+      y: {
+        grid: { color: 'rgba(27,73,101,0.06)' },
+        ticks: { color: '#5FA8D3', font: { size: 12 }, callback: v => v + '°C' },
+        min: 0, max: 36
+      }
+    }
+  }
+});
+
+// ─── ECONOMIE CHART ───────────────────────────────────
+new Chart(document.getElementById('econChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Toerisme', 'Haven &\nLogistiek', 'Petrochemie\n& Industrie', 'Visserij &\nVisteelt', 'Vastgoed &\nDiensten', 'Cultuur &\nMedia'],
+    datasets: [
+      {
+        label: 'Venetiaanse Lagune',
+        data: [72, 8, 2, 5, 10, 3],
+        backgroundColor: 'rgba(98,182,203,0.80)',
+        borderColor: '#62B6CB',
+        borderWidth: 1.5,
+        borderRadius: 8,
+        borderSkipped: false,
+      },
+      {
+        label: 'Galveston Bay',
+        data: [12, 30, 38, 8, 9, 3],
+        backgroundColor: 'rgba(244,162,97,0.80)',
+        borderColor: '#F4A261',
+        borderWidth: 1.5,
+        borderRadius: 8,
+        borderSkipped: false,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: 'rgba(27,73,101,0.92)',
+        titleColor: '#BEE9E8',
+        bodyColor: '#CAE9FF',
+        borderColor: 'rgba(190,233,232,0.25)',
+        borderWidth: 1,
+        padding: 12,
+        callbacks: {
+          label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y}% van economie`
+        }
+      }
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: { color: '#5FA8D3', font: { size: 11 }, maxRotation: 0 }
+      },
+      y: {
+        grid: { color: 'rgba(27,73,101,0.06)' },
+        ticks: { color: '#5FA8D3', font: { size: 12 }, callback: v => v + '%' },
+        min: 0, max: 80,
+        title: { display: true, text: 'Aandeel in regionale economie (%)', color: '#5FA8D3', font: { size: 11 } }
+      }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
