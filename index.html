@@ -38,7 +38,8 @@
   }
 
   a { color: inherit; text-decoration: none; }
-  img { max-width: 100%; display: block; }
+  img { max-width: 100%; display: block; image-rendering: -webkit-optimize-contrast; }
+  .card-img img, .detail-img img, .gallery-shot img { will-change: transform; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
   button { font: inherit; cursor: pointer; border: none; }
 
   .container {
@@ -201,6 +202,7 @@
     display: none;
     box-shadow: var(--shadow);
     backdrop-filter: blur(20px);
+    z-index: 200;
   }
   .dd-menu a {
     display: flex;
@@ -219,7 +221,7 @@
     border-color: rgba(190,233,232,.20);
     color: var(--white);
   }
-  .dd:hover .dd-menu { display: block; }
+  .dd.open .dd-menu { display: block; }
 
   .nav-plain {
     display: inline-flex;
@@ -419,9 +421,8 @@
     width: 100%; height: 100%;
     object-fit: cover;
     transition: transform .4s ease;
-    filter: saturate(1.1);
   }
-  .dest-card:hover .card-img img { transform: scale(1.06); }
+  .dest-card:hover .card-img img { transform: scale(1.02); }
 
   .card-img-overlay {
     position: absolute;
@@ -577,7 +578,6 @@
   .detail-img img {
     width: 100%; height: 100%;
     object-fit: cover;
-    filter: saturate(1.08);
   }
 
   .detail-copy h2 {
@@ -678,9 +678,8 @@
     width: 100%; height: 100%;
     object-fit: cover;
     transition: transform .35s ease;
-    filter: saturate(1.1);
   }
-  .gallery-shot:hover img { transform: scale(1.06); }
+  .gallery-shot:hover img { transform: scale(1.02); }
   .gallery-shot-overlay {
     position: absolute;
     inset: 0;
@@ -755,6 +754,7 @@
 <div class="nav">
   <div class="container nav-inner">
     <a href="index.html" class="brand">
+      <img src="logo1.png" alt="Lagoon Tourist Centre" style="height:38px;width:auto;flex-shrink:0;">
       <div>
         <div class="brand-text-main">Lagoon Tourist Centre</div>
         <div class="brand-text-sub">Venetië × Galveston</div>
@@ -762,25 +762,26 @@
     </a>
     <div class="nav-right">
       <form class="search" onsubmit="return handleSearch(event)">
-        <span class="search-icon"></span>
+        <span class="search-icon">🔍</span>
         <input id="searchInput" type="search" placeholder="Zoek bestemmingen…">
       </form>
       <nav class="nav-links">
         <div class="dd">
-          <a href="#plan" class="active">Ontdek de Wereld van Lagunes <span class="caret">▾</span></a>
+          <a href="index.html#plan">Ontdek de Wereld van Lagunes <span class="caret">▾</span></a>
           <div class="dd-menu">
-            <a href="#bedreigingen">Bedreigingen</a>
-            <a href="#venetie">Venetiaanse Lagune</a>
-            <a href="#galveston">Galveston Bay</a>
-            <a href="#galerij">Foto Galerij</a>
+            <a href="index.html#bedreigingen">Bedreigingen</a>
+            <a href="index.html#venetie">Venetiaanse Lagune</a>
+            <a href="index.html#galveston">Galveston Bay</a>
+            <a href="index.html#galerij">Foto Galerij</a>
           </div>
         </div>
         <div class="dd">
-          <a href="lagoons.html">Lagoons <span class="caret">▾</span></a>
+          <a href="vergelijking.html">De lagoons <span class="caret">▾</span></a>
           <div class="dd-menu">
-            <a href="lagoons.html#ligging">Ligging</a>
-            <a href="lagoons.html#klimaat">Klimaat</a>
-            <a href="lagoons.html#economie">Economie</a>
+            <a href="vergelijking.html#diagram">Spinnenwebdiagram</a>
+            <a href="vergelijking.html#scores">Score per categorie</a>
+            <a href="vergelijking.html#tabel">Datatabel</a>
+            <a href="vergelijking.html#winnaar">Winnaar per thema</a>
           </div>
         </div>
         <div class="dd">
@@ -811,17 +812,17 @@
   <div class="hero-content">
     <div class="container">
       <div class="hero-text">
-        <div class="hero-eyebrow">Twee Unieke Lagune Bestemmingen</div>
+        <div class="hero-eyebrow">Twee Unieke Lagune-Bestemmingen</div>
         <h1 class="hero-title">
           Ontdek de<br><span class="accent">Mooiste Lagunes</span><br>ter Wereld
         </h1>
         <p class="hero-desc">
-          Van de iconische grachten van Venetië tot de wilde wetlands van Galveston Bay
+          Van de iconische grachten van Venetië tot de wilde wetlands van Galveston Bay —
           verken twee van de meest fascinerende kust-ecosystemen op aarde.
         </p>
         <div class="hero-btns">
-          <a href="#plan" class="btn-primary"> Plan je reis</a>
-          <a href="lagoons.html" class="btn-outline">Meer ontdekken →</a>
+          <a href="#plan" class="btn-primary">✈️ Plan je reis</a>
+          <a href="vergelijking.html" class="btn-outline">Meer ontdekken →</a>
         </div>
       </div>
     </div>
@@ -857,7 +858,7 @@
 <section class="section" id="plan">
   <div class="container">
     <div class="section-title">
-      <div class="section-eyebrow"> Bestemmingen</div>
+      <div class="section-eyebrow">✈️ Bestemmingen</div>
       <h2>Ontdek de Wereld van Lagunes</h2>
       <p>Ontdek de schoonheid van deze unieke delta's en ervaar zelf waarom ze zo waardevol zijn voor natuur en cultuur.</p>
     </div>
@@ -865,9 +866,13 @@
     <div class="grid-2">
       <article class="dest-card">
         <div class="card-img">
+<<<<<<< HEAD
           <img src="IMG/drtechfuchs-galveston-1152505_1920.jpg" alt="Galveston Bay vanuit de lucht" />
+=======
+          <img src="IMG/STS075-723-21.jpg" alt="Galveston Bay satellietfoto" />
+>>>>>>> 18c37a23c7308a61a54ba2078eef199da1971a11
           <div class="card-img-overlay"></div>
-          <span class="card-badge texas">Texas, VS</span>
+          <span class="card-badge texas">🇺🇸 Texas, VS</span>
         </div>
         <div class="card-body">
           <h3>Galveston Bay</h3>
@@ -886,9 +891,13 @@
 
       <article class="dest-card">
         <div class="card-img">
+<<<<<<< HEAD
           <img src="IMG/venicegondola.jpg" alt="Venetiaanse Lagune met gondels" />
+=======
+          <img src="IMG/venicegondola.jpg" alt="Gondels in de Venetiaanse Lagune" />
+>>>>>>> 18c37a23c7308a61a54ba2078eef199da1971a11
           <div class="card-img-overlay"></div>
-          <span class="card-badge italy">Venetie, Italië</span>
+          <span class="card-badge italy">🇮🇹 Italië</span>
         </div>
         <div class="card-body">
           <h3>Venetiaanse Lagune</h3>
@@ -908,17 +917,53 @@
   </div>
 </section>
 
+<!-- BEDREIGINGEN -->
+<section class="section section-alt" id="bedreigingen">
+  <div class="container">
+    <div class="section-title">
+      <div class="section-eyebrow">⚠️ Uitdagingen</div>
+      <h2>Bedreigingen & Uitdagingen</h2>
+      <p>Beide delta's worden geconfronteerd met ernstige uitdagingen die hun voortbestaan bedreigen. Bewustzijn is de eerste stap naar bescherming.</p>
+    </div>
 
+    <div class="threats-grid">
+      <div class="threat-card">
+        <div class="threat-icon">🌊</div>
+        <h4>Zeespiegelstijging</h4>
+        <p>Klimaatverandering zorgt voor stijgende zeeniveaus, wat beide delta's bedreigt met toenemende overstromingen en kusterosie.</p>
+      </div>
+      <div class="threat-card">
+        <div class="threat-icon">🏭</div>
+        <h4>Vervuiling</h4>
+        <p>Industriële activiteiten en afvalwater beïnvloeden de waterkwaliteit en bedreigen de rijke biodiversiteit van beide ecosystemen.</p>
+      </div>
+      <div class="threat-card">
+        <div class="threat-icon">🚢</div>
+        <h4>Intensieve Scheepvaart</h4>
+        <p>Drukke scheepsroutes verstoren het ecologisch evenwicht en veroorzaken erosie van oevers en kwetsbare habitats.</p>
+      </div>
+      <div class="threat-card">
+        <div class="threat-icon">🏗️</div>
+        <h4>Stedelijke Ontwikkeling</h4>
+        <p>Uitbreiding van steden en infrastructuur vermindert natuurlijke gebieden en vermindert essentiële ecosysteemdiensten.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- VENETIAANSE LAGUNE DETAIL -->
 <section class="detail-section" id="venetie">
   <div class="container">
     <div class="detail-grid">
       <div class="detail-img">
+<<<<<<< HEAD
         <img src="IMG/ba03968751dc57c155f43e46be9776c7.jpg" alt="Gondels in de Venetiaanse Lagune" />
+=======
+        <img src="IMG/venicesunset.jpg" alt="Venetiaanse Lagune bij zonsondergang" />
+>>>>>>> 18c37a23c7308a61a54ba2078eef199da1971a11
       </div>
       <div class="detail-copy">
-        <div class="section-eyebrow">Venetie, Italië</div>
+        <div class="section-eyebrow">🇮🇹 Italië</div>
         <h2>Venetiaanse Lagune</h2>
         <p>De Venetiaanse Lagune is een iconisch ecosysteem dat niet alleen de wereldberoemde stad Venetië ondersteunt, maar ook een rijk zoutmoeras is met unieke flora en fauna.</p>
         <p>Het delicate evenwicht tussen getijden, zoutgehalte en menselijke aanwezigheid maakt dit gebied bijzonder kwetsbaar maar tegelijkertijd ongekend mooi.</p>
@@ -950,7 +995,7 @@
   <div class="container">
     <div class="detail-grid reverse">
       <div class="detail-copy">
-        <div class="section-eyebrow">Texas, VS</div>
+        <div class="section-eyebrow">🇺🇸 Texas, VS</div>
         <h2>Galveston Bay</h2>
         <p>Galveston Bay in Texas is een van de meest productieve estuaria van de Verenigde Staten met een ongekend hoge biodiversiteit aan zeeleven en vogelsoorten.</p>
         <p>Het ecosysteem ondersteunt de lokale visserij en biedt tevens bescherming tegen orkanen en overstromingen voor het achterland.</p>
@@ -974,7 +1019,11 @@
         </div>
       </div>
       <div class="detail-img">
+<<<<<<< HEAD
         <img src="IMG/5b2bb125f7b6d3ca3a418f01f95c4b34.jpg" alt="Satellietbeeld Galveston Bay" />
+=======
+        <img src="IMG/galvestonsunset.jpg" alt="Galveston bij zonsondergang" />
+>>>>>>> 18c37a23c7308a61a54ba2078eef199da1971a11
       </div>
     </div>
   </div>
@@ -992,13 +1041,14 @@
     </div>
 
     <div class="section-title">
-      <div class="section-eyebrow">Impressies</div>
+      <div class="section-eyebrow">📷 Impressies</div>
       <h2>Foto Galerij</h2>
       <p>Een sfeerimpressie van de lagune en de baai op hun allermooiste.</p>
     </div>
 
     <div class="gallery">
       <div class="gallery-shot">
+<<<<<<< HEAD
         <img src="IMG/galvestonstatepark.jpg" alt="Galerijfoto 1" />
         <div class="gallery-shot-overlay"></div>
       </div>
@@ -1032,6 +1082,17 @@
       </div>
       <div class="gallery-shot">
         <img src="IMG/veronikasz-venice-4899912_1920.jpg" alt="Galerijfoto 3" />
+=======
+        <img src="IMG/eastendlagoon.jpg" alt="East End Lagoon" />
+        <div class="gallery-shot-overlay"></div>
+      </div>
+      <div class="gallery-shot">
+        <img src="IMG/sanmarcobasilla.jpg" alt="San Marco Basilica" />
+        <div class="gallery-shot-overlay"></div>
+      </div>
+      <div class="gallery-shot">
+        <img src="IMG/galvestonstatepark.jpg" alt="Galveston Island State Park" />
+>>>>>>> 18c37a23c7308a61a54ba2078eef199da1971a11
         <div class="gallery-shot-overlay"></div>
       </div>
     </div>
@@ -1047,7 +1108,7 @@
       </div>
       <div class="footer-links">
         <a href="index.html">Home</a>
-        <a href="lagoons.html">Lagoons</a>
+        <a href="vergelijking.html">De lagoons</a>
         <a href="activiteiten.html">Activiteiten</a>
         <a href="over-ons.html">Over ons</a>
       </div>
@@ -1062,6 +1123,19 @@
     if (!el) return;
     el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
+  // Dropdown click-toggle
+  document.querySelectorAll('.dd > a').forEach(trigger => {
+    trigger.addEventListener('click', function(e) {
+      const dd = this.parentElement;
+      const isOpen = dd.classList.contains('open');
+      document.querySelectorAll('.dd').forEach(d => d.classList.remove('open'));
+      if (!isOpen) { e.preventDefault(); dd.classList.add('open'); }
+    });
+  });
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.dd')) document.querySelectorAll('.dd').forEach(d => d.classList.remove('open'));
+  });
+
   function handleSearch(e) {
     e.preventDefault();
     const q = (document.getElementById('searchInput').value || '').trim().toLowerCase();
