@@ -38,10 +38,10 @@
   .dd>a,.nav-plain{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;font-size:13.5px;font-weight:500;color:rgba(202,233,255,.90);border:1px solid transparent;transition:.2s;white-space:nowrap;}
   .dd>a:hover,.dd>a.active,.nav-plain:hover,.nav-plain.active{background:rgba(190,233,232,.14);border-color:rgba(190,233,232,.25);color:var(--white);}
   .caret{font-size:10px;opacity:.7;}
-  .dd-menu{position:absolute;top:calc(100% + 10px);left:0;min-width:220px;background:rgba(27,73,101,.97);border:1px solid rgba(190,233,232,.22);border-radius:18px;padding:8px;display:none;box-shadow:var(--shadow);backdrop-filter:blur(20px);}
+  .dd-menu{position:absolute;top:calc(100% + 10px);left:0;min-width:220px;background:rgba(27,73,101,.97);border:1px solid rgba(190,233,232,.22);border-radius:18px;padding:8px;display:none;box-shadow:var(--shadow);backdrop-filter:blur(20px);z-index:200;}
   .dd-menu a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;font-size:13.5px;font-weight:500;color:rgba(202,233,255,.85);border:1px solid transparent;transition:.15s;}
   .dd-menu a:hover{background:rgba(190,233,232,.12);border-color:rgba(190,233,232,.20);color:var(--white);}
-  .dd:hover .dd-menu{display:block;}
+  .dd.open .dd-menu{display:block;}
 
   /* HERO */
   .hero{position:relative;height:68vh;min-height:420px;overflow:hidden;}
@@ -71,7 +71,7 @@
   section:nth-child(even) .dest-card{background:var(--sand);}
   .dest-card-img{height:240px;overflow:hidden;position:relative;}
   .dest-card-img img{transition:transform .5s ease;}
-  .dest-card:hover .dest-card-img img{transform:scale(1.04);}
+  .dest-card:hover .dest-card-img img{transform:scale(1.02);}
   .dest-card-body{padding:24px;}
   .dest-card-title{font-family:var(--font-display);font-size:22px;font-weight:700;margin-bottom:6px;}
   .dest-card-desc{font-size:14px;color:var(--muted);margin-bottom:18px;}
@@ -118,7 +118,7 @@
   .beach-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
   .beach-item{border-radius:14px;overflow:hidden;height:180px;position:relative;cursor:pointer;}
   .beach-item img{transition:transform .4s ease;}
-  .beach-item:hover img{transform:scale(1.06);}
+  .beach-item:hover img{transform:scale(1.02);}
   .beach-label{position:absolute;bottom:0;left:0;right:0;padding:10px 14px;background:linear-gradient(transparent,rgba(27,73,101,.75));color:var(--white);font-size:13px;font-weight:500;}
   .beach-info{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
   .beach-info-block{padding:28px;background:var(--deep);border-radius:var(--radius);color:var(--white);}
@@ -177,6 +177,7 @@
 <div class="nav">
   <div class="container nav-inner">
     <a href="index.html" class="brand">
+      <img src="logo1.png" alt="Lagoon Tourist Centre" style="height:38px;width:auto;flex-shrink:0;">
       <div>
         <div class="brand-text-main">Lagoon Tourist Centre</div>
         <div class="brand-text-sub">Venetië × Galveston</div>
@@ -184,25 +185,35 @@
     </a>
     <nav class="nav-links">
       <div class="dd">
-        <a href="lagoons.html">Lagoons <span class="caret">▾</span></a>
+        <a href="index.html#plan">Ontdek de Wereld van Lagunes <span class="caret">▾</span></a>
         <div class="dd-menu">
-          <a href="lagoons.html#ligging">Ligging</a>
-          <a href="lagoons.html#klimaat">Klimaat</a>
-          <a href="lagoons.html#economie">Economie</a>
+          <a href="index.html#bedreigingen">Bedreigingen</a>
+          <a href="index.html#venetie">Venetiaanse Lagune</a>
+          <a href="index.html#galveston">Galveston Bay</a>
+          <a href="index.html#galerij">Foto Galerij</a>
+        </div>
+      </div>
+      <div class="dd">
+        <a href="vergelijking.html" class="">De lagoons <span class="caret">▾</span></a>
+        <div class="dd-menu">
+          <a href="vergelijking.html#diagram">Spinnenwebdiagram</a>
+          <a href="vergelijking.html#scores">Score per categorie</a>
+          <a href="vergelijking.html#tabel">Datatabel</a>
+          <a href="vergelijking.html#winnaar">Winnaar per thema</a>
         </div>
       </div>
       <div class="dd">
         <a href="activiteiten.html" class="active">Activiteiten <span class="caret">▾</span></a>
         <div class="dd-menu">
-          <a href="#citytrip">Citytrip</a>
-          <a href="#mustdo">Must Do</a>
-          <a href="#strand">Strand</a>
-          <a href="#natuur">Natuur</a>
-          <a href="#kids">Kids</a>
+          <a href="activiteiten.html#citytrip">Citytrip</a>
+          <a href="activiteiten.html#indoor">Indoor</a>
+          <a href="activiteiten.html#water-strand">Water & Strand</a>
+          <a href="activiteiten.html#natuur">Natuur</a>
+          <a href="activiteiten.html#kids">Kids</a>
         </div>
       </div>
-      <a href="over-ons.html" class="nav-plain">Over ons</a>
-    </nav>
+      <a href="over-ons.html" class="nav-plain ">Over ons</a>
+      </nav>
   </div>
 </div>
 
@@ -211,7 +222,7 @@
 <!-- HERO -->
 <section class="hero" style="padding:0;">
   <div class="hero-img">
-    <img src=img alt="Lagoon activiteiten" />
+    <img src="IMG/eastendlagoon.jpg" alt="Lagoon activiteiten" />
   </div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
@@ -235,7 +246,7 @@
       <div>
         <div class="dest-card">
           <div class="dest-card-img">
-            <img src=img alt="Venetië" />
+            <img src="IMG/venicenatuur.jpg" alt="Venetië" />
           </div>
           <div class="dest-card-body">
             <div class="dest-card-title">Venetië</div>
@@ -251,19 +262,19 @@
           <div class="slider-wrap" data-slider>
             <div class="slider-track">
               <div class="slide">
-                <div class="slide-img"><img src=img alt="San Marco" /></div>
+                <div class="slide-img"><img src="IMG/sanmarcobasilla.jpg" alt="San Marco" /></div>
                 <div class="slide-body"><div class="slide-title">Basilica di San Marco</div><div class="slide-desc">De schitterende basiliek op het Piazza San Marco, een meesterwerk van Byzantijnse architectuur met gouden mozaïeken.</div></div>
               </div>
               <div class="slide">
-                <div class="slide-img"><img src=img alt="Dogenpaleis" /></div>
+                <div class="slide-img"><img src="IMG/venicenatuur.jpg" alt="Dogenpaleis" /></div>
                 <div class="slide-body"><div class="slide-title">Palazzo Ducale</div><div class="slide-desc">Het machtige Dogenpaleis, eeuwenlang het politieke hart van de Republiek Venetië, nu een world-class museum.</div></div>
               </div>
               <div class="slide">
-                <div class="slide-img"><img src=img alt="Rialtobrug" /></div>
+                <div class="slide-img"><img src="IMG/venicenatuur.jpg" alt="Rialtobrug" /></div>
                 <div class="slide-body"><div class="slide-title">Ponte di Rialto</div><div class="slide-desc">De oudste en meest iconische brug over het Canal Grande, omringd door marktkramen en panoramisch uitzicht.</div></div>
               </div>
               <div class="slide">
-                <div class="slide-img"><img src=img alt="Gallerie dell Accademia" /></div>
+                <div class="slide-img"><img src="IMG/venicenatuur.jpg" alt="Gallerie dell Accademia" /></div>
                 <div class="slide-body"><div class="slide-title">Gallerie dell'Accademia</div><div class="slide-desc">Het belangrijkste kunstmuseum van Venetië met werken van Titiaan, Tintoretto, Bellini en Veronese.</div></div>
               </div>
             </div>
@@ -279,19 +290,19 @@
           <div class="slider-wrap" data-slider>
             <div class="slider-track">
               <div class="slide">
-                <div class="slide-img"><img src=img alt="Cicchetti bar" /></div>
+                <div class="slide-img"><img src="IMG/venicenatuur.jpg" alt="Cicchetti bar" /></div>
                 <div class="slide-body"><div class="slide-title">Bacaro – Cicchetti & Ombra</div><div class="slide-desc">Proef de Venetiaanse tapas (cicchetti) met een glaasje wijn in een van de gezellige bacaro-wijnbars in de Cannaregio wijk.</div></div>
               </div>
               <div class="slide">
-                <div class="slide-img"><img src=img alt="Vismarkt" /></div>
+                <div class="slide-img"><img src="IMG/venicenatuur.jpg" alt="Vismarkt" /></div>
                 <div class="slide-body"><div class="slide-title">Pescheria – Verse Vismarkt</div><div class="slide-desc">De beroemde vismarkt bij de Rialtobrug waar de versste zeevruchten van de lagune elke ochtend worden verkocht.</div></div>
               </div>
               <div class="slide">
-                <div class="slide-img"><img src=img alt="Restaurant Venetië" /></div>
+                <div class="slide-img"><img src="IMG/venicenatuur.jpg" alt="Restaurant Venetië" /></div>
                 <div class="slide-body"><div class="slide-title">Osteria Alle Testiere</div><div class="slide-desc">Een intiem restaurant in Castello, befaamd om zijn uitzonderlijke zeevruchten en minimalistische Venetiaanse keuken.</div></div>
               </div>
               <div class="slide">
-                <div class="slide-img"><img src=img alt="Gelato Venetië" /></div>
+                <div class="slide-img"><img src="IMG/venicenatuur.jpg" alt="Gelato Venetië" /></div>
                 <div class="slide-body"><div class="slide-title">Suso Gelatoteca</div><div class="slide-desc">Ambachtelijk gelato met unieke smaken als pistacchio di Bronte en tiramisù, vlakbij de Rialtobrug.</div></div>
               </div>
             </div>
@@ -308,7 +319,7 @@
       <div>
         <div class="dest-card">
           <div class="dest-card-img">
-            <img src=img alt="Galveston Bay" />
+            <img src="IMG/STS075-723-21.jpg" alt="Galveston Bay" />
           </div>
           <div class="dest-card-body">
             <div class="dest-card-title">Galveston Bay</div>
@@ -324,19 +335,19 @@
           <div class="slider-wrap" data-slider>
             <div class="slider-track">
               <div class="slide">
-                <div class="slide-img"><img src=img alt="Galveston Seawall" /></div>
+                <div class="slide-img"><img src="IMG/eastendlagoon.jpg" alt="Galveston Seawall" /></div>
                 <div class="slide-body"><div class="slide-title">Galveston Seawall Boulevard</div><div class="slide-desc">De historische zeewering van 16 km, gebouwd na de orkaan van 1900, nu een levendige promenade met winkels en restaurants.</div></div>
               </div>
               <div class="slide">
-                <div class="slide-img"><img src=img  alt="Strand Galveston" /></div>
+                <div class="slide-img"><img src="IMG/galvestonstatepark.jpg"  alt="Strand Galveston" /></div>
                 <div class="slide-body"><div class="slide-title">1900 Storm Memorial</div><div class="slide-desc">Indrukwekkend monument ter herdenking van de dodelijkste ramp in de Amerikaanse geschiedenis – de orkaan die 8.000 levens eiste.</div></div>
               </div>
               <div class="slide">
-                <div class="slide-img"><img src=img alt="Moody Mansion" /></div>
+                <div class="slide-img"><img src="IMG/venicenatuur.jpg" alt="Moody Mansion" /></div>
                 <div class="slide-body"><div class="slide-title">Moody Mansion</div><div class="slide-desc">Een prachtig gerestaureerd victoriaans herenhuis uit 1895 met originele meubelen en kunstschatten van de welvarende Moody familie.</div></div>
               </div>
               <div class="slide">
-                <div class="slide-img"><img src=img alt="Galveston History Museum" /></div>
+                <div class="slide-img"><img src="IMG/eastendlagoon.jpg" alt="Galveston History Museum" /></div>
                 <div class="slide-body"><div class="slide-title">Galveston Railroad Museum</div><div class="slide-desc">Het spoorwegmuseum met historische locomotieven en rijtuigen vertelt het verhaal van de gouden spoorwegjaren van Texas.</div></div>
               </div>
             </div>
@@ -352,19 +363,19 @@
           <div class="slider-wrap" data-slider>
             <div class="slider-track">
               <div class="slide">
-                <div class="slide-img"><img src="img alt="Zeevruchten" /></div>
+                <div class="slide-img"><img src="IMG/eastendlagoon.jpg" alt="Zeevruchten" /></div>
                 <div class="slide-body"><div class="slide-title">Shrimp 'n Stuff</div><div class="slide-desc">Een Galveston icoon voor verse garnalen en vis, geserveerd in de authentieke Texaanse stijl van de Golf van Mexico.</div></div>
               </div>
               <div class="slide">
-                <div class="slide-img"><img src=img alt="Cajun eten" /></div>
+                <div class="slide-img"><img src="IMG/eastendlagoon.jpg" alt="Cajun eten" /></div>
                 <div class="slide-body"><div class="slide-title">The Spot Restaurant</div><div class="slide-desc">Gelegen aan de zeewering met uitzicht op de Golf, behalve voor de beste burgers en cocktails bij zonsondergang.</div></div>
               </div>
               <div class="slide">
-                <div class="slide-img"><img src=img alt="BBQ Texas" /></div>
+                <div class="slide-img"><img src="IMG/eastendlagoon.jpg" alt="BBQ Texas" /></div>
                 <div class="slide-body"><div class="slide-title">Gaido's Seafood Restaurant</div><div class="slide-desc">Galveston's oudste seafoodrestaurant (1911), met verse oesters, kreeft en klassieke Gulf Coast gerechten in een nostalgische sfeer.</div></div>
               </div>
               <div class="slide">
-                <div class="slide-img"><img src=img alt="Strand café" /></div>
+                <div class="slide-img"><img src="IMG/eastendlagoon.jpg" alt="Strand café" /></div>
                 <div class="slide-body"><div class="slide-title">La King's Confectionery</div><div class="slide-desc">Een historische snoepwinkel op The Strand waar ambachtelijk snoep en handgemaakte ijsjes worden gemaakt voor je ogen.</div></div>
               </div>
             </div>
@@ -395,12 +406,12 @@
         <div class="vscroll-arrows-top"><button class="vscroll-btn" onclick="vscroll('ven-must', -1)">▲</button></div>
         <div class="vscroll-viewport">
           <div class="vscroll-inner" id="ven-must">
-            <div class="vscroll-card"><div class="vscroll-card-img"><img src=img alt="Gondola" /></div><div class="vscroll-card-caption">Gondola vaart door de grachten<div class="vscroll-caption-sub">Klassieke Venetiaanse ervaring door eeuwenoude kanalen</div></div></div>
-            <div class="vscroll-card"><div class="vscroll-card-img"><img src=img alt="Vaporetto" /></div><div class="vscroll-card-caption">Vaporetto over het Canal Grande<div class="vscroll-caption-sub">Geniet van het uitzicht vanuit de Venetiaanse waterbus</div></div></div>
-            <div class="vscroll-card"><div class="vscroll-card-img"><img src=img alt="Murano" /></div><div class="vscroll-card-caption">Glasblazers op Murano<div class="vscroll-caption-sub">Bewonder het eeuwenoude ambacht op het eiland Murano</div></div></div>
-            <div class="vscroll-card"><div class="vscroll-card-img"><img src=img alt="Zonsondergang Venetië" /></div><div class="vscroll-card-caption">Zonsondergang bij Punta della Dogana<div class="vscroll-caption-sub">Het mooiste uitzicht op de lagune bij avondschemering</div></div></div>
-            <div class="vscroll-card"><div class="vscroll-card-img"><img src=img alt="Burano" /></div><div class="vscroll-card-caption">Kleurrijke huisjes op Burano<div class="vscroll-caption-sub">Een tocht naar het kleurrijkste eiland van de Venetiaanse lagune</div></div></div>
-            <div class="vscroll-card"><div class="vscroll-card-img"><img src=img alt="Carnaval" /></div><div class="vscroll-card-caption">Venetiaans Carnaval<div class="vscroll-caption-sub">Prachtige maskers en kostuums tijdens het jaarlijkse carnaval in februari</div></div></div>
+            <div class="vscroll-card"><div class="vscroll-card-img"><img src="IMG/venicegondola.jpg" alt="Gondola" /></div><div class="vscroll-card-caption">Gondola vaart door de grachten<div class="vscroll-caption-sub">Klassieke Venetiaanse ervaring door eeuwenoude kanalen</div></div></div>
+            <div class="vscroll-card"><div class="vscroll-card-img"><img src="IMG/venicenatuur.jpg" alt="Vaporetto" /></div><div class="vscroll-card-caption">Vaporetto over het Canal Grande<div class="vscroll-caption-sub">Geniet van het uitzicht vanuit de Venetiaanse waterbus</div></div></div>
+            <div class="vscroll-card"><div class="vscroll-card-img"><img src="IMG/venicenatuur.jpg" alt="Murano" /></div><div class="vscroll-card-caption">Glasblazers op Murano<div class="vscroll-caption-sub">Bewonder het eeuwenoude ambacht op het eiland Murano</div></div></div>
+            <div class="vscroll-card"><div class="vscroll-card-img"><img src="IMG/venicesunset.jpg" alt="Zonsondergang Venetië" /></div><div class="vscroll-card-caption">Zonsondergang bij Punta della Dogana<div class="vscroll-caption-sub">Het mooiste uitzicht op de lagune bij avondschemering</div></div></div>
+            <div class="vscroll-card"><div class="vscroll-card-img"><img src="IMG/venicenatuur.jpg" alt="Burano" /></div><div class="vscroll-card-caption">Kleurrijke huisjes op Burano<div class="vscroll-caption-sub">Een tocht naar het kleurrijkste eiland van de Venetiaanse lagune</div></div></div>
+            <div class="vscroll-card"><div class="vscroll-card-img"><img src="IMG/venicenatuur.jpg" alt="Carnaval" /></div><div class="vscroll-card-caption">Venetiaans Carnaval<div class="vscroll-caption-sub">Prachtige maskers en kostuums tijdens het jaarlijkse carnaval in februari</div></div></div>
           </div>
         </div>
         <div class="vscroll-arrows-bot"><button class="vscroll-btn" onclick="vscroll('ven-must', 1)">▼</button></div>
@@ -412,12 +423,12 @@
         <div class="vscroll-arrows-top"><button class="vscroll-btn" onclick="vscroll('gal-must', -1)">▲</button></div>
         <div class="vscroll-viewport">
           <div class="vscroll-inner" id="gal-must">
-            <div class="vscroll-card"><div class="vscroll-card-img"><img src=img alt="Strand Galveston" /></div><div class="vscroll-card-caption">Zonnen op het strand<div class="vscroll-caption-sub">Ontspan op de brede stranden langs de Golf van Mexico</div></div></div>
-            <div class="vscroll-card"><div class="vscroll-card-img"><img src=img alt="Pelican Island" /></div><div class="vscroll-card-caption">Pelican Island boottocht<div class="vscroll-caption-sub">Vogelkijk-tochten naar het beschermde eiland vol zeevogels</div></div></div>
-            <div class="vscroll-card"><div class="vscroll-card-img"><img src=img alt="Pier vissen" /></div><div class="vscroll-card-caption">Vissen vanaf de pier<div class="vscroll-caption-sub">Hengel uit aan een van de vele vispieren over de baai</div></div></div>
-            <div class="vscroll-card"><div class="vscroll-card-img"><img src=img alt="Dolphin tour" /></div><div class="vscroll-card-caption">Dolfijnen spotten in de baai<div class="vscroll-caption-sub">Boottochten door de baai voor dolfijn- en vogelspotting</div></div></div>
-            <div class="vscroll-card"><div class="vscroll-card-img"><img src=img alt="Galveston Ferry" /></div><div class="vscroll-card-caption">Gratis veerboot over de baai<div class="vscroll-caption-sub">De gratis staatsveerboot biedt panoramisch uitzicht op de hele baai</div></div></div>
-            <div class="vscroll-card"><div class="vscroll-card-img"><img src=img alt="Kayak Galveston" /></div><div class="vscroll-card-caption">Kajakken in de bayou's<div class="vscroll-caption-sub">Verken de rustige waterloopjes en mangrovebossen per kajak</div></div></div>
+            <div class="vscroll-card"><div class="vscroll-card-img"><img src="IMG/galvestonstatepark.jpg" alt="Strand Galveston" /></div><div class="vscroll-card-caption">Zonnen op het strand<div class="vscroll-caption-sub">Ontspan op de brede stranden langs de Golf van Mexico</div></div></div>
+            <div class="vscroll-card"><div class="vscroll-card-img"><img src="IMG/eastendlagoon.jpg" alt="Pelican Island" /></div><div class="vscroll-card-caption">Pelican Island boottocht<div class="vscroll-caption-sub">Vogelkijk-tochten naar het beschermde eiland vol zeevogels</div></div></div>
+            <div class="vscroll-card"><div class="vscroll-card-img"><img src="IMG/eastendlagoon.jpg" alt="Pier vissen" /></div><div class="vscroll-card-caption">Vissen vanaf de pier<div class="vscroll-caption-sub">Hengel uit aan een van de vele vispieren over de baai</div></div></div>
+            <div class="vscroll-card"><div class="vscroll-card-img"><img src="IMG/eastendlagoon.jpg" alt="Dolphin tour" /></div><div class="vscroll-card-caption">Dolfijnen spotten in de baai<div class="vscroll-caption-sub">Boottochten door de baai voor dolfijn- en vogelspotting</div></div></div>
+            <div class="vscroll-card"><div class="vscroll-card-img"><img src="IMG/eastendlagoon.jpg" alt="Galveston Ferry" /></div><div class="vscroll-card-caption">Gratis veerboot over de baai<div class="vscroll-caption-sub">De gratis staatsveerboot biedt panoramisch uitzicht op de hele baai</div></div></div>
+            <div class="vscroll-card"><div class="vscroll-card-img"><img src="IMG/eastendlagoon.jpg" alt="Kayak Galveston" /></div><div class="vscroll-card-caption">Kajakken in de bayou's<div class="vscroll-caption-sub">Verken de rustige waterloopjes en mangrovebossen per kajak</div></div></div>
           </div>
         </div>
         <div class="vscroll-arrows-bot"><button class="vscroll-btn" onclick="vscroll('gal-must', 1)">▼</button></div>
@@ -439,20 +450,20 @@
       <div>
         <div class="dest-divider"><div class="dest-divider-line"></div><div class="dest-divider-label">Venetië</div><div class="dest-divider-line"></div></div>
         <div class="beach-col" style="margin-top:16px;">
-          <div class="beach-item"><img src=img alt="Lido di Venezia" /><div class="beach-label">Lido di Venezia</div></div>
-          <div class="beach-item"><img src=img alt="Jesolo strand" /><div class="beach-label">Jesolo Strand</div></div>
-          <div class="beach-item"><img src=img alt="Pellestrina" /><div class="beach-label">Pellestrina</div></div>
-          <div class="beach-item"><img src=img alt="Cavallino strand" /><div class="beach-label">Cavallino</div></div>
+          <div class="beach-item"><img src="IMG/bibione.png" alt="Lido di Venezia" /><div class="beach-label">Lido di Venezia</div></div>
+          <div class="beach-item"><img src="IMG/eastendlagoon.jpg" alt="Jesolo strand" /><div class="beach-label">Jesolo Strand</div></div>
+          <div class="beach-item"><img src="IMG/venicenatuur.jpg" alt="Pellestrina" /><div class="beach-label">Pellestrina</div></div>
+          <div class="beach-item"><img src="IMG/eastendlagoon.jpg" alt="Cavallino strand" /><div class="beach-label">Cavallino</div></div>
         </div>
       </div>
       <!-- Galveston beaches -->
       <div>
         <div class="dest-divider"><div class="dest-divider-line"></div><div class="dest-divider-label">Galveston Bay</div><div class="dest-divider-line"></div></div>
         <div class="beach-col" style="margin-top:16px;">
-          <div class="beach-item"><img src=img alt="Stewart Beach" /><div class="beach-label">Stewart Beach</div></div>
-          <div class="beach-item"><img src=img alt="East Beach" /><div class="beach-label">East Beach</div></div>
-          <div class="beach-item"><img src=img alt="Seawall Beach" /><div class="beach-label">Seawall Beach</div></div>
-          <div class="beach-item"><img src=img alt="Bolivar Peninsula" /><div class="beach-label">Bolivar Peninsula</div></div>
+          <div class="beach-item"><img src="IMG/venicenatuur.jpg" alt="Stewart Beach" /><div class="beach-label">Stewart Beach</div></div>
+          <div class="beach-item"><img src="IMG/venicenatuur.jpg" alt="East Beach" /><div class="beach-label">East Beach</div></div>
+          <div class="beach-item"><img src="IMG/eastendlagoon.jpg" alt="Seawall Beach" /><div class="beach-label">Seawall Beach</div></div>
+          <div class="beach-item"><img src="IMG/eastendlagoon.jpg" alt="Bolivar Peninsula" /><div class="beach-label">Bolivar Peninsula</div></div>
         </div>
       </div>
     </div>
@@ -481,11 +492,11 @@
     <div style="margin-top:20px;">
       <div class="hslider-wrap" id="ven-nature-wrap">
         <div class="hslider-track" id="ven-nature-track">
-          <div class="hslide"><div class="hslide-img"><img src=img alt="Venetiaanse lagune" /></div><div class="hslide-body"><div class="hslide-title">Laguna di Venezia</div><div class="hslide-desc">Het grootste wetland van Europa – thuis voor paling, kreeft en honderden vogelsoorten.</div></div></div>
-          <div class="hslide"><div class="hslide-img"><img src=img alt="Torcello" /></div><div class="hslide-body"><div class="hslide-title">Eiland Torcello</div><div class="hslide-desc">Een bijna verlaten eiland vol moerasland en vroegmiddeleeuwse overblijfselen, de oudste nederzetting van de lagune.</div></div></div>
-          <div class="hslide"><div class="hslide-img"><img src=img alt="Po-delta" /></div><div class="hslide-body"><div class="hslide-title">Po-delta Nationaal Park</div><div class="hslide-desc">Dichtbij Venetië: Europa's grootste deltagebied met roze flamingo's, reigers en uitgestrekte rietvelden.</div></div></div>
-          <div class="hslide"><div class="hslide-img"><img src=img alt="Vogels Venetië" /></div><div class="hslide-body"><div class="hslide-title">Valle da Pesca – Vogelkijken</div><div class="hslide-desc">Traditionele visvijvers omgevormd tot vogelreservaat – ideaal voor vogelaars en stiltezoekers.</div></div></div>
-          <div class="hslide"><div class="hslide-img"><img src=img alt="Lido natuur" /></div><div class="hslide-body"><div class="hslide-title">Lido Natuur Reservaat</div><div class="hslide-desc">Het zuidelijke puntje van het Lido herbergt zeldzame duinvegetatie en beschermde zeevogelbiotopen.</div></div></div>
+          <div class="hslide"><div class="hslide-img"><img src="IMG/venicenatuur.jpg" alt="Venetiaanse lagune" /></div><div class="hslide-body"><div class="hslide-title">Laguna di Venezia</div><div class="hslide-desc">Het grootste wetland van Europa – thuis voor paling, kreeft en honderden vogelsoorten.</div></div></div>
+          <div class="hslide"><div class="hslide-img"><img src="IMG/venicenatuur.jpg" alt="Torcello" /></div><div class="hslide-body"><div class="hslide-title">Eiland Torcello</div><div class="hslide-desc">Een bijna verlaten eiland vol moerasland en vroegmiddeleeuwse overblijfselen, de oudste nederzetting van de lagune.</div></div></div>
+          <div class="hslide"><div class="hslide-img"><img src="IMG/venicenatuur.jpg" alt="Po-delta" /></div><div class="hslide-body"><div class="hslide-title">Po-delta Nationaal Park</div><div class="hslide-desc">Dichtbij Venetië: Europa's grootste deltagebied met roze flamingo's, reigers en uitgestrekte rietvelden.</div></div></div>
+          <div class="hslide"><div class="hslide-img"><img src="IMG/venicenatuur.jpg" alt="Vogels Venetië" /></div><div class="hslide-body"><div class="hslide-title">Valle da Pesca – Vogelkijken</div><div class="hslide-desc">Traditionele visvijvers omgevormd tot vogelreservaat – ideaal voor vogelaars en stiltezoekers.</div></div></div>
+          <div class="hslide"><div class="hslide-img"><img src="IMG/valgrande.jpg" alt="Lido natuur" /></div><div class="hslide-body"><div class="hslide-title">Lido Natuur Reservaat</div><div class="hslide-desc">Het zuidelijke puntje van het Lido herbergt zeldzame duinvegetatie en beschermde zeevogelbiotopen.</div></div></div>
         </div>
       </div>
       <div class="hslider-nav">
@@ -498,11 +509,11 @@
     <div style="margin-top:20px;">
       <div class="hslider-wrap" id="gal-nature-wrap">
         <div class="hslider-track" id="gal-nature-track">
-          <div class="hslide"><div class="hslide-img"><img src=img alt="Galveston Bay natuur" /></div><div class="hslide-body"><div class="hslide-title">Galveston Bay Estuary</div><div class="hslide-desc">Een van de produktiefste estuaria van Noord-Amerika – broedplaats voor oesters, garnalen en zeegrasvelden.</div></div></div>
-          <div class="hslide"><div class="hslide-img"><img src=img alt="Anahuac NWR" /></div><div class="hslide-body"><div class="hslide-title">Anahuac National Wildlife Refuge</div><div class="hslide-desc">Een uitgestrekt moerasgebied voor overwinterende ganzen, sneeuwganzen en alligators.</div></div></div>
-          <div class="hslide"><div class="hslide-img"><img src=img alt="Bolivar Flats" /></div><div class="hslide-body"><div class="hslide-title">Bolivar Flats Shorebird Sanctuary</div><div class="hslide-desc">Wereldberoemd vogelparadijs voor trekvogels – een absolute must voor vogelaars in het voorjaar.</div></div></div>
-          <div class="hslide"><div class="hslide-img"><img src=img alt="Sea Rim State Park" /></div><div class="hslide-body"><div class="hslide-title">Sea Rim State Park</div><div class="hslide-desc">Uniek park waar strand en moerasland samenkomen – kajak-, wandel- en vogelroutes door rietvelden.</div></div></div>
-          <div class="hslide"><div class="hslide-img"><img src=img alt="Dolfijnen baai" /></div><div class="hslide-body"><div class="hslide-title">Dolfijnenspotten in de Baai</div><div class="hslide-desc">Gestreepte dolfijnen, bruinvissen en zelfs walvissen zijn regelmatig te zien vanuit boottochten op de baai.</div></div></div>
+          <div class="hslide"><div class="hslide-img"><img src="IMG/eastendlagoon.jpg" alt="Galveston Bay natuur" /></div><div class="hslide-body"><div class="hslide-title">Galveston Bay Estuary</div><div class="hslide-desc">Een van de produktiefste estuaria van Noord-Amerika – broedplaats voor oesters, garnalen en zeegrasvelden.</div></div></div>
+          <div class="hslide"><div class="hslide-img"><img src="IMG/eastendlagoon.jpg" alt="Anahuac NWR" /></div><div class="hslide-body"><div class="hslide-title">Anahuac National Wildlife Refuge</div><div class="hslide-desc">Een uitgestrekt moerasgebied voor overwinterende ganzen, sneeuwganzen en alligators.</div></div></div>
+          <div class="hslide"><div class="hslide-img"><img src="IMG/eastendlagoon.jpg" alt="Bolivar Flats" /></div><div class="hslide-body"><div class="hslide-title">Bolivar Flats Shorebird Sanctuary</div><div class="hslide-desc">Wereldberoemd vogelparadijs voor trekvogels – een absolute must voor vogelaars in het voorjaar.</div></div></div>
+          <div class="hslide"><div class="hslide-img"><img src="IMG/eastendlagoon.jpg" alt="Sea Rim State Park" /></div><div class="hslide-body"><div class="hslide-title">Sea Rim State Park</div><div class="hslide-desc">Uniek park waar strand en moerasland samenkomen – kajak-, wandel- en vogelroutes door rietvelden.</div></div></div>
+          <div class="hslide"><div class="hslide-img"><img src="IMG/eastendlagoon.jpg" alt="Dolfijnen baai" /></div><div class="hslide-body"><div class="hslide-title">Dolfijnenspotten in de Baai</div><div class="hslide-desc">Gestreepte dolfijnen, bruinvissen en zelfs walvissen zijn regelmatig te zien vanuit boottochten op de baai.</div></div></div>
         </div>
       </div>
       <div class="hslider-nav">
@@ -543,7 +554,7 @@
       </div>
       <div class="footer-links">
         <a href="index.html">Home</a>
-        <a href="lagoons.html">Lagoons</a>
+        <a href="vergelijking.html">De lagoons</a>
         <a href="activiteiten.html">Activiteiten</a>
         <a href="over-ons.html">Over ons</a>
       </div>
@@ -688,6 +699,19 @@ const galKidsSpots = [
 galKidsSpots.forEach(s => {
   L.marker([s.lat, s.lng], { icon: kidsIconGal }).addTo(mapGal).bindPopup(popupHtml(s.name, s.desc, s.stars), { maxWidth: 240 });
 });
+</script>
+<script>
+  document.querySelectorAll('.dd > a').forEach(trigger => {
+    trigger.addEventListener('click', function(e) {
+      const dd = this.parentElement;
+      const isOpen = dd.classList.contains('open');
+      document.querySelectorAll('.dd').forEach(d => d.classList.remove('open'));
+      if (!isOpen) { e.preventDefault(); dd.classList.add('open'); }
+    });
+  });
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.dd')) document.querySelectorAll('.dd').forEach(d => d.classList.remove('open'));
+  });
 </script>
 </body>
 </html>

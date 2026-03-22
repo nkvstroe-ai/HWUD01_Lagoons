@@ -31,10 +31,10 @@
   .dd>a,.nav-plain{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;font-size:13.5px;font-weight:500;color:rgba(202,233,255,.90);border:1px solid transparent;transition:.2s;white-space:nowrap;}
   .dd>a:hover,.dd>a.active,.nav-plain:hover,.nav-plain.active{background:rgba(190,233,232,.14);border-color:rgba(190,233,232,.25);color:var(--white);}
   .caret{font-size:10px;opacity:.7;}
-  .dd-menu{position:absolute;top:calc(100% + 10px);left:0;min-width:220px;background:rgba(27,73,101,.97);border:1px solid rgba(190,233,232,.22);border-radius:18px;padding:8px;display:none;box-shadow:var(--shadow);backdrop-filter:blur(20px);}
+  .dd-menu{position:absolute;top:calc(100% + 10px);left:0;min-width:220px;background:rgba(27,73,101,.97);border:1px solid rgba(190,233,232,.22);border-radius:18px;padding:8px;display:none;box-shadow:var(--shadow);backdrop-filter:blur(20px);z-index:200;}
   .dd-menu a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;font-size:13.5px;font-weight:500;color:rgba(202,233,255,.85);border:1px solid transparent;transition:.15s;}
   .dd-menu a:hover{background:rgba(190,233,232,.12);border-color:rgba(190,233,232,.20);color:var(--white);}
-  .dd:hover .dd-menu{display:block;}
+  .dd.open .dd-menu{display:block;}
   main{flex:1;}
   footer{background:var(--deep);color:rgba(202,233,255,.75);padding:48px 0 36px;}
   .footer-inner{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:36px;}
@@ -52,6 +52,7 @@
 <div class="nav">
   <div class="container nav-inner">
     <a href="index.html" class="brand">
+      <img src="logo1.png" alt="Lagoon Tourist Centre" style="height:38px;width:auto;flex-shrink:0;">
       <div>
         <div class="brand-text-main">Lagoon Tourist Centre</div>
         <div class="brand-text-sub">Venetië × Galveston</div>
@@ -59,7 +60,7 @@
     </a>
     <nav class="nav-links">
       <div class="dd">
-        <a href="index.html#plan">Plan je bezoek <span class="caret">▾</span></a>
+        <a href="index.html#plan">Ontdek de Wereld van Lagunes <span class="caret">▾</span></a>
         <div class="dd-menu">
           <a href="index.html#bedreigingen">Bedreigingen</a>
           <a href="index.html#venetie">Venetiaanse Lagune</a>
@@ -68,15 +69,16 @@
         </div>
       </div>
       <div class="dd">
-        <a href="lagoons.html">Lagoons <span class="caret">▾</span></a>
+        <a href="vergelijking.html" class="">De lagoons <span class="caret">▾</span></a>
         <div class="dd-menu">
-          <a href="#ligging">Ligging</a>
-          <a href="#klimaat">Klimaat</a>
-          <a href="#economie">Economie</a>
+          <a href="vergelijking.html#diagram">Spinnenwebdiagram</a>
+          <a href="vergelijking.html#scores">Score per categorie</a>
+          <a href="vergelijking.html#tabel">Datatabel</a>
+          <a href="vergelijking.html#winnaar">Winnaar per thema</a>
         </div>
       </div>
       <div class="dd">
-        <a href="activiteiten.html">Activiteiten <span class="caret">▾</span></a>
+        <a href="activiteiten.html" class="">Activiteiten <span class="caret">▾</span></a>
         <div class="dd-menu">
           <a href="activiteiten.html#citytrip">Citytrip</a>
           <a href="activiteiten.html#indoor">Indoor</a>
@@ -86,7 +88,7 @@
         </div>
       </div>
       <a href="over-ons.html" class="nav-plain active">Over ons</a>
-    </nav>
+      </nav>
   </div>
 </div>
 
@@ -103,7 +105,7 @@
       </div>
       <div class="footer-links">
         <a href="index.html">Home</a>
-        <a href="lagoons.html">Lagoons</a>
+        <a href="vergelijking.html">De lagoons</a>
         <a href="activiteiten.html">Activiteiten</a>
         <a href="over-ons.html">Over ons</a>
       </div>
@@ -112,5 +114,18 @@
   </div>
 </footer>
 
+<script>
+  document.querySelectorAll('.dd > a').forEach(trigger => {
+    trigger.addEventListener('click', function(e) {
+      const dd = this.parentElement;
+      const isOpen = dd.classList.contains('open');
+      document.querySelectorAll('.dd').forEach(d => d.classList.remove('open'));
+      if (!isOpen) { e.preventDefault(); dd.classList.add('open'); }
+    });
+  });
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.dd')) document.querySelectorAll('.dd').forEach(d => d.classList.remove('open'));
+  });
+</script>
 </body>
 </html>
