@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../prototype delta"
+		},
+		{
+			"path": "../../HWUD04/NONO_portfolio"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "NONO_portfolio"
+	}
+}
