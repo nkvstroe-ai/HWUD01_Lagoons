@@ -311,43 +311,46 @@
 <div class="nav">
   <div class="container nav-inner">
     <a href="index.html" class="brand">
-      <img src="logo1.png" alt="Lagoon Tourist Centre" style="height:38px;width:auto;flex-shrink:0;">
+      <img src="IMG/logo1.png" alt="Lagoon Tourist Centre" style="height:38px;width:auto;flex-shrink:0;">
       <div>
         <div class="brand-text-main">Lagoon Tourist Centre</div>
-        <div class="brand-text-sub">Venetië × Galveston</div>
+        <div class="brand-text-sub" data-i18n="brand_sub">Venetië × Galveston</div>
       </div>
     </a>
     <div class="nav-right">
       <nav class="nav-links">
-        <div class="dd">
-          <a href="index.html#plan">Ontdek de Wereld van Lagunes <span class="caret">▾</span></a>
+      <div class="dd">
+          <a href="index.html#plan" data-i18n="nav_ontdek">Ontdek de Wereld van Lagunes <span class="caret">▾</span></a>
           <div class="dd-menu">
-            <a href="index.html#bedreigingen">Bedreigingen</a>
-            <a href="index.html#venetie">Venetiaanse Lagune</a>
-            <a href="index.html#galveston">Galveston Bay</a>
-            <a href="index.html#galerij">Foto Galerij</a>
+            <a href="index.html#bedreigingen" data-i18n="nav_bedreigingen">Bedreigingen</a>
+            <a href="index.html#venetie" data-i18n="nav_venetie">Venetiaanse Lagune</a>
+            <a href="index.html#galveston" data-i18n="nav_galveston">Galveston Bay</a>
+            <a href="index.html#grafieken" data-i18n="nav_cijfers">Lagunes in cijfers</a>
+            <a href="index.html#galerij" data-i18n="nav_galerij">Foto Galerij</a>
           </div>
         </div>
         <div class="dd">
-          <a href="vergelijking.html" class="active">De lagoons <span class="caret">▾</span></a>
+          <a href="vergelijking.html" data-i18n="nav_lagoons">De lagoons <span class="caret">▾</span></a>
           <div class="dd-menu">
-            <a href="vergelijking.html#diagram">Spinnenwebdiagram</a>
-            <a href="vergelijking.html#scores">Score per categorie</a>
-            <a href="vergelijking.html#tabel">Datatabel</a>
-            <a href="vergelijking.html#winnaar">Winnaar per thema</a>
+            <a href="vergelijking.html#winnaar" data-i18n="nav_winnaar">Winnaar per thema</a>
+            <a href="vergelijking.html#scorecards" data-i18n="verg_score_eyebrow">Scorecards</a>
+            <a href="vergelijking.html#diagram" data-i18n="nav_diagram">Spinnenwebdiagram</a>
+            <a href="vergelijking.html#scores" data-i18n="nav_scores">Score per categorie</a>
+            <a href="vergelijking.html#tabel" data-i18n="nav_tabel">Datatabel</a>
+            <a href="vergelijking.html#grafieken-verg" data-i18n="nav_cijfers">Lagunes in cijfers</a>
           </div>
         </div>
         <div class="dd">
-          <a href="activiteiten.html">Activiteiten <span class="caret">▾</span></a>
+          <a href="activiteiten.html" data-i18n="nav_activiteiten">Activiteiten <span class="caret">▾</span></a>
           <div class="dd-menu">
-            <a href="activiteiten.html#citytrip">Citytrip</a>
-            <a href="activiteiten.html#indoor">Indoor</a>
-            <a href="activiteiten.html#water-strand">Water & Strand</a>
-            <a href="activiteiten.html#natuur">Natuur</a>
-            <a href="activiteiten.html#kids">Kids</a>
+            <a href="activiteiten.html#citytrip" data-i18n="nav_citytrip">Citytrip</a>
+            <a href="activiteiten.html#indoor" data-i18n="nav_indoor">Indoor</a>
+            <a href="activiteiten.html#water-strand" data-i18n="nav_water">Water & Strand</a>
+            <a href="activiteiten.html#natuur" data-i18n="nav_natuur">Natuur</a>
+            <a href="activiteiten.html#kids" data-i18n="nav_kids">Kids</a>
           </div>
         </div>
-        <a href="over-ons.html" class="nav-plain">Over ons</a>
+        <a href="over-ons.html" class="nav-plain" data-i18n="nav_overons">Over ons</a>
       </nav>
     </div>
   </div>
@@ -356,8 +359,8 @@
 <!-- HERO -->
 <div class="page-hero">
   <div class="container inner">
-    <div class="hero-eyebrow fade-in">Dashboard · De lagoons</div>
-    <h1 class="fade-in fade-in-1">Venetië <em>&</em> Galveston<br>onder de loep</h1>
+    <div class="hero-eyebrow fade-in" data-i18n="verg_eyebrow">Dashboard · De lagoons</div>
+    <h1 class="fade-in fade-in-1" data-i18n="verg_title">Venetië <em>&</em> Galveston<br>onder de loep</h1>
     <p class="fade-in fade-in-2">Een data-gedreven blik op de Venetiaanse Lagune en Galveston Bay —
       van biodiversiteit tot strandkwaliteit, in grafieken en tabellen.</p>
   </div>
@@ -378,20 +381,20 @@
 <section class="section">
   <div class="container">
     <div class="section-head">
-      <div class="section-eyebrow">Snel overzicht</div>
-      <h2 id="winnaar">Winnaar per thema</h2>
+      <div class="section-eyebrow" data-i18n="verg_win_eyebrow">Snel overzicht</div>
+      <h2 id="winnaar" data-i18n="verg_win_title">Winnaar per thema</h2>
     </div>
     <div class="podium-grid" id="podium"></div>
   </div>
 </section>
 
 <!-- SCORE CARDS -->
-<section class="section section-alt">
+<section class="section section-alt" id="scorecards">
   <div class="container">
     <div class="score-strip fade-in fade-in-3">
       <div class="score-card venetie">
-        <div class="dest-label">Italië · Europa</div>
-        <div class="dest-name">Venetiaanse Lagune</div>
+        <div class="dest-label" data-i18n="ven_badge_eu">Italië · Europa</div>
+        <div class="dest-name" data-i18n="ven_det_title">Venetiaanse Lagune</div>
         <div class="dest-sub">550 km² · Mediterraan klimaat</div>
         <div class="score-row"><div class="score-big">7.2</div><div class="score-unit">/ 10<br>overall</div></div>
         <div class="mini-bar"><span>Cultuur</span><div class="mini-bar-track"><div class="mini-bar-fill" style="width:95%"></div></div><span>9.5</span></div>
@@ -401,8 +404,8 @@
       </div>
       <div class="vs-badge">&amp;</div>
       <div class="score-card galveston">
-        <div class="dest-label">Texas · Noord-Amerika</div>
-        <div class="dest-name">Galveston Bay</div>
+        <div class="dest-label" data-i18n="galv_badge_us">Texas · Noord-Amerika</div>
+        <div class="dest-name" data-i18n="galv_det_title">Galveston Bay</div>
         <div class="dest-sub">1.600 km² · Subtropisch klimaat</div>
         <div class="score-row"><div class="score-big">7.6</div><div class="score-unit">/ 10<br>overall</div></div>
         <div class="mini-bar"><span>Cultuur</span><div class="mini-bar-track"><div class="mini-bar-fill g" style="width:52%"></div></div><span>5.2</span></div>
@@ -418,21 +421,21 @@
 <section class="section">
   <div class="container">
     <div class="section-head">
-      <div class="section-eyebrow">Meerdimensionaal</div>
+      <div class="section-eyebrow" data-i18n="verg_radar_eyebrow">Meerdimensionaal</div>
       <h2 id="diagram">Spinnenwebdiagram</h2>
     </div>
     <div class="card-wrap">
       <div class="radar-layout">
         <div class="radar-canvas-wrap"><canvas id="radarChart"></canvas></div>
         <div>
-          <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:16px;">Hoe groter het gevulde vlak, hoe breder het profiel van die bestemming over alle zes dimensies.</p>
+          <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:16px;" data-i18n="verg_radar_desc">Hoe groter het gevulde vlak, hoe breder het profiel van die bestemming over alle zes dimensies.</p>
           <div class="radar-scores">
-            <div class="radar-score-item"><span class="lbl">Biodiversiteit</span><span class="vals"><span class="sv v">7.0</span><span class="sv g">8.8</span></span></div>
-            <div class="radar-score-item"><span class="lbl">Strandkwaliteit</span><span class="vals"><span class="sv v">3.0</span><span class="sv g">8.4</span></span></div>
-            <div class="radar-score-item"><span class="lbl">Waterkwaliteit</span><span class="vals"><span class="sv v">5.0</span><span class="sv g">7.5</span></span></div>
-            <div class="radar-score-item"><span class="lbl">Cultuur & erfgoed</span><span class="vals"><span class="sv v">9.5</span><span class="sv g">5.2</span></span></div>
-            <div class="radar-score-item"><span class="lbl">Toegankelijkheid</span><span class="vals"><span class="sv v">8.0</span><span class="sv g">7.2</span></span></div>
-            <div class="radar-score-item"><span class="lbl">Watersport</span><span class="vals"><span class="sv v">6.0</span><span class="sv g">8.2</span></span></div>
+            <div class="radar-score-item"><span class="lbl" data-i18n="lbl_biodiv">Biodiversiteit</span><span class="vals"><span class="sv v">7.0</span><span class="sv g">8.8</span></span></div>
+            <div class="radar-score-item"><span class="lbl" data-i18n="lbl_strand">Strandkwaliteit</span><span class="vals"><span class="sv v">3.0</span><span class="sv g">8.4</span></span></div>
+            <div class="radar-score-item"><span class="lbl" data-i18n="lbl_water">Waterkwaliteit</span><span class="vals"><span class="sv v">5.0</span><span class="sv g">7.5</span></span></div>
+            <div class="radar-score-item"><span class="lbl" data-i18n="lbl_cultuur">Cultuur & erfgoed</span><span class="vals"><span class="sv v">9.5</span><span class="sv g">5.2</span></span></div>
+            <div class="radar-score-item"><span class="lbl" data-i18n="lbl_toegang">Toegankelijkheid</span><span class="vals"><span class="sv v">8.0</span><span class="sv g">7.2</span></span></div>
+            <div class="radar-score-item"><span class="lbl" data-i18n="lbl_watersport">Watersport</span><span class="vals"><span class="sv v">6.0</span><span class="sv g">8.2</span></span></div>
           </div>
         </div>
       </div>
@@ -444,7 +447,7 @@
 <section class="section section-alt">
   <div class="container">
     <div class="section-head">
-      <div class="section-eyebrow">Balkgrafiek</div>
+      <div class="section-eyebrow" data-i18n="verg_bar_eyebrow">Balkgrafiek</div>
       <h2 id="scores">Score per categorie</h2>
     </div>
     <div class="card-wrap"><div class="bar-chart-inner" id="barChart"></div></div>
@@ -455,12 +458,12 @@
 <section class="section">
   <div class="container">
     <div class="section-head">
-      <div class="section-eyebrow">Overzicht</div>
+      <div class="section-eyebrow" data-i18n="verg_tbl_eyebrow">Overzicht</div>
       <h2 id="tabel">Volledige datatabel</h2>
     </div>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Categorie</th><th>Venetiaanse Lagune</th><th>Galveston Bay</th><th>Winnaar</th></tr></thead>
+        <thead><tr><th data-i18n="tbl_cat">Categorie</th><th data-i18n="ven_det_title">Venetiaanse Lagune</th><th data-i18n="galv_det_title">Galveston Bay</th><th data-i18n="tbl_winnaar">Winnaar</th></tr></thead>
         <tbody>
           <tr><td class="cat">Oppervlakte</td><td>550 km²</td><td>1.600 km²</td><td><span class="winner-chip g">Galveston</span></td></tr>
           <tr><td class="cat">Gem. hotelprijs</td><td>€ 180 / nacht</td><td>$ 150 / nacht</td><td><span class="winner-chip g">Galveston</span></td></tr>
@@ -482,12 +485,66 @@
 
 
 <!-- FOOTER -->
+
+<!-- GRAFIEKEN -->
+<section class="section section-alt" id="grafieken-verg">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow" data-i18n="chart_eyebrow">Data &amp; Feiten</div>
+      <h2 data-i18n="chart_title">Lagunes in cijfers</h2>
+    </div>
+    <p style="color:var(--muted);font-size:14px;margin-bottom:28px;max-width:600px;" data-i18n="chart_desc">Klimaatdata en bezoekersinformatie om jouw reis beter te plannen.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;">
+      <div class="card-wrap">
+        <div style="font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--deep);margin-bottom:4px;" data-i18n="chart_temp_title">Temperatuur door het jaar</div>
+        <div style="font-size:12.5px;color:var(--muted);margin-bottom:16px;" data-i18n="chart_temp_sub">Gemiddelde luchttemperatuur per maand (°C)</div>
+        <div style="display:flex;gap:18px;margin-bottom:12px;flex-wrap:wrap;">
+          <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--deep);"><span style="width:24px;height:3px;background:var(--deep);border-radius:2px;display:inline-block;"></span><span data-i18n="legend_venetie">Venetiaanse Lagune</span></span>
+          <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--aqua);"><span style="width:24px;height:3px;background:var(--aqua);border-radius:2px;display:inline-block;"></span><span data-i18n="legend_galveston">Galveston Bay</span></span>
+        </div>
+        <canvas id="verg_tempChart" height="200"></canvas>
+      </div>
+      <div class="card-wrap">
+        <div style="font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--deep);margin-bottom:4px;" data-i18n="chart_drukt_title">Beste reismaanden</div>
+        <div style="font-size:12.5px;color:var(--muted);margin-bottom:16px;" data-i18n="chart_drukt_sub">Drukte-index per maand (lager = rustiger)</div>
+        <div style="display:flex;gap:18px;margin-bottom:12px;flex-wrap:wrap;">
+          <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--deep);"><span style="width:14px;height:14px;background:var(--deep);border-radius:3px;opacity:.75;display:inline-block;"></span><span data-i18n="legend_venetie">Venetiaanse Lagune</span></span>
+          <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--aqua);"><span style="width:14px;height:14px;background:var(--aqua);border-radius:3px;opacity:.75;display:inline-block;"></span><span data-i18n="legend_galveston">Galveston Bay</span></span>
+        </div>
+        <canvas id="verg_druktChart" height="200"></canvas>
+      </div>
+    </div>
+
+    <div class="card-wrap">
+      <div style="font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--deep);margin-bottom:4px;" data-i18n="chart_water_title">Watertemperatuur &amp; neerslag</div>
+      <div style="font-size:12.5px;color:var(--muted);margin-bottom:16px;" data-i18n="chart_water_sub">Watertemperatuur (°C) en neerslag (mm)</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+        <div>
+          <div style="display:flex;gap:14px;margin-bottom:10px;flex-wrap:wrap;">
+            <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--deep);"><span style="width:24px;height:3px;background:var(--deep);border-radius:2px;display:inline-block;"></span><span data-i18n="legend_ven_water">Venetië watertemp.</span></span>
+            <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--aqua);"><span style="width:24px;height:3px;background:var(--aqua);border-radius:2px;display:inline-block;"></span><span data-i18n="legend_galv_water">Galveston watertemp.</span></span>
+          </div>
+          <canvas id="verg_waterChart" height="180"></canvas>
+        </div>
+        <div>
+          <div style="display:flex;gap:14px;margin-bottom:10px;flex-wrap:wrap;">
+            <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:rgba(27,73,101,.6);"><span style="width:14px;height:14px;background:rgba(27,73,101,.5);border-radius:3px;display:inline-block;"></span><span data-i18n="legend_ven_neerl">Venetië neerslag (mm)</span></span>
+            <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:rgba(98,182,203,.9);"><span style="width:14px;height:14px;background:rgba(98,182,203,.65);border-radius:3px;display:inline-block;"></span><span data-i18n="legend_galv_neerl">Galveston neerslag (mm)</span></span>
+          </div>
+          <canvas id="verg_neerslagChart" height="180"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="container">
     <div class="footer-inner">
       <div>
         <div class="footer-brand-name">Lagoon Tourist Centre</div>
-        <div class="footer-brand-sub">Venetiaanse Lagune & Galveston Bay</div>
+        <div class="footer-brand-sub" data-i18n="footer_sub">Venetiaanse Lagune & Galveston Bay</div>
       </div>
       <div class="footer-links">
         <a href="index.html">Home</a>
@@ -496,7 +553,7 @@
         <a href="over-ons.html">Over ons</a>
       </div>
     </div>
-    <div class="footer-bottom">© 2025 Lagoon Tourist Centre · Alle rechten voorbehouden</div>
+    <div class="footer-bottom"><span data-i18n="footer_copy">© 2025 Lagoon Tourist Centre · Alle rechten voorbehouden</span></div>
   </div>
 </footer>
 
@@ -576,5 +633,40 @@
     </div>`;
   });
 </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+(function(){
+  const maanden = ['Jan','Feb','Mrt','Apr','Mei','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];
+  const base = {
+    responsive:true,
+    interaction:{mode:'index',intersect:false},
+    plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(27,73,101,.92)',titleColor:'#BEE9E8',bodyColor:'#CAE9FF',borderColor:'rgba(190,233,232,.25)',borderWidth:1,padding:10}},
+    scales:{
+      x:{grid:{color:'rgba(27,73,101,.06)'},ticks:{color:'#5FA8D3',font:{size:10}}},
+      y:{grid:{color:'rgba(27,73,101,.06)'},ticks:{color:'#5FA8D3',font:{size:10}}}
+    }
+  };
+  const deep='#1B4965', aqua='#62B6CB';
+  new Chart(document.getElementById('verg_tempChart'),{type:'line',data:{labels:maanden,datasets:[
+    {label:'Venetië',data:[4,5,9,14,19,24,27,27,23,17,11,6],borderColor:deep,backgroundColor:'rgba(27,73,101,.08)',fill:true,tension:.4,pointRadius:3,borderWidth:2.5,pointBackgroundColor:deep},
+    {label:'Galveston',data:[13,15,19,23,27,30,32,32,29,24,18,14],borderColor:aqua,backgroundColor:'rgba(98,182,203,.08)',fill:true,tension:.4,pointRadius:3,borderWidth:2.5,pointBackgroundColor:aqua}
+  ]},options:{...base,scales:{...base.scales,y:{...base.scales.y,min:0,max:36,ticks:{...base.scales.y.ticks,callback:v=>v+'°C'}}}}});
+  new Chart(document.getElementById('verg_druktChart'),{type:'bar',data:{labels:maanden,datasets:[
+    {label:'Venetië',data:[30,35,55,65,75,90,100,95,70,60,40,45],backgroundColor:'rgba(27,73,101,.75)',borderColor:deep,borderWidth:1.5,borderRadius:5,borderSkipped:false},
+    {label:'Galveston',data:[40,42,60,70,80,85,75,78,72,65,45,42],backgroundColor:'rgba(98,182,203,.75)',borderColor:aqua,borderWidth:1.5,borderRadius:5,borderSkipped:false}
+  ]},options:{...base}});
+  new Chart(document.getElementById('verg_waterChart'),{type:'line',data:{labels:maanden,datasets:[
+    {label:'Venetië',data:[9,9,11,14,18,23,26,26,23,18,14,10],borderColor:deep,tension:.4,pointRadius:3,borderWidth:2.5,pointBackgroundColor:deep,fill:false},
+    {label:'Galveston',data:[15,16,19,22,26,29,30,30,28,24,20,16],borderColor:aqua,tension:.4,pointRadius:3,borderWidth:2.5,pointBackgroundColor:aqua,fill:false}
+  ]},options:{...base,scales:{...base.scales,y:{...base.scales.y,min:5,max:35,ticks:{...base.scales.y.ticks,callback:v=>v+'°C'}}}}});
+  new Chart(document.getElementById('verg_neerslagChart'),{type:'bar',data:{labels:maanden,datasets:[
+    {label:'Venetië',data:[58,50,57,60,67,60,38,45,60,70,65,55],backgroundColor:'rgba(27,73,101,.45)',borderRadius:4,borderSkipped:false},
+    {label:'Galveston',data:[85,80,75,80,115,130,110,120,145,120,90,80],backgroundColor:'rgba(98,182,203,.65)',borderRadius:4,borderSkipped:false}
+  ]},options:{...base,scales:{...base.scales,y:{...base.scales.y,min:0,ticks:{...base.scales.y.ticks,callback:v=>v+'mm'}}}}});
+})();
+</script>
+
+<script src="translations.js"></script>
 </body>
 </html>

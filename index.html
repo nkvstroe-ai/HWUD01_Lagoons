@@ -515,46 +515,6 @@
   }
   .btn-card.teal:hover { opacity: .92; transform: translateY(-1px); }
 
-  .threats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-  }
-
-  .threat-card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: var(--r);
-    padding: 24px 20px;
-    box-shadow: var(--shadow-s);
-    transition: transform .18s, box-shadow .18s;
-  }
-  .threat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
-
-  .threat-icon {
-    width: 52px; height: 52px;
-    border-radius: 16px;
-    background: linear-gradient(135deg, var(--sky), rgba(98,182,203,.25));
-    border: 1px solid rgba(98,182,203,.30);
-    display: grid;
-    place-items: center;
-    margin-bottom: 16px;
-    box-shadow: 0 8px 20px rgba(98,182,203,.20);
-    font-size: 22px;
-  }
-  .threat-card h4 {
-    font-family: var(--font-display);
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--deep);
-    margin-bottom: 8px;
-  }
-  .threat-card p {
-    font-size: 13.5px;
-    color: var(--muted);
-    line-height: 1.6;
-    font-weight: 300;
-  }
 
   .detail-section { padding: 80px 0; }
 
@@ -727,7 +687,6 @@
 
   @media (max-width: 980px) {
     .grid-2 { grid-template-columns: 1fr; }
-    .threats-grid { grid-template-columns: repeat(2, 1fr); }
     .detail-grid,
     .detail-grid.reverse { grid-template-columns: 1fr; }
     .detail-grid.reverse .detail-img,
@@ -739,7 +698,6 @@
     .search { display: none; }
   }
   @media (max-width: 640px) {
-    .threats-grid { grid-template-columns: 1fr; }
     .gallery { grid-template-columns: 1fr; }
     .info-grid { grid-template-columns: 1fr; }
     .nav-links { display: none; }
@@ -754,47 +712,46 @@
 <div class="nav">
   <div class="container nav-inner">
     <a href="index.html" class="brand">
-      <img src="logo1.png" alt="Lagoon Tourist Centre" style="height:38px;width:auto;flex-shrink:0;">
+      <img src="IMG/logo1.png" alt="Lagoon Tourist Centre" style="height:38px;width:auto;flex-shrink:0;">
       <div>
         <div class="brand-text-main">Lagoon Tourist Centre</div>
-        <div class="brand-text-sub">Venetië × Galveston</div>
+        <div class="brand-text-sub" data-i18n="brand_sub">Venetië × Galveston</div>
       </div>
     </a>
     <div class="nav-right">
       <form class="search" onsubmit="return handleSearch(event)">
-        <span class="search-icon">🔍</span>
+        <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(202,233,255,.6)" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="17" y1="17" x2="22" y2="22"/></svg>
         <input id="searchInput" type="search" placeholder="Zoek bestemmingen…">
       </form>
       <nav class="nav-links">
-        <div class="dd">
-          <a href="index.html#plan">Ontdek de Wereld van Lagunes <span class="caret">▾</span></a>
+      <div class="dd">
+          <a href="index.html#plan" data-i18n="nav_ontdek">Ontdek de Wereld van Lagunes <span class="caret">▾</span></a>
           <div class="dd-menu">
-            <a href="index.html#bedreigingen">Bedreigingen</a>
-            <a href="index.html#venetie">Venetiaanse Lagune</a>
-            <a href="index.html#galveston">Galveston Bay</a>
-            <a href="index.html#galerij">Foto Galerij</a>
+            <a href="index.html#venetie" data-i18n="nav_venetie">Venetiaanse Lagune</a>
+            <a href="index.html#galveston" data-i18n="nav_galveston">Galveston Bay</a>
+            <a href="index.html#galerij" data-i18n="nav_galerij">Foto Galerij</a>
           </div>
         </div>
         <div class="dd">
-          <a href="vergelijking.html">De lagoons <span class="caret">▾</span></a>
+          <a href="vergelijking.html" data-i18n="nav_lagoons">De lagoons <span class="caret">▾</span></a>
           <div class="dd-menu">
-            <a href="vergelijking.html#diagram">Spinnenwebdiagram</a>
-            <a href="vergelijking.html#scores">Score per categorie</a>
-            <a href="vergelijking.html#tabel">Datatabel</a>
-            <a href="vergelijking.html#winnaar">Winnaar per thema</a>
+            <a href="vergelijking.html#winnaar" data-i18n="nav_winnaar">Winnaar per thema</a>
+            <a href="vergelijking.html#diagram" data-i18n="nav_diagram">Spinnenwebdiagram</a>
+            <a href="vergelijking.html#scores" data-i18n="nav_scores">Score per categorie</a>
+            <a href="vergelijking.html#tabel" data-i18n="nav_tabel">Datatabel</a>
           </div>
         </div>
         <div class="dd">
-          <a href="activiteiten.html">Activiteiten <span class="caret">▾</span></a>
+          <a href="activiteiten.html" data-i18n="nav_activiteiten">Activiteiten <span class="caret">▾</span></a>
           <div class="dd-menu">
-            <a href="activiteiten.html#citytrip">Citytrip</a>
-            <a href="activiteiten.html#indoor">Indoor</a>
-            <a href="activiteiten.html#water-strand">Water & Strand</a>
-            <a href="activiteiten.html#natuur">Natuur</a>
-            <a href="activiteiten.html#kids">Kids</a>
+            <a href="activiteiten.html#citytrip" data-i18n="nav_citytrip">Citytrip</a>
+            <a href="activiteiten.html#indoor" data-i18n="nav_indoor">Indoor</a>
+            <a href="activiteiten.html#water-strand" data-i18n="nav_water">Water & Strand</a>
+            <a href="activiteiten.html#natuur" data-i18n="nav_natuur">Natuur</a>
+            <a href="activiteiten.html#kids" data-i18n="nav_kids">Kids</a>
           </div>
         </div>
-        <a href="over-ons.html" class="nav-plain">Over ons</a>
+        <a href="over-ons.html" class="nav-plain" data-i18n="nav_overons">Over ons</a>
       </nav>
     </div>
   </div>
@@ -812,17 +769,17 @@
   <div class="hero-content">
     <div class="container">
       <div class="hero-text">
-        <div class="hero-eyebrow">Twee Unieke Lagune-Bestemmingen</div>
+        <div class="hero-eyebrow" data-i18n="hero_eyebrow">Twee Unieke Lagune-Bestemmingen</div>
         <h1 class="hero-title">
-          Ontdek de<br><span class="accent">Mooiste Lagunes</span><br>ter Wereld
+          <span data-i18n="hero_title">Ontdek de<br><span class="accent">Mooiste Lagunes</span><br>ter Wereld</span>
         </h1>
-        <p class="hero-desc">
+        <p class="hero-desc" data-i18n="hero_desc">
           Van de iconische grachten van Venetië tot de wilde wetlands van Galveston Bay —
           verken twee van de meest fascinerende kust-ecosystemen op aarde.
         </p>
         <div class="hero-btns">
-          <a href="#plan" class="btn-primary">✈️ Plan je reis</a>
-          <a href="vergelijking.html" class="btn-outline">Meer ontdekken →</a>
+          <a href="#plan" class="btn-primary" data-i18n="hero_btn_primary">Plan je reis</a>
+          <a href="vergelijking.html" class="btn-outline" data-i18n="hero_btn_outline">Meer ontdekken →</a>
         </div>
       </div>
     </div>
@@ -832,19 +789,19 @@
     <div class="container" style="display:flex; width:100%;">
       <div class="stat">
         <div class="stat-num">2</div>
-        <div class="stat-label">Unieke bestemmingen</div>
+        <div class="stat-label" data-i18n="stat1_lbl">Unieke bestemmingen</div>
       </div>
       <div class="stat">
         <div class="stat-num">550+</div>
-        <div class="stat-label">km² Venetiaanse Lagune</div>
+        <div class="stat-label" data-i18n="stat2_lbl">km² Venetiaanse Lagune</div>
       </div>
       <div class="stat">
         <div class="stat-num">1.600+</div>
-        <div class="stat-label">km² Galveston Bay</div>
+        <div class="stat-label" data-i18n="stat3_lbl">km² Galveston Bay</div>
       </div>
       <div class="stat">
         <div class="stat-num">1000+</div>
-        <div class="stat-label">Jaar geschiedenis</div>
+        <div class="stat-label" data-i18n="stat4_lbl">Jaar geschiedenis</div>
       </div>
     </div>
   </div>
@@ -858,58 +815,50 @@
 <section class="section" id="plan">
   <div class="container">
     <div class="section-title">
-      <div class="section-eyebrow">✈️ Bestemmingen</div>
-      <h2>Ontdek de Wereld van Lagunes</h2>
-      <p>Ontdek de schoonheid van deze unieke delta's en ervaar zelf waarom ze zo waardevol zijn voor natuur en cultuur.</p>
+      <div class="section-eyebrow" data-i18n="dest_eyebrow">Bestemmingen</div>
+      <h2 data-i18n="dest_title">Ontdek de Wereld van Lagunes</h2>
+      <p data-i18n="dest_desc">Ontdek de schoonheid van deze unieke delta's en ervaar zelf waarom ze zo waardevol zijn voor natuur en cultuur.</p>
     </div>
 
     <div class="grid-2">
       <article class="dest-card">
         <div class="card-img">
-<<<<<<< HEAD
-          <img src="IMG/drtechfuchs-galveston-1152505_1920.jpg" alt="Galveston Bay vanuit de lucht" />
-=======
           <img src="IMG/STS075-723-21.jpg" alt="Galveston Bay satellietfoto" />
->>>>>>> 18c37a23c7308a61a54ba2078eef199da1971a11
           <div class="card-img-overlay"></div>
-          <span class="card-badge texas">🇺🇸 Texas, VS</span>
+          <span class="card-badge texas" data-i18n="galv_badge">Texas, VS</span>
         </div>
         <div class="card-body">
-          <h3>Galveston Bay</h3>
-          <p class="card-desc">Een adembenemend estuarium met rijke biodiversiteit, uitgestrekte wetlands en prachtige kustlandschappen langs de Golf van Mexico.</p>
+          <h3 data-i18n="galv_title">Galveston Bay</h3>
+          <p class="card-desc" data-i18n="galv_desc">Een adembenemend estuarium met rijke biodiversiteit, uitgestrekte wetlands en prachtige kustlandschappen langs de Golf van Mexico.</p>
           <div class="card-highlights">
-            <div class="highlight"><div class="highlight-dot"></div>Bezoek het Galveston Island State Park</div>
-            <div class="highlight"><div class="highlight-dot"></div>Maak een boottocht door de baai</div>
-            <div class="highlight"><div class="highlight-dot"></div>Ontdek het unieke wetland-ecosysteem</div>
-            <div class="highlight"><div class="highlight-dot"></div>Proef verse zeevruchten van lokale visserijen</div>
+            <div class="highlight"><div class="highlight-dot"></div><span data-i18n="galv_tip1">Bezoek het Galveston Island State Park</span></div>
+            <div class="highlight"><div class="highlight-dot"></div><span data-i18n="galv_tip2">Maak een boottocht door de baai</span></div>
+            <div class="highlight"><div class="highlight-dot"></div><span data-i18n="galv_tip3">Ontdek het unieke wetland-ecosysteem</span></div>
+            <div class="highlight"><div class="highlight-dot"></div><span data-i18n="galv_tip4">Proef verse zeevruchten van lokale visserijen</span></div>
           </div>
           <div class="card-btn">
-            <button class="btn-card dark" onclick="scrollToSection('galveston')">✈️ Plan Trip naar Galveston</button>
+            <button class="btn-card dark" onclick="scrollToSection('galveston')" data-i18n="galv_btn">Plan trip naar Galveston</button>
           </div>
         </div>
       </article>
 
       <article class="dest-card">
         <div class="card-img">
-<<<<<<< HEAD
-          <img src="IMG/venicegondola.jpg" alt="Venetiaanse Lagune met gondels" />
-=======
           <img src="IMG/venicegondola.jpg" alt="Gondels in de Venetiaanse Lagune" />
->>>>>>> 18c37a23c7308a61a54ba2078eef199da1971a11
           <div class="card-img-overlay"></div>
-          <span class="card-badge italy">🇮🇹 Italië</span>
+          <span class="card-badge italy" data-i18n="ven_badge">Italië</span>
         </div>
         <div class="card-body">
-          <h3>Venetiaanse Lagune</h3>
-          <p class="card-desc">Een iconisch UNESCO-erfgoed met unieke architectuur, rijke geschiedenis en een ongeëvenaard samenspel van water, eilanden en cultuur.</p>
+          <h3 data-i18n="ven_title">Venetiaanse Lagune</h3>
+          <p class="card-desc" data-i18n="ven_desc">Een iconisch UNESCO-erfgoed met unieke architectuur, rijke geschiedenis en een ongeëvenaard samenspel van water, eilanden en cultuur.</p>
           <div class="card-highlights">
-            <div class="highlight"><div class="highlight-dot"></div>Verken de eilanden Murano en Burano</div>
-            <div class="highlight"><div class="highlight-dot"></div>Neem een vaporetto naar rustige plekken</div>
-            <div class="highlight"><div class="highlight-dot"></div>Bezoek tijdens rustigere seizoenen</div>
-            <div class="highlight"><div class="highlight-dot"></div>Steun lokale Venetiaanse bedrijven</div>
+            <div class="highlight"><div class="highlight-dot"></div><span data-i18n="ven_tip1">Verken de eilanden Murano en Burano</span></div>
+            <div class="highlight"><div class="highlight-dot"></div><span data-i18n="ven_tip2">Neem een vaporetto naar rustige plekken</span></div>
+            <div class="highlight"><div class="highlight-dot"></div><span data-i18n="ven_tip3">Bezoek tijdens rustigere seizoenen</span></div>
+            <div class="highlight"><div class="highlight-dot"></div><span data-i18n="ven_tip4">Steun lokale Venetiaanse bedrijven</span></div>
           </div>
           <div class="card-btn">
-            <button class="btn-card teal" onclick="scrollToSection('venetie')">✈️ Plan Trip naar Venetië</button>
+            <button class="btn-card teal" onclick="scrollToSection('venetie')" data-i18n="ven_btn">Plan trip naar Venetië</button>
           </div>
         </div>
       </article>
@@ -917,72 +866,35 @@
   </div>
 </section>
 
-<!-- BEDREIGINGEN -->
-<section class="section section-alt" id="bedreigingen">
-  <div class="container">
-    <div class="section-title">
-      <div class="section-eyebrow">⚠️ Uitdagingen</div>
-      <h2>Bedreigingen & Uitdagingen</h2>
-      <p>Beide delta's worden geconfronteerd met ernstige uitdagingen die hun voortbestaan bedreigen. Bewustzijn is de eerste stap naar bescherming.</p>
-    </div>
-
-    <div class="threats-grid">
-      <div class="threat-card">
-        <div class="threat-icon">🌊</div>
-        <h4>Zeespiegelstijging</h4>
-        <p>Klimaatverandering zorgt voor stijgende zeeniveaus, wat beide delta's bedreigt met toenemende overstromingen en kusterosie.</p>
-      </div>
-      <div class="threat-card">
-        <div class="threat-icon">🏭</div>
-        <h4>Vervuiling</h4>
-        <p>Industriële activiteiten en afvalwater beïnvloeden de waterkwaliteit en bedreigen de rijke biodiversiteit van beide ecosystemen.</p>
-      </div>
-      <div class="threat-card">
-        <div class="threat-icon">🚢</div>
-        <h4>Intensieve Scheepvaart</h4>
-        <p>Drukke scheepsroutes verstoren het ecologisch evenwicht en veroorzaken erosie van oevers en kwetsbare habitats.</p>
-      </div>
-      <div class="threat-card">
-        <div class="threat-icon">🏗️</div>
-        <h4>Stedelijke Ontwikkeling</h4>
-        <p>Uitbreiding van steden en infrastructuur vermindert natuurlijke gebieden en vermindert essentiële ecosysteemdiensten.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- VENETIAANSE LAGUNE DETAIL -->
 <section class="detail-section" id="venetie">
   <div class="container">
     <div class="detail-grid">
       <div class="detail-img">
-<<<<<<< HEAD
-        <img src="IMG/ba03968751dc57c155f43e46be9776c7.jpg" alt="Gondels in de Venetiaanse Lagune" />
-=======
         <img src="IMG/venicesunset.jpg" alt="Venetiaanse Lagune bij zonsondergang" />
->>>>>>> 18c37a23c7308a61a54ba2078eef199da1971a11
       </div>
       <div class="detail-copy">
-        <div class="section-eyebrow">🇮🇹 Italië</div>
-        <h2>Venetiaanse Lagune</h2>
-        <p>De Venetiaanse Lagune is een iconisch ecosysteem dat niet alleen de wereldberoemde stad Venetië ondersteunt, maar ook een rijk zoutmoeras is met unieke flora en fauna.</p>
-        <p>Het delicate evenwicht tussen getijden, zoutgehalte en menselijke aanwezigheid maakt dit gebied bijzonder kwetsbaar maar tegelijkertijd ongekend mooi.</p>
+        <div class="section-eyebrow" data-i18n="ven_det_eyebrow">Italië</div>
+        <h2 data-i18n="ven_det_title">Venetiaanse Lagune</h2>
+        <p data-i18n="ven_det_p1">De Venetiaanse Lagune is een iconisch ecosysteem dat niet alleen de wereldberoemde stad Venetië ondersteunt, maar ook een rijk zoutmoeras is met unieke flora en fauna.</p>
+        <p data-i18n="ven_det_p2">Het delicate evenwicht tussen getijden, zoutgehalte en menselijke aanwezigheid maakt dit gebied bijzonder kwetsbaar maar tegelijkertijd ongekend mooi.</p>
         <div class="info-grid">
           <div class="info-card">
-            <div class="info-label">📍 Locatie</div>
-            <div class="info-value">Noord-Italië</div>
+            <div class="info-label" data-i18n="info_locatie">Locatie</div>
+            <div class="info-value" data-i18n="ven_locatie">Noord-Italië</div>
           </div>
           <div class="info-card">
-            <div class="info-label">🌡️ Klimaat</div>
-            <div class="info-value">Mediterraan</div>
+            <div class="info-label" data-i18n="info_klimaat">Klimaat</div>
+            <div class="info-value" data-i18n="ven_klimaat">Mediterraan</div>
           </div>
           <div class="info-card">
-            <div class="info-label">💧 Oppervlakte</div>
-            <div class="info-value">550 km²</div>
+            <div class="info-label" data-i18n="info_opp">Oppervlakte</div>
+            <div class="info-value" data-i18n="ven_opp">550 km²</div>
           </div>
           <div class="info-card">
-            <div class="info-label">🗓️ Best bezoek</div>
-            <div class="info-value">April – Juni</div>
+            <div class="info-label" data-i18n="info_bezoek">Best bezoek</div>
+            <div class="info-value" data-i18n="ven_bezoek">April – Juni</div>
           </div>
         </div>
       </div>
@@ -995,35 +907,31 @@
   <div class="container">
     <div class="detail-grid reverse">
       <div class="detail-copy">
-        <div class="section-eyebrow">🇺🇸 Texas, VS</div>
-        <h2>Galveston Bay</h2>
-        <p>Galveston Bay in Texas is een van de meest productieve estuaria van de Verenigde Staten met een ongekend hoge biodiversiteit aan zeeleven en vogelsoorten.</p>
-        <p>Het ecosysteem ondersteunt de lokale visserij en biedt tevens bescherming tegen orkanen en overstromingen voor het achterland.</p>
+        <div class="section-eyebrow" data-i18n="galv_det_eyebrow">Texas, VS</div>
+        <h2 data-i18n="galv_det_title">Galveston Bay</h2>
+        <p data-i18n="galv_det_p1">Galveston Bay in Texas is een van de meest productieve estuaria van de Verenigde Staten met een ongekend hoge biodiversiteit aan zeeleven en vogelsoorten.</p>
+        <p data-i18n="galv_det_p2">Het ecosysteem ondersteunt de lokale visserij en biedt tevens bescherming tegen orkanen en overstromingen voor het achterland.</p>
         <div class="info-grid">
           <div class="info-card">
-            <div class="info-label">📍 Locatie</div>
-            <div class="info-value">Texas, VS</div>
+            <div class="info-label" data-i18n="info_locatie">Locatie</div>
+            <div class="info-value" data-i18n="galv_locatie">Texas, VS</div>
           </div>
           <div class="info-card">
-            <div class="info-label">🌡️ Klimaat</div>
-            <div class="info-value">Subtropisch</div>
+            <div class="info-label" data-i18n="info_klimaat">Klimaat</div>
+            <div class="info-value" data-i18n="galv_klimaat">Subtropisch</div>
           </div>
           <div class="info-card">
-            <div class="info-label">💧 Oppervlakte</div>
-            <div class="info-value">1.600 km²</div>
+            <div class="info-label" data-i18n="info_opp">Oppervlakte</div>
+            <div class="info-value" data-i18n="galv_opp">1.600 km²</div>
           </div>
           <div class="info-card">
-            <div class="info-label">🗓️ Best bezoek</div>
-            <div class="info-value">Maart – Mei</div>
+            <div class="info-label" data-i18n="info_bezoek">Best bezoek</div>
+            <div class="info-value" data-i18n="galv_bezoek">Maart – Mei</div>
           </div>
         </div>
       </div>
       <div class="detail-img">
-<<<<<<< HEAD
-        <img src="IMG/5b2bb125f7b6d3ca3a418f01f95c4b34.jpg" alt="Satellietbeeld Galveston Bay" />
-=======
         <img src="IMG/galvestonsunset.jpg" alt="Galveston bij zonsondergang" />
->>>>>>> 18c37a23c7308a61a54ba2078eef199da1971a11
       </div>
     </div>
   </div>
@@ -1035,54 +943,19 @@
     <div class="tip-box">
       <div class="tip-icon">💡</div>
       <div>
-        <h4>Toeristen Tip</h4>
-        <p>Voor een complete ervaring, overweeg om beide bestemmingen te bezoeken in verschillende seizoenen. Galveston Bay is ideaal in de lente en herfst, terwijl de Venetiaanse Lagune prachtig is in het vroege voorjaar of de herfst — wanneer de drukte van het hoogseizoen voorbij is.</p>
+        <h4 data-i18n="tip_title">Toeristen Tip</h4>
+        <p data-i18n="tip_text">Voor een complete ervaring, overweeg om beide bestemmingen te bezoeken in verschillende seizoenen. Galveston Bay is ideaal in de lente en herfst, terwijl de Venetiaanse Lagune prachtig is in het vroege voorjaar of de herfst — wanneer de drukte van het hoogseizoen voorbij is.</p>
       </div>
     </div>
 
     <div class="section-title">
-      <div class="section-eyebrow">📷 Impressies</div>
-      <h2>Foto Galerij</h2>
-      <p>Een sfeerimpressie van de lagune en de baai op hun allermooiste.</p>
+      <div class="section-eyebrow" data-i18n="gal_eyebrow">Impressies</div>
+      <h2 data-i18n="gal_title">Foto Galerij</h2>
+      <p data-i18n="gal_desc">Een sfeerimpressie van de lagune en de baai op hun allermooiste.</p>
     </div>
 
     <div class="gallery">
       <div class="gallery-shot">
-<<<<<<< HEAD
-        <img src="IMG/galvestonstatepark.jpg" alt="Galerijfoto 1" />
-        <div class="gallery-shot-overlay"></div>
-      </div>
-      <div class="gallery-shot">
-        <img src="IMG/f0cd484f8af80bca42d0cd4bfa856792.jpg" alt="Galerijfoto 2" />
-        <div class="gallery-shot-overlay"></div>
-      </div>
-      <div class="gallery-shot">
-        <img src="IMG/10efdbd5dd6da22eb565315a8a3f4dde.jpg" alt="Galerijfoto 3" />
-        <div class="gallery-shot-overlay"></div>
-      </div>
-      <div class="gallery-shot">
-        <img src="IMG/venicesunset.jpg" alt="Galerijfoto 3" />
-        <div class="gallery-shot-overlay"></div>
-      </div>
-      <div class="gallery-shot">
-        <img src="IMG/brusa.jpg" alt="Galerijfoto 3" />
-        <div class="gallery-shot-overlay"></div>
-      </div>
-      <div class="gallery-shot">
-        <img src="IMG/ellen26-grave-1210112_1920.jpg" alt="Galerijfoto 3" />
-        <div class="gallery-shot-overlay"></div>
-      </div>
-       <div class="gallery-shot">
-        <img src="IMG/12019-ruhl-house-1591356_1920.jpg" alt="Galerijfoto 3" />
-        <div class="gallery-shot-overlay"></div>
-      </div>
-      <div class="gallery-shot">
-        <img src="IMG/naknaknak-italy-6735340_1920.jpg" alt="Galerijfoto 3" />
-        <div class="gallery-shot-overlay"></div>
-      </div>
-      <div class="gallery-shot">
-        <img src="IMG/veronikasz-venice-4899912_1920.jpg" alt="Galerijfoto 3" />
-=======
         <img src="IMG/eastendlagoon.jpg" alt="East End Lagoon" />
         <div class="gallery-shot-overlay"></div>
       </div>
@@ -1092,28 +965,28 @@
       </div>
       <div class="gallery-shot">
         <img src="IMG/galvestonstatepark.jpg" alt="Galveston Island State Park" />
->>>>>>> 18c37a23c7308a61a54ba2078eef199da1971a11
         <div class="gallery-shot-overlay"></div>
       </div>
     </div>
   </div>
 </section>
 
+
 <footer>
   <div class="container">
     <div class="footer-inner">
       <div class="footer-brand">
         <div class="footer-brand-name">Lagoon Tourist Centre</div>
-        <div class="footer-brand-sub">Venetiaanse Lagune & Galveston Bay</div>
+        <div class="footer-brand-sub" data-i18n="footer_sub">Venetiaanse Lagune & Galveston Bay</div>
       </div>
       <div class="footer-links">
         <a href="index.html">Home</a>
-        <a href="vergelijking.html">De lagoons</a>
-        <a href="activiteiten.html">Activiteiten</a>
+        <a href="vergelijking.html" data-i18n="nav_lagoons">De lagoons</a>
+        <a href="activiteiten.html" data-i18n="nav_activiteiten">Activiteiten</a>
         <a href="over-ons.html">Over ons</a>
       </div>
     </div>
-    <div class="footer-bottom">© 2025 Lagoon Tourist Centre · Alle rechten voorbehouden</div>
+    <div class="footer-bottom"><span data-i18n="footer_copy">© 2025 Lagoon Tourist Centre · Alle rechten voorbehouden</span></div>
   </div>
 </footer>
 
@@ -1151,5 +1024,104 @@
     return false;
   }
 </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+  const maanden = ['Jan','Feb','Mrt','Apr','Mei','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];
+
+  const chartDefaults = {
+    responsive: true,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: 'rgba(27,73,101,.92)',
+        titleColor: '#BEE9E8', bodyColor: '#CAE9FF',
+        borderColor: 'rgba(190,233,232,.25)', borderWidth: 1, padding: 10,
+      }
+    },
+    scales: {
+      x: { grid: { color: 'rgba(27,73,101,.06)' }, ticks: { color: '#5FA8D3', font: { size: 11 } } },
+      y: { grid: { color: 'rgba(27,73,101,.06)' }, ticks: { color: '#5FA8D3', font: { size: 11 } } }
+    }
+  };
+
+  // ── Temperatuur lijngrafiek ──
+  new Chart(document.getElementById('tempChart'), {
+    type: 'line',
+    data: {
+      labels: maanden,
+      datasets: [
+        { label: 'Venetiaanse Lagune (°C)', data: [4,5,9,14,19,24,27,27,23,17,11,6],
+          borderColor: '#1B4965', backgroundColor: 'rgba(27,73,101,.08)',
+          fill: true, tension: 0.4, pointRadius: 3, borderWidth: 2.5, pointBackgroundColor: '#1B4965' },
+        { label: 'Galveston Bay (°C)', data: [13,15,19,23,27,30,32,32,29,24,18,14],
+          borderColor: '#62B6CB', backgroundColor: 'rgba(98,182,203,.08)',
+          fill: true, tension: 0.4, pointRadius: 3, borderWidth: 2.5, pointBackgroundColor: '#62B6CB' }
+      ]
+    },
+    options: { ...chartDefaults, scales: { ...chartDefaults.scales,
+      y: { ...chartDefaults.scales.y, min: 0, max: 36, ticks: { ...chartDefaults.scales.y.ticks, callback: v => v + '°C' } }
+    }}
+  });
+
+  // ── Drukte-index staafdiagram ──
+  new Chart(document.getElementById('druktChart'), {
+    type: 'bar',
+    data: {
+      labels: maanden,
+      datasets: [
+        { label: 'Venetiaanse Lagune', data: [30,35,55,65,75,90,100,95,70,60,40,45],
+          backgroundColor: 'rgba(27,73,101,.75)', borderColor: '#1B4965',
+          borderWidth: 1.5, borderRadius: 5, borderSkipped: false },
+        { label: 'Galveston Bay', data: [40,42,60,70,80,85,75,78,72,65,45,42],
+          backgroundColor: 'rgba(98,182,203,.75)', borderColor: '#62B6CB',
+          borderWidth: 1.5, borderRadius: 5, borderSkipped: false }
+      ]
+    },
+    options: { ...chartDefaults, scales: { ...chartDefaults.scales,
+      y: { ...chartDefaults.scales.y, min: 0, max: 100,
+           ticks: { ...chartDefaults.scales.y.ticks, callback: v => v } }
+    }}
+  });
+
+  // ── Watertemperatuur lijngrafiek ──
+  new Chart(document.getElementById('waterChart'), {
+    type: 'line',
+    data: {
+      labels: maanden,
+      datasets: [
+        { label: 'Venetië watertemp. (°C)', data: [9,9,11,14,18,23,26,26,23,18,14,10],
+          borderColor: '#1B4965', tension: 0.4, pointRadius: 3, borderWidth: 2.5,
+          pointBackgroundColor: '#1B4965', fill: false },
+        { label: 'Galveston watertemp. (°C)', data: [15,16,19,22,26,29,30,30,28,24,20,16],
+          borderColor: '#62B6CB', tension: 0.4, pointRadius: 3, borderWidth: 2.5,
+          pointBackgroundColor: '#62B6CB', fill: false }
+      ]
+    },
+    options: { ...chartDefaults, scales: { ...chartDefaults.scales,
+      y: { ...chartDefaults.scales.y, min: 5, max: 35, ticks: { ...chartDefaults.scales.y.ticks, callback: v => v + '°C' } }
+    }}
+  });
+
+  // ── Neerslag staafdiagram ──
+  new Chart(document.getElementById('neerslagChart'), {
+    type: 'bar',
+    data: {
+      labels: maanden,
+      datasets: [
+        { label: 'Venetië (mm)', data: [58,50,57,60,67,60,38,45,60,70,65,55],
+          backgroundColor: 'rgba(27,73,101,.45)', borderRadius: 4, borderSkipped: false },
+        { label: 'Galveston (mm)', data: [85,80,75,80,115,130,110,120,145,120,90,80],
+          backgroundColor: 'rgba(98,182,203,.65)', borderRadius: 4, borderSkipped: false }
+      ]
+    },
+    options: { ...chartDefaults, scales: { ...chartDefaults.scales,
+      y: { ...chartDefaults.scales.y, min: 0, ticks: { ...chartDefaults.scales.y.ticks, callback: v => v + 'mm' } }
+    }}
+  });
+</script>
+
+<script src="translations.js"></script>
 </body>
 </html>
