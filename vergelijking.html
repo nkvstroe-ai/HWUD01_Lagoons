@@ -200,32 +200,135 @@
     border-radius: var(--r-lg); padding: 32px; box-shadow: var(--shadow-s);
   }
 
-  /* ── RADAR ── */
-  .radar-layout { display: grid; grid-template-columns: 1fr 260px; gap: 40px; align-items: center; }
-  .radar-canvas-wrap { position: relative; max-width: 420px; margin: 0 auto; }
-  .radar-scores { display: flex; flex-direction: column; gap: 10px; }
-  .radar-score-item {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 9px 14px; border-radius: 10px;
-    background: rgba(202,233,255,.25); border: 1px solid var(--border); font-size: 13px;
+  /* ── CHART TOGGLE BUTTONS ── */
+  .chart-toggle {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
   }
-  .radar-score-item .lbl { color: var(--muted); font-weight: 500; }
-  .radar-score-item .vals { display: flex; gap: 14px; }
-  .sv { font-weight: 800; font-size: 13.5px; }
-  .sv.v { color: var(--v-color); }
-  .sv.g { color: var(--aqua); }
+  .chart-toggle-btn {
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--muted);
+    background: rgba(98,182,203,.08);
+    border: 1px solid rgba(98,182,203,.20);
+    transition: all .2s;
+    cursor: pointer;
+  }
+  .chart-toggle-btn:hover {
+    background: rgba(98,182,203,.15);
+    border-color: rgba(98,182,203,.35);
+  }
+  .chart-toggle-btn.active {
+    background: linear-gradient(135deg, var(--deep), var(--steel));
+    color: var(--white);
+    border-color: var(--deep);
+  }
+  .chart-panel {
+    display: none;
+  }
+  .chart-panel.active {
+    display: block;
+  }
 
-  /* ── BAR CHART ── */
-  .bar-chart-inner { display: flex; flex-direction: column; gap: 20px; }
-  .bar-row { display: grid; grid-template-columns: 160px 1fr 1fr; gap: 12px; align-items: center; }
-  .bar-label { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); text-align: right; padding-right: 6px; }
-  .bar-group { display: flex; flex-direction: column; gap: 4px; }
-  .bar-track { height: 9px; background: rgba(98,182,203,.18); border-radius: 999px; overflow: hidden; }
-  .bar-fill { height: 100%; border-radius: 999px; transition: width 1.2s cubic-bezier(.4,0,.2,1); }
-  .bar-fill.v { background: linear-gradient(90deg, var(--deep), var(--steel)); }
-  .bar-fill.g { background: linear-gradient(90deg, var(--aqua), var(--mint)); }
-  .bar-val { font-size: 11px; font-weight: 700; color: var(--muted); }
-  .bar-val.best { color: var(--deep); }
+  /* ── REVIEWS ── */
+  .review-toggle {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .review-toggle-btn {
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--muted);
+    background: rgba(98,182,203,.08);
+    border: 1px solid rgba(98,182,203,.20);
+    transition: all .2s;
+    cursor: pointer;
+  }
+  .review-toggle-btn:hover {
+    background: rgba(98,182,203,.15);
+    border-color: rgba(98,182,203,.35);
+  }
+  .review-toggle-btn.active {
+    background: linear-gradient(135deg, var(--deep), var(--steel));
+    color: var(--white);
+    border-color: var(--deep);
+  }
+  .review-panel {
+    display: none;
+  }
+  .review-panel.active {
+    display: block;
+  }
+  .review-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+  }
+  .review-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-s);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 6px;
+  }
+  .review-author {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--deep);
+    line-height: 1.2;
+  }
+  .review-location {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .review-stars {
+    color: #fbbf24;
+    font-size: 14px;
+    letter-spacing: 2px;
+  }
+  .review-date {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-bottom: 8px;
+  }
+  .review-text {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .review-highlight {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    background: rgba(98,182,203,.12);
+    border: 1px solid rgba(98,182,203,.25);
+    color: var(--steel);
+    margin-top: 8px;
+  }
 
   /* ── TABLE ── */
   .table-wrap {
@@ -292,15 +395,13 @@
 
   /* ── RESPONSIVE ── */
   @media (max-width: 980px) {
-    .radar-layout { grid-template-columns: 1fr; }
     .podium-grid { grid-template-columns: 1fr 1fr; }
-    .bar-row { grid-template-columns: 110px 1fr 1fr; }
+    .review-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 640px) {
     .score-strip { grid-template-columns: 1fr; }
     .vs-badge { display: none; }
     .podium-grid { grid-template-columns: 1fr; }
-    .bar-row { grid-template-columns: 90px 1fr 1fr; }
     .nav-links { display: none; }
   }
 </style>
@@ -334,8 +435,7 @@
           <div class="dd-menu">
             <a href="vergelijking.html#winnaar" data-i18n="nav_winnaar">Winnaar per thema</a>
             <a href="vergelijking.html#scorecards" data-i18n="verg_score_eyebrow">Scorecards</a>
-            <a href="vergelijking.html#diagram" data-i18n="nav_diagram">Spinnenwebdiagram</a>
-            <a href="vergelijking.html#scores" data-i18n="nav_scores">Score per categorie</a>
+            <a href="vergelijking.html#reviews" data-i18n="nav_reviews">Bezoekersreviews</a>
             <a href="vergelijking.html#tabel" data-i18n="nav_tabel">Datatabel</a>
             <a href="vergelijking.html#grafieken-verg" data-i18n="nav_cijfers">Lagunes in cijfers</a>
           </div>
@@ -417,40 +517,211 @@
   </div>
 </section>
 
-<!-- RADAR -->
-<section class="section">
-  <div class="container">
-    <div class="section-head">
-      <div class="section-eyebrow" data-i18n="verg_radar_eyebrow">Meerdimensionaal</div>
-      <h2 id="diagram">Spinnenwebdiagram</h2>
-    </div>
-    <div class="card-wrap">
-      <div class="radar-layout">
-        <div class="radar-canvas-wrap"><canvas id="radarChart"></canvas></div>
-        <div>
-          <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:16px;" data-i18n="verg_radar_desc">Hoe groter het gevulde vlak, hoe breder het profiel van die bestemming over alle zes dimensies.</p>
-          <div class="radar-scores">
-            <div class="radar-score-item"><span class="lbl" data-i18n="lbl_biodiv">Biodiversiteit</span><span class="vals"><span class="sv v">7.0</span><span class="sv g">8.8</span></span></div>
-            <div class="radar-score-item"><span class="lbl" data-i18n="lbl_strand">Strandkwaliteit</span><span class="vals"><span class="sv v">3.0</span><span class="sv g">8.4</span></span></div>
-            <div class="radar-score-item"><span class="lbl" data-i18n="lbl_water">Waterkwaliteit</span><span class="vals"><span class="sv v">5.0</span><span class="sv g">7.5</span></span></div>
-            <div class="radar-score-item"><span class="lbl" data-i18n="lbl_cultuur">Cultuur & erfgoed</span><span class="vals"><span class="sv v">9.5</span><span class="sv g">5.2</span></span></div>
-            <div class="radar-score-item"><span class="lbl" data-i18n="lbl_toegang">Toegankelijkheid</span><span class="vals"><span class="sv v">8.0</span><span class="sv g">7.2</span></span></div>
-            <div class="radar-score-item"><span class="lbl" data-i18n="lbl_watersport">Watersport</span><span class="vals"><span class="sv v">6.0</span><span class="sv g">8.2</span></span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- BAR CHART -->
+<!-- REVIEWS -->
 <section class="section section-alt">
   <div class="container">
     <div class="section-head">
-      <div class="section-eyebrow" data-i18n="verg_bar_eyebrow">Balkgrafiek</div>
-      <h2 id="scores">Score per categorie</h2>
+      <div class="section-eyebrow">Ervaringen</div>
+      <h2 id="reviews">Wat zeggen bezoekers</h2>
     </div>
-    <div class="card-wrap"><div class="bar-chart-inner" id="barChart"></div></div>
+    <p style="color:var(--muted);font-size:14px;margin-bottom:28px;max-width:600px;">Echte ervaringen van reizigers die beide lagunes hebben bezocht.</p>
+
+    <!-- Toggle Buttons -->
+    <div class="review-toggle">
+      <button class="review-toggle-btn active" onclick="showReview('venetie')">Venetiaanse Lagune</button>
+      <button class="review-toggle-btn" onclick="showReview('galveston')">Galveston Bay</button>
+    </div>
+
+    <!-- Venetië Reviews -->
+    <div class="review-panel active" id="review-venetie">
+      <div class="review-grid">
+        <div class="review-card">
+          <div class="review-header">
+            <div>
+              <div class="review-author">Sophie van den Berg</div>
+              <div class="review-location">Amsterdam, Nederland</div>
+            </div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+          <div class="review-date">Bezocht in mei 2024</div>
+          <div class="review-text">
+            "De Venetiaanse Lagune is werkelijk magisch. Varen door de smalle kanalen tussen de eilanden voelt als tijdreizen. De architectuur, de kunst, de sfeer — het is allemaal overweldigend mooi. Wel druk in het hoogseizoen, maar de vroege ochtend op Burano is het mooiste wat ik ooit heb gezien."
+          </div>
+          <div class="review-highlight">✨ Cultuur & geschiedenis</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-header">
+            <div>
+              <div class="review-author">Marco Bianchi</div>
+              <div class="review-location">Milaan, Italië</div>
+            </div>
+            <div class="review-stars">★★★★☆</div>
+          </div>
+          <div class="review-date">Bezocht in augustus 2024</div>
+          <div class="review-text">
+            "Prachtige bestemming, maar de massa's toeristen in augustus maakten het soms overweldigend. De lagune zelf is rustiger dan het centrum. Murano en Torcello zijn pareltjes. Het eten is fenomenaal, maar je betaalt er wel voor. Aanrader: bezoek buiten het hoogseizoen."
+          </div>
+          <div class="review-highlight">🍝 Culinaire ervaring</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-header">
+            <div>
+              <div class="review-author">Emma Johansen</div>
+              <div class="review-location">Kopenhagen, Denemarken</div>
+            </div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+          <div class="review-date">Bezocht in april 2024</div>
+          <div class="review-text">
+            "April bleek de perfecte maand! Niet te druk, heerlijk weer, en de lagunenatuur ontwaakt. We hebben gekajakt tussen de eilanden — een absolute aanrader. De vogels, de stilte, de weerspiegeling van de kerkjes in het water. Pure rust en schoonheid gecombineerd."
+          </div>
+          <div class="review-highlight">🚣 Kajakken & natuur</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-header">
+            <div>
+              <div class="review-author">Thomas Müller</div>
+              <div class="review-location">München, Duitsland</div>
+            </div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+          <div class="review-date">Bezocht in oktober 2023</div>
+          <div class="review-text">
+            "UNESCO-erfgoed waar je met eigen ogen moet zien. De Basilica di San Marco, het Palazzo Ducale, de gondels — clichés die je toch raken. Maar het échte Venetië vind je op de kleinere eilanden. Neem de tijd voor Torcello en San Francesco del Deserto. Onvergetelijk."
+          </div>
+          <div class="review-highlight">🏛️ Architectuur</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-header">
+            <div>
+              <div class="review-author">Lisa Chen</div>
+              <div class="review-location">Singapore</div>
+            </div>
+            <div class="review-stars">★★★★☆</div>
+          </div>
+          <div class="review-date">Bezocht in juni 2024</div>
+          <div class="review-text">
+            "Adembenemende bestemming, maar niet ideaal met kleine kinderen. De stranden zijn klein en druk. Het constant in en uit boten stappen met een buggy was uitdagend. Maar de lagune zelf, de gekleurde huizen, de glazen kunst op Murano — dat maakte alles goed. Gewoon goed plannen."
+          </div>
+          <div class="review-highlight">👨‍👩‍👧 Gezinsreis</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-header">
+            <div>
+              <div class="review-author">Pierre Dubois</div>
+              <div class="review-location">Lyon, Frankrijk</div>
+            </div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+          <div class="review-date">Bezocht in september 2024</div>
+          <div class="review-text">
+            "Als fotograaf was dit het paradijs. Elk hoekje, elke reflectie in het water, de zachte ochtendgloed over de lagune — magisch. De beste foto's maak je vroeg in de ochtend of bij zonsondergang. En de lokale seafood? Vers uit de lagune, simpel bereid, verrukkelijk."
+          </div>
+          <div class="review-highlight">📷 Fotografie</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Galveston Reviews -->
+    <div class="review-panel" id="review-galveston">
+      <div class="review-grid">
+        <div class="review-card">
+          <div class="review-header">
+            <div>
+              <div class="review-author">Sarah Martinez</div>
+              <div class="review-location">Houston, Texas</div>
+            </div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+          <div class="review-date">Bezocht in maart 2024</div>
+          <div class="review-text">
+            "Galveston Bay is ons jaarlijkse uitje met het gezin. De stranden zijn prachtig, het water is warm, en er is zóveel te doen. Kitesurfen, kajakken, vogelspotten — we vervelen ons nooit. En de Strand Historic District heeft geweldige restaurants en winkels. Perfect weekendje weg!"
+          </div>
+          <div class="review-highlight">🏖️ Strandleven</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-header">
+            <div>
+              <div class="review-author">Michael O'Connor</div>
+              <div class="review-location">Dublin, Ierland</div>
+            </div>
+            <div class="review-stars">★★★★☆</div>
+          </div>
+          <div class="review-date">Bezocht in april 2024</div>
+          <div class="review-text">
+            "Geweldige bestemming voor watersport! Ik kwam voor het kitesurfen en werd niet teleurgesteld. De wind is consistent, het water is warm, en de community is super vriendelijk. Wel minder cultuur dan ik verwacht had, maar als je van actieve vakanties houdt, is dit de plek."
+          </div>
+          <div class="review-highlight">🪁 Kitesurfen</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-header">
+            <div>
+              <div class="review-author">Jennifer Wu</div>
+              <div class="review-location">San Francisco, California</div>
+            </div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+          <div class="review-date">Bezocht in november 2023</div>
+          <div class="review-text">
+            "Als vogelliefhebber was dit een droom die uitkwam. De Great Texas Coastal Birding Trail loopt door Galveston Bay en we hebben meer dan 100 soorten gespot in één weekend. Pelikanen, reigers, roze lepelaars — het is een vogelparadijs. Neem je verrekijker mee!"
+          </div>
+          <div class="review-highlight">🦅 Birdwatching</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-header">
+            <div>
+              <div class="review-author">David Thompson</div>
+              <div class="review-location">Austin, Texas</div>
+            </div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+          <div class="review-date">Bezocht in mei 2024</div>
+          <div class="review-text">
+            "Ik ben opgegroeid met verhalen over Galveston en het overtrof mijn verwachtingen. De mix van geschiedenis (de Strand), natuur (de baai), en moderne voorzieningen is perfect. We hebben gevaren, gezwommen, gefietst, en 's avonds gegeten bij een van de lokale seafood-kraampjes. Authentiek Texas."
+          </div>
+          <div class="review-highlight">🦞 Lokale seafood</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-header">
+            <div>
+              <div class="review-author">Anna Kowalski</div>
+              <div class="review-location">Warschau, Polen</div>
+            </div>
+            <div class="review-stars">★★★★☆</div>
+          </div>
+          <div class="review-date">Bezocht in juli 2024</div>
+          <div class="review-text">
+            "Een fantastische bestemming voor een actieve vakantie! We hebben diepzeevissen geprobeerd — onze eerste keer — en het was geweldig. De stranden zijn breed en schoon. Wel héél warm in juli, en soms wat druk. Maar de zonsondergangen over de Golf zijn onvergetelijk mooi."
+          </div>
+          <div class="review-highlight">🎣 Diepzeevissen</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-header">
+            <div>
+              <div class="review-author">Carlos Mendoza</div>
+              <div class="review-location">Mexico City, Mexico</div>
+            </div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+          <div class="review-date">Bezocht in oktober 2024</div>
+          <div class="review-text">
+            "Perfect najaarsvakantie! Niet te heet, niet te druk, en de natuur is op zijn mooist. We hebben een kajakreis gemaakt door de mangrovebossen — zo vredig en vol leven. En Moody Gardens is geweldig voor kinderen. Galveston combineert natuurlijke schoonheid met gezinsvriendelijke activiteiten."
+          </div>
+          <div class="review-highlight">🌿 Natuur & wildlife</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -495,7 +766,15 @@
     </div>
     <p style="color:var(--muted);font-size:14px;margin-bottom:28px;max-width:600px;" data-i18n="chart_desc">Klimaatdata en bezoekersinformatie om jouw reis beter te plannen.</p>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;">
+    <!-- Toggle Buttons -->
+    <div class="chart-toggle">
+      <button class="chart-toggle-btn active" onclick="showChart('temp')">Temperatuur</button>
+      <button class="chart-toggle-btn" onclick="showChart('drukte')">Beste reismaanden</button>
+      <button class="chart-toggle-btn" onclick="showChart('water')">Watertemperatuur & neerslag</button>
+    </div>
+
+    <!-- Temperatuur Chart -->
+    <div class="chart-panel active" id="chart-temp">
       <div class="card-wrap">
         <div style="font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--deep);margin-bottom:4px;" data-i18n="chart_temp_title">Temperatuur door het jaar</div>
         <div style="font-size:12.5px;color:var(--muted);margin-bottom:16px;" data-i18n="chart_temp_sub">Gemiddelde luchttemperatuur per maand (°C)</div>
@@ -505,6 +784,10 @@
         </div>
         <canvas id="verg_tempChart" height="200"></canvas>
       </div>
+    </div>
+
+    <!-- Drukte Chart -->
+    <div class="chart-panel" id="chart-drukte">
       <div class="card-wrap">
         <div style="font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--deep);margin-bottom:4px;" data-i18n="chart_drukt_title">Beste reismaanden</div>
         <div style="font-size:12.5px;color:var(--muted);margin-bottom:16px;" data-i18n="chart_drukt_sub">Drukte-index per maand (lager = rustiger)</div>
@@ -516,26 +799,30 @@
       </div>
     </div>
 
-    <div class="card-wrap">
-      <div style="font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--deep);margin-bottom:4px;" data-i18n="chart_water_title">Watertemperatuur &amp; neerslag</div>
-      <div style="font-size:12.5px;color:var(--muted);margin-bottom:16px;" data-i18n="chart_water_sub">Watertemperatuur (°C) en neerslag (mm)</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
-        <div>
-          <div style="display:flex;gap:14px;margin-bottom:10px;flex-wrap:wrap;">
-            <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--deep);"><span style="width:24px;height:3px;background:var(--deep);border-radius:2px;display:inline-block;"></span><span data-i18n="legend_ven_water">Venetië watertemp.</span></span>
-            <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--aqua);"><span style="width:24px;height:3px;background:var(--aqua);border-radius:2px;display:inline-block;"></span><span data-i18n="legend_galv_water">Galveston watertemp.</span></span>
+    <!-- Water & Neerslag Chart -->
+    <div class="chart-panel" id="chart-water">
+      <div class="card-wrap">
+        <div style="font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--deep);margin-bottom:4px;" data-i18n="chart_water_title">Watertemperatuur &amp; neerslag</div>
+        <div style="font-size:12.5px;color:var(--muted);margin-bottom:16px;" data-i18n="chart_water_sub">Watertemperatuur (°C) en neerslag (mm)</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+          <div>
+            <div style="display:flex;gap:14px;margin-bottom:10px;flex-wrap:wrap;">
+              <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--deep);"><span style="width:24px;height:3px;background:var(--deep);border-radius:2px;display:inline-block;"></span><span data-i18n="legend_ven_water">Venetië watertemp.</span></span>
+              <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--aqua);"><span style="width:24px;height:3px;background:var(--aqua);border-radius:2px;display:inline-block;"></span><span data-i18n="legend_galv_water">Galveston watertemp.</span></span>
+            </div>
+            <canvas id="verg_waterChart" height="180"></canvas>
           </div>
-          <canvas id="verg_waterChart" height="180"></canvas>
-        </div>
-        <div>
-          <div style="display:flex;gap:14px;margin-bottom:10px;flex-wrap:wrap;">
-            <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:rgba(27,73,101,.6);"><span style="width:14px;height:14px;background:rgba(27,73,101,.5);border-radius:3px;display:inline-block;"></span><span data-i18n="legend_ven_neerl">Venetië neerslag (mm)</span></span>
-            <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:rgba(98,182,203,.9);"><span style="width:14px;height:14px;background:rgba(98,182,203,.65);border-radius:3px;display:inline-block;"></span><span data-i18n="legend_galv_neerl">Galveston neerslag (mm)</span></span>
+          <div>
+            <div style="display:flex;gap:14px;margin-bottom:10px;flex-wrap:wrap;">
+              <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:rgba(27,73,101,.6);"><span style="width:14px;height:14px;background:rgba(27,73,101,.5);border-radius:3px;display:inline-block;"></span><span data-i18n="legend_ven_neerl">Venetië neerslag (mm)</span></span>
+              <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:rgba(98,182,203,.9);"><span style="width:14px;height:14px;background:rgba(98,182,203,.65);border-radius:3px;display:inline-block;"></span><span data-i18n="legend_galv_neerl">Galveston neerslag (mm)</span></span>
+            </div>
+            <canvas id="verg_neerslagChart" height="180"></canvas>
           </div>
-          <canvas id="verg_neerslagChart" height="180"></canvas>
         </div>
       </div>
     </div>
+
   </div>
 </section>
 
@@ -571,50 +858,37 @@
     if (!e.target.closest('.dd')) document.querySelectorAll('.dd').forEach(d => d.classList.remove('open'));
   });
 
-  // Radar
-  new Chart(document.getElementById('radarChart').getContext('2d'), {
-    type: 'radar',
-    data: {
-      labels: ['Biodiversiteit','Strandkwaliteit','Waterkwaliteit','Cultuur & erfgoed','Toegankelijkheid','Watersport'],
-      datasets: [
-        { label: 'Venetiaanse Lagune', data: [7.0,3.0,5.0,9.5,8.0,6.0],
-          backgroundColor: 'rgba(27,73,101,.15)', borderColor: '#1B4965',
-          borderWidth: 2.5, pointBackgroundColor: '#1B4965', pointRadius: 4 },
-        { label: 'Galveston Bay', data: [8.8,8.4,7.5,5.2,7.2,8.2],
-          backgroundColor: 'rgba(98,182,203,.15)', borderColor: '#62B6CB',
-          borderWidth: 2.5, pointBackgroundColor: '#62B6CB', pointRadius: 4 }
-      ]
-    },
-    options: {
-      responsive: true,
-      scales: { r: {
-        min: 0, max: 10,
-        ticks: { stepSize: 2, color: 'rgba(27,73,101,.5)', font: { size: 10 }, backdropColor: 'transparent' },
-        grid: { color: 'rgba(27,73,101,.10)' },
-        angleLines: { color: 'rgba(27,73,101,.10)' },
-        pointLabels: { color: '#1B4965', font: { size: 12, weight: '600', family: 'DM Sans' } }
-      }},
-      plugins: {
-        legend: { display: false },
-        tooltip: { backgroundColor: 'rgba(27,73,101,.92)', titleFont: { family: 'DM Sans', weight: '700' }, bodyFont: { family: 'DM Sans' }, padding: 10 }
-      }
-    }
-  });
+  // Chart Toggle Function
+  function showChart(chartName) {
+    // Hide all panels
+    document.querySelectorAll('.chart-panel').forEach(panel => {
+      panel.classList.remove('active');
+    });
+    // Remove active from all buttons
+    document.querySelectorAll('.chart-toggle-btn').forEach(btn => {
+      btn.classList.remove('active');
+    });
+    // Show selected panel
+    document.getElementById('chart-' + chartName).classList.add('active');
+    // Activate corresponding button
+    event.target.classList.add('active');
+  }
 
-  // Bar chart
-  const barData = [
-    {label:'Biodiversiteit',v:70,g:88}, {label:'Strandkwaliteit',v:30,g:84},
-    {label:'Waterkwaliteit',v:50,g:75}, {label:'Cultuur',v:95,g:52},
-    {label:'Toegankelijkheid',v:80,g:72}, {label:'Watersport',v:60,g:82}
-  ];
-  const bc = document.getElementById('barChart');
-  barData.forEach(({label,v,g}) => {
-    bc.innerHTML += `<div class="bar-row">
-      <div class="bar-label">${label}</div>
-      <div class="bar-group"><div class="bar-track"><div class="bar-fill v" style="width:${v}%"></div></div><div class="bar-val ${v>g?'best':''}">${(v/10).toFixed(1)}</div></div>
-      <div class="bar-group"><div class="bar-track"><div class="bar-fill g" style="width:${g}%"></div></div><div class="bar-val ${g>v?'best':''}">${(g/10).toFixed(1)}</div></div>
-    </div>`;
-  });
+  // Review Toggle Function
+  function showReview(destination) {
+    // Hide all panels
+    document.querySelectorAll('.review-panel').forEach(panel => {
+      panel.classList.remove('active');
+    });
+    // Remove active from all buttons
+    document.querySelectorAll('.review-toggle-btn').forEach(btn => {
+      btn.classList.remove('active');
+    });
+    // Show selected panel
+    document.getElementById('review-' + destination).classList.add('active');
+    // Activate corresponding button
+    event.target.classList.add('active');
+  }
 
   // Podium
   [

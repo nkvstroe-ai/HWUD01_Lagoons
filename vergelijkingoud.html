@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>De lagoons — Lagoon Tourist Centre</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+<style>
+  :root {
+    --mint:    #BEE9E8;
+    --aqua:    #62B6CB;
+    --deep:    #1B4965;
+    --sky:     #CAE9FF;
+    --steel:   #5FA8D3;
+    --sand:    #F6FAFD;
+    --white:   #ffffff;
+    --muted:   rgba(27,73,101,.65);
+    --border:  rgba(98,182,203,.28);
+    --shadow:  0 24px 64px rgba(27,73,101,.16);
+    --shadow-s:0 8px 28px rgba(27,73,101,.11);
+    --r:       16px;
+    --r-lg:    24px;
+    --container: 1140px;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body:    'DM Sans', sans-serif;
+    --v-color: #1B4965;
+    --g-color: #62B6CB;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--deep);
+    background: var(--sand);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  button { font: inherit; cursor: pointer; border: none; }
+
+  .container {
+    width: min(var(--container), calc(100% - 40px));
+    margin: 0 auto;
+  }
+
+  /* ── NAV (identical to index) ── */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(14px) saturate(1.4);
+    background: rgba(27,73,101,.82);
+    border-bottom: 1px solid rgba(190,233,232,.18);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 15px 0; gap: 16px;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; flex: 0 0 auto; color: var(--white); }
+  .brand-text-main { font-family: var(--font-display); font-size: 16px; line-height: 1; color: var(--white); }
+  .brand-text-sub  { font-size: 11px; color: rgba(202,233,255,.75); font-weight: 400; margin-top: 2px; letter-spacing: .3px; }
+  .nav-right { display: flex; align-items: center; gap: 12px; flex: 1; justify-content: flex-end; }
+  .nav-links { display: flex; align-items: center; gap: 4px; flex: 0 0 auto; }
+  .dd { position: relative; }
+  .dd > a {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 14px; border-radius: 999px;
+    font-size: 13.5px; font-weight: 500;
+    color: rgba(202,233,255,.90); border: 1px solid transparent;
+    transition: .2s; white-space: nowrap;
+  }
+  .dd > a:hover, .dd > a.active {
+    background: rgba(190,233,232,.14);
+    border-color: rgba(190,233,232,.25);
+    color: var(--white);
+  }
+  .caret { font-size: 10px; opacity: .7; }
+  .dd-menu {
+    position: absolute; top: calc(100% + 10px); left: 0; min-width: 220px;
+    background: rgba(27,73,101,.97); border: 1px solid rgba(190,233,232,.22);
+    border-radius: 18px; padding: 8px; display: none;
+    box-shadow: var(--shadow); backdrop-filter: blur(20px); z-index: 200;
+  }
+  .dd-menu a {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px; border-radius: 12px;
+    font-size: 13.5px; font-weight: 500;
+    color: rgba(202,233,255,.85); border: 1px solid transparent; transition: .15s;
+  }
+  .dd-menu a:hover { background: rgba(190,233,232,.12); border-color: rgba(190,233,232,.20); color: var(--white); }
+  .dd.open .dd-menu { display: block; }
+  .nav-plain {
+    display: inline-flex; align-items: center;
+    padding: 8px 14px; border-radius: 999px;
+    font-size: 13.5px; font-weight: 500;
+    color: rgba(202,233,255,.90); border: 1px solid transparent; transition: .2s; white-space: nowrap;
+  }
+  .nav-plain:hover, .nav-plain.active {
+    background: rgba(190,233,232,.14); border-color: rgba(190,233,232,.25); color: var(--white);
+  }
+
+  /* ── HERO (matches index hero style) ── */
+  .page-hero {
+    position: relative; overflow: hidden;
+    background: linear-gradient(160deg, var(--deep) 0%, #1e5e80 45%, var(--steel) 100%);
+    padding: 80px 0 108px;
+  }
+  .page-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 800px 600px at 10% 30%, rgba(190,233,232,.15) 0%, transparent 60%),
+      radial-gradient(ellipse 600px 400px at 90% 70%, rgba(202,233,255,.12) 0%, transparent 55%);
+  }
+  .page-hero .inner { position: relative; z-index: 2; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(190,233,232,.14); border: 1px solid rgba(190,233,232,.30);
+    border-radius: 999px; padding: 6px 14px;
+    font-size: 12.5px; font-weight: 500; color: var(--mint);
+    letter-spacing: .5px; text-transform: uppercase; margin-bottom: 24px;
+  }
+  .page-hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(42px, 6vw, 72px);
+    font-weight: 900; color: var(--white);
+    line-height: 1.08; letter-spacing: -1.5px; margin-bottom: 18px;
+  }
+  .page-hero h1 em { font-style: italic; color: var(--mint); }
+  .page-hero p {
+    font-size: 17px; font-weight: 300;
+    color: rgba(202,233,255,.80); max-width: 560px; line-height: 1.7;
+  }
+  .hero-wave { position: absolute; bottom: -2px; left: 0; width: 100%; z-index: 3; }
+
+  /* ── LEGEND ── */
+  .legend-strip {
+    display: flex; justify-content: center; gap: 32px;
+    padding: 36px 0 8px;
+  }
+  .legend-item { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--deep); }
+  .legend-dot { width: 14px; height: 14px; border-radius: 4px; }
+  .leg-v { background: var(--v-color); }
+  .leg-g { background: var(--g-color); }
+
+  /* ── SECTIONS ── */
+  .section { padding: 64px 0; }
+  .section-alt { background: rgba(202,233,255,.20); }
+
+  .section-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(98,182,203,.12); border: 1px solid rgba(98,182,203,.30);
+    border-radius: 999px; padding: 5px 14px;
+    font-size: 11px; font-weight: 600; color: var(--steel);
+    letter-spacing: .5px; text-transform: uppercase; margin-bottom: 10px;
+  }
+  .section-head { margin-bottom: 28px; }
+  .section-head h2 {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 700; color: var(--deep); letter-spacing: -.5px; line-height: 1.1; margin-top: 6px;
+  }
+
+  /* ── SCORE CARDS ── */
+  .score-strip { display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: center; }
+  .score-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--r-lg); padding: 28px 30px; box-shadow: var(--shadow-s);
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .score-card.venetie  { border-top: 4px solid var(--v-color); }
+  .score-card.galveston { border-top: 4px solid var(--g-color); }
+  .dest-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
+  .dest-name { font-family: var(--font-display); font-size: 24px; color: var(--deep); line-height: 1.1; margin-bottom: 2px; }
+  .dest-sub  { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+  .score-row { display: flex; align-items: flex-end; gap: 6px; margin-bottom: 14px; }
+  .score-big { font-family: var(--font-display); font-size: 52px; font-weight: 700; line-height: 1; color: var(--deep); }
+  .score-unit { font-size: 13px; font-weight: 600; color: var(--muted); padding-bottom: 6px; }
+  .mini-bar { display: flex; align-items: center; gap: 10px; font-size: 11.5px; color: var(--muted); font-weight: 500; margin-bottom: 5px; }
+  .mini-bar span:first-child { width: 88px; flex-shrink: 0; }
+  .mini-bar-track { flex: 1; height: 5px; background: rgba(98,182,203,.18); border-radius: 999px; overflow: hidden; }
+  .mini-bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--deep), var(--steel)); }
+  .mini-bar-fill.g { background: linear-gradient(90deg, var(--aqua), var(--mint)); }
+  .mini-bar span:last-child { width: 28px; text-align: right; font-weight: 700; color: var(--deep); }
+
+  .vs-badge {
+    width: 58px; height: 58px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--deep), var(--steel));
+    color: var(--white); display: grid; place-items: center;
+    font-family: var(--font-display); font-size: 22px;
+    box-shadow: var(--shadow-s); flex-shrink: 0;
+  }
+
+  /* ── CARDS ── */
+  .card-wrap {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--r-lg); padding: 32px; box-shadow: var(--shadow-s);
+  }
+
+  /* ── RADAR ── */
+  .radar-layout { display: grid; grid-template-columns: 1fr 260px; gap: 40px; align-items: center; }
+  .radar-canvas-wrap { position: relative; max-width: 420px; margin: 0 auto; }
+  .radar-scores { display: flex; flex-direction: column; gap: 10px; }
+  .radar-score-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 9px 14px; border-radius: 10px;
+    background: rgba(202,233,255,.25); border: 1px solid var(--border); font-size: 13px;
+  }
+  .radar-score-item .lbl { color: var(--muted); font-weight: 500; }
+  .radar-score-item .vals { display: flex; gap: 14px; }
+  .sv { font-weight: 800; font-size: 13.5px; }
+  .sv.v { color: var(--v-color); }
+  .sv.g { color: var(--aqua); }
+
+  /* ── BAR CHART ── */
+  .bar-chart-inner { display: flex; flex-direction: column; gap: 20px; }
+  .bar-row { display: grid; grid-template-columns: 160px 1fr 1fr; gap: 12px; align-items: center; }
+  .bar-label { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); text-align: right; padding-right: 6px; }
+  .bar-group { display: flex; flex-direction: column; gap: 4px; }
+  .bar-track { height: 9px; background: rgba(98,182,203,.18); border-radius: 999px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 999px; transition: width 1.2s cubic-bezier(.4,0,.2,1); }
+  .bar-fill.v { background: linear-gradient(90deg, var(--deep), var(--steel)); }
+  .bar-fill.g { background: linear-gradient(90deg, var(--aqua), var(--mint)); }
+  .bar-val { font-size: 11px; font-weight: 700; color: var(--muted); }
+  .bar-val.best { color: var(--deep); }
+
+  /* ── TABLE ── */
+  .table-wrap {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-s);
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  thead tr { background: linear-gradient(135deg, var(--deep), #1e5e80); color: var(--white); }
+  thead th { padding: 15px 20px; text-align: left; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background .12s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:nth-child(even) { background: rgba(202,233,255,.12); }
+  tbody tr:hover { background: rgba(190,233,232,.22); }
+  tbody td { padding: 13px 20px; vertical-align: middle; }
+  td.cat { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+  td.tie { color: var(--muted); font-style: italic; font-size: 13px; }
+  .winner-chip {
+    display: inline-flex; padding: 3px 11px; border-radius: 999px;
+    font-size: 11px; font-weight: 700;
+    background: rgba(27,73,101,.10); border: 1px solid rgba(27,73,101,.18); color: var(--deep);
+  }
+  .winner-chip.g { background: rgba(98,182,203,.15); border-color: rgba(98,182,203,.30); color: #0d6a7a; }
+
+  /* ── PODIUM ── */
+  .podium-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .podium-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--r-lg); padding: 22px 20px; box-shadow: var(--shadow-s);
+    display: flex; flex-direction: column; gap: 8px;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .podium-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .podium-cat { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+  .podium-winner { font-family: var(--font-display); font-size: 17px; line-height: 1.2; }
+  .podium-winner.v { color: var(--deep); }
+  .podium-winner.g { color: #0d6a7a; }
+  .podium-winner.tie { color: var(--muted); font-style: italic; }
+  .podium-reason { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .podium-bar { height: 3px; border-radius: 999px; margin-top: 4px; }
+  .podium-bar.v { background: linear-gradient(90deg, var(--deep), var(--steel)); }
+  .podium-bar.g { background: linear-gradient(90deg, var(--aqua), var(--mint)); }
+  .podium-bar.tie { background: var(--border); }
+
+  /* ── FOOTER (identical to index) ── */
+  footer {
+    background: linear-gradient(160deg, var(--deep) 0%, #1e5e80 100%);
+    color: var(--white); padding: 40px 0 50px;
+  }
+  .footer-inner { display: flex; justify-content: space-between; align-items: flex-start; gap: 40px; flex-wrap: wrap; margin-bottom: 32px; }
+  .footer-brand-name { font-family: var(--font-display); font-size: 20px; color: var(--white); margin-bottom: 6px; }
+  .footer-brand-sub  { font-size: 13px; color: rgba(202,233,255,.50); }
+  .footer-links { display: flex; gap: 28px; flex-wrap: wrap; }
+  .footer-links a { font-size: 13.5px; color: rgba(202,233,255,.65); transition: color .15s; }
+  .footer-links a:hover { color: var(--mint); }
+  .footer-bottom { border-top: 1px solid rgba(190,233,232,.12); padding-top: 24px; text-align: center; font-size: 13px; color: rgba(202,233,255,.40); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .fade-in   { animation: fadeUp .55s ease both; }
+  .fade-in-1 { animation-delay: .08s; }
+  .fade-in-2 { animation-delay: .18s; }
+  .fade-in-3 { animation-delay: .28s; }
+  .fade-in-4 { animation-delay: .38s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 980px) {
+    .radar-layout { grid-template-columns: 1fr; }
+    .podium-grid { grid-template-columns: 1fr 1fr; }
+    .bar-row { grid-template-columns: 110px 1fr 1fr; }
+  }
+  @media (max-width: 640px) {
+    .score-strip { grid-template-columns: 1fr; }
+    .vs-badge { display: none; }
+    .podium-grid { grid-template-columns: 1fr; }
+    .bar-row { grid-template-columns: 90px 1fr 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="brand">
+      <img src="IMG/logo1.png" alt="Lagoon Tourist Centre" style="height:38px;width:auto;flex-shrink:0;">
+      <div>
+        <div class="brand-text-main">Lagoon Tourist Centre</div>
+        <div class="brand-text-sub" data-i18n="brand_sub">Venetië × Galveston</div>
+      </div>
+    </a>
+    <div class="nav-right">
+      <nav class="nav-links">
+      <div class="dd">
+          <a href="index.html#plan" data-i18n="nav_ontdek">Ontdek de Wereld van Lagunes <span class="caret">▾</span></a>
+          <div class="dd-menu">
+            <a href="index.html#bedreigingen" data-i18n="nav_bedreigingen">Bedreigingen</a>
+            <a href="index.html#venetie" data-i18n="nav_venetie">Venetiaanse Lagune</a>
+            <a href="index.html#galveston" data-i18n="nav_galveston">Galveston Bay</a>
+            <a href="index.html#grafieken" data-i18n="nav_cijfers">Lagunes in cijfers</a>
+            <a href="index.html#galerij" data-i18n="nav_galerij">Foto Galerij</a>
+          </div>
+        </div>
+        <div class="dd">
+          <a href="vergelijking.html" data-i18n="nav_lagoons">De lagoons <span class="caret">▾</span></a>
+          <div class="dd-menu">
+            <a href="vergelijking.html#winnaar" data-i18n="nav_winnaar">Winnaar per thema</a>
+            <a href="vergelijking.html#scorecards" data-i18n="verg_score_eyebrow">Scorecards</a>
+            <a href="vergelijking.html#diagram" data-i18n="nav_diagram">Spinnenwebdiagram</a>
+            <a href="vergelijking.html#scores" data-i18n="nav_scores">Score per categorie</a>
+            <a href="vergelijking.html#tabel" data-i18n="nav_tabel">Datatabel</a>
+            <a href="vergelijking.html#grafieken-verg" data-i18n="nav_cijfers">Lagunes in cijfers</a>
+          </div>
+        </div>
+        <div class="dd">
+          <a href="activiteiten.html" data-i18n="nav_activiteiten">Activiteiten <span class="caret">▾</span></a>
+          <div class="dd-menu">
+            <a href="activiteiten.html#citytrip" data-i18n="nav_citytrip">Citytrip</a>
+            <a href="activiteiten.html#indoor" data-i18n="nav_indoor">Indoor</a>
+            <a href="activiteiten.html#water-strand" data-i18n="nav_water">Water & Strand</a>
+            <a href="activiteiten.html#natuur" data-i18n="nav_natuur">Natuur</a>
+            <a href="activiteiten.html#kids" data-i18n="nav_kids">Kids</a>
+          </div>
+        </div>
+        <a href="over-ons.html" class="nav-plain" data-i18n="nav_overons">Over ons</a>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="container inner">
+    <div class="hero-eyebrow fade-in" data-i18n="verg_eyebrow">Dashboard · De lagoons</div>
+    <h1 class="fade-in fade-in-1" data-i18n="verg_title">Venetië <em>&</em> Galveston<br>onder de loep</h1>
+    <p class="fade-in fade-in-2">Een data-gedreven blik op de Venetiaanse Lagune en Galveston Bay —
+      van biodiversiteit tot strandkwaliteit, in grafieken en tabellen.</p>
+  </div>
+  <svg class="hero-wave" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="#F6FAFD"/>
+  </svg>
+</div>
+
+<!-- LEGEND -->
+<div class="container">
+  <div class="legend-strip fade-in fade-in-2">
+    <div class="legend-item"><div class="legend-dot leg-v"></div>Venetiaanse Lagune</div>
+    <div class="legend-item"><div class="legend-dot leg-g"></div>Galveston Bay</div>
+  </div>
+</div>
+
+<!-- PODIUM -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow" data-i18n="verg_win_eyebrow">Snel overzicht</div>
+      <h2 id="winnaar" data-i18n="verg_win_title">Winnaar per thema</h2>
+    </div>
+    <div class="podium-grid" id="podium"></div>
+  </div>
+</section>
+
+<!-- SCORE CARDS -->
+<section class="section section-alt" id="scorecards">
+  <div class="container">
+    <div class="score-strip fade-in fade-in-3">
+      <div class="score-card venetie">
+        <div class="dest-label" data-i18n="ven_badge_eu">Italië · Europa</div>
+        <div class="dest-name" data-i18n="ven_det_title">Venetiaanse Lagune</div>
+        <div class="dest-sub">550 km² · Mediterraan klimaat</div>
+        <div class="score-row"><div class="score-big">7.2</div><div class="score-unit">/ 10<br>overall</div></div>
+        <div class="mini-bar"><span>Cultuur</span><div class="mini-bar-track"><div class="mini-bar-fill" style="width:95%"></div></div><span>9.5</span></div>
+        <div class="mini-bar"><span>Natuur</span><div class="mini-bar-track"><div class="mini-bar-fill" style="width:68%"></div></div><span>6.8</span></div>
+        <div class="mini-bar"><span>Strand</span><div class="mini-bar-track"><div class="mini-bar-fill" style="width:30%"></div></div><span>3.0</span></div>
+        <div class="mini-bar"><span>Watersport</span><div class="mini-bar-track"><div class="mini-bar-fill" style="width:60%"></div></div><span>6.0</span></div>
+      </div>
+      <div class="vs-badge">&amp;</div>
+      <div class="score-card galveston">
+        <div class="dest-label" data-i18n="galv_badge_us">Texas · Noord-Amerika</div>
+        <div class="dest-name" data-i18n="galv_det_title">Galveston Bay</div>
+        <div class="dest-sub">1.600 km² · Subtropisch klimaat</div>
+        <div class="score-row"><div class="score-big">7.6</div><div class="score-unit">/ 10<br>overall</div></div>
+        <div class="mini-bar"><span>Cultuur</span><div class="mini-bar-track"><div class="mini-bar-fill g" style="width:52%"></div></div><span>5.2</span></div>
+        <div class="mini-bar"><span>Natuur</span><div class="mini-bar-track"><div class="mini-bar-fill g" style="width:88%"></div></div><span>8.8</span></div>
+        <div class="mini-bar"><span>Strand</span><div class="mini-bar-track"><div class="mini-bar-fill g" style="width:84%"></div></div><span>8.4</span></div>
+        <div class="mini-bar"><span>Watersport</span><div class="mini-bar-track"><div class="mini-bar-fill g" style="width:82%"></div></div><span>8.2</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RADAR -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow" data-i18n="verg_radar_eyebrow">Meerdimensionaal</div>
+      <h2 id="diagram">Spinnenwebdiagram</h2>
+    </div>
+    <div class="card-wrap">
+      <div class="radar-layout">
+        <div class="radar-canvas-wrap"><canvas id="radarChart"></canvas></div>
+        <div>
+          <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:16px;" data-i18n="verg_radar_desc">Hoe groter het gevulde vlak, hoe breder het profiel van die bestemming over alle zes dimensies.</p>
+          <div class="radar-scores">
+            <div class="radar-score-item"><span class="lbl" data-i18n="lbl_biodiv">Biodiversiteit</span><span class="vals"><span class="sv v">7.0</span><span class="sv g">8.8</span></span></div>
+            <div class="radar-score-item"><span class="lbl" data-i18n="lbl_strand">Strandkwaliteit</span><span class="vals"><span class="sv v">3.0</span><span class="sv g">8.4</span></span></div>
+            <div class="radar-score-item"><span class="lbl" data-i18n="lbl_water">Waterkwaliteit</span><span class="vals"><span class="sv v">5.0</span><span class="sv g">7.5</span></span></div>
+            <div class="radar-score-item"><span class="lbl" data-i18n="lbl_cultuur">Cultuur & erfgoed</span><span class="vals"><span class="sv v">9.5</span><span class="sv g">5.2</span></span></div>
+            <div class="radar-score-item"><span class="lbl" data-i18n="lbl_toegang">Toegankelijkheid</span><span class="vals"><span class="sv v">8.0</span><span class="sv g">7.2</span></span></div>
+            <div class="radar-score-item"><span class="lbl" data-i18n="lbl_watersport">Watersport</span><span class="vals"><span class="sv v">6.0</span><span class="sv g">8.2</span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BAR CHART -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow" data-i18n="verg_bar_eyebrow">Balkgrafiek</div>
+      <h2 id="scores">Score per categorie</h2>
+    </div>
+    <div class="card-wrap"><div class="bar-chart-inner" id="barChart"></div></div>
+  </div>
+</section>
+
+<!-- TABLE -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow" data-i18n="verg_tbl_eyebrow">Overzicht</div>
+      <h2 id="tabel">Volledige datatabel</h2>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th data-i18n="tbl_cat">Categorie</th><th data-i18n="ven_det_title">Venetiaanse Lagune</th><th data-i18n="galv_det_title">Galveston Bay</th><th data-i18n="tbl_winnaar">Winnaar</th></tr></thead>
+        <tbody>
+          <tr><td class="cat">Oppervlakte</td><td>550 km²</td><td>1.600 km²</td><td><span class="winner-chip g">Galveston</span></td></tr>
+          <tr><td class="cat">Gem. hotelprijs</td><td>€ 180 / nacht</td><td>$ 150 / nacht</td><td><span class="winner-chip g">Galveston</span></td></tr>
+          <tr><td class="cat">Strandkwaliteit</td><td>Beperkt (Lido)</td><td>60 km zandstrand</td><td><span class="winner-chip g">Galveston</span></td></tr>
+          <tr><td class="cat">Waterkwaliteit</td><td>Matig (bootverkeer)</td><td>Goed (genormeerd)</td><td><span class="winner-chip g">Galveston</span></td></tr>
+          <tr><td class="cat">Cultuur & erfgoed</td><td>UNESCO, 118 eilanden</td><td>Historisch havenstadje</td><td><span class="winner-chip">Venetië</span></td></tr>
+          <tr><td class="cat">Vogelsoorten</td><td>~80 soorten</td><td>300+ soorten</td><td><span class="winner-chip g">Galveston</span></td></tr>
+          <tr><td class="cat">Watersportaanbod</td><td>Kajak, SUP, zeilen</td><td>Kitesurfen, diepzeevisserij, SUP</td><td><span class="winner-chip g">Galveston</span></td></tr>
+          <tr><td class="cat">Golfslag & veiligheid</td><td>Vrijwel golfvrij</td><td>Matige golfslag</td><td><span class="winner-chip">Venetië</span></td></tr>
+          <tr><td class="cat">Beste reistijd</td><td>April – juni</td><td>Mrt–mei · Sep–nov</td><td class="tie">Seizoensafhankelijk</td></tr>
+          <tr><td class="cat">Grootste risico</td><td>Zeespiegelstijging</td><td>Orkanen & vervuiling</td><td class="tie">Beide kwetsbaar</td></tr>
+          <tr><td class="cat">Restaurants / 100 toer.</td><td>12</td><td>9</td><td><span class="winner-chip">Venetië</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- FOOTER -->
+
+<!-- GRAFIEKEN -->
+<section class="section section-alt" id="grafieken-verg">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow" data-i18n="chart_eyebrow">Data &amp; Feiten</div>
+      <h2 data-i18n="chart_title">Lagunes in cijfers</h2>
+    </div>
+    <p style="color:var(--muted);font-size:14px;margin-bottom:28px;max-width:600px;" data-i18n="chart_desc">Klimaatdata en bezoekersinformatie om jouw reis beter te plannen.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;">
+      <div class="card-wrap">
+        <div style="font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--deep);margin-bottom:4px;" data-i18n="chart_temp_title">Temperatuur door het jaar</div>
+        <div style="font-size:12.5px;color:var(--muted);margin-bottom:16px;" data-i18n="chart_temp_sub">Gemiddelde luchttemperatuur per maand (°C)</div>
+        <div style="display:flex;gap:18px;margin-bottom:12px;flex-wrap:wrap;">
+          <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--deep);"><span style="width:24px;height:3px;background:var(--deep);border-radius:2px;display:inline-block;"></span><span data-i18n="legend_venetie">Venetiaanse Lagune</span></span>
+          <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--aqua);"><span style="width:24px;height:3px;background:var(--aqua);border-radius:2px;display:inline-block;"></span><span data-i18n="legend_galveston">Galveston Bay</span></span>
+        </div>
+        <canvas id="verg_tempChart" height="200"></canvas>
+      </div>
+      <div class="card-wrap">
+        <div style="font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--deep);margin-bottom:4px;" data-i18n="chart_drukt_title">Beste reismaanden</div>
+        <div style="font-size:12.5px;color:var(--muted);margin-bottom:16px;" data-i18n="chart_drukt_sub">Drukte-index per maand (lager = rustiger)</div>
+        <div style="display:flex;gap:18px;margin-bottom:12px;flex-wrap:wrap;">
+          <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--deep);"><span style="width:14px;height:14px;background:var(--deep);border-radius:3px;opacity:.75;display:inline-block;"></span><span data-i18n="legend_venetie">Venetiaanse Lagune</span></span>
+          <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--aqua);"><span style="width:14px;height:14px;background:var(--aqua);border-radius:3px;opacity:.75;display:inline-block;"></span><span data-i18n="legend_galveston">Galveston Bay</span></span>
+        </div>
+        <canvas id="verg_druktChart" height="200"></canvas>
+      </div>
+    </div>
+
+    <div class="card-wrap">
+      <div style="font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--deep);margin-bottom:4px;" data-i18n="chart_water_title">Watertemperatuur &amp; neerslag</div>
+      <div style="font-size:12.5px;color:var(--muted);margin-bottom:16px;" data-i18n="chart_water_sub">Watertemperatuur (°C) en neerslag (mm)</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+        <div>
+          <div style="display:flex;gap:14px;margin-bottom:10px;flex-wrap:wrap;">
+            <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--deep);"><span style="width:24px;height:3px;background:var(--deep);border-radius:2px;display:inline-block;"></span><span data-i18n="legend_ven_water">Venetië watertemp.</span></span>
+            <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--aqua);"><span style="width:24px;height:3px;background:var(--aqua);border-radius:2px;display:inline-block;"></span><span data-i18n="legend_galv_water">Galveston watertemp.</span></span>
+          </div>
+          <canvas id="verg_waterChart" height="180"></canvas>
+        </div>
+        <div>
+          <div style="display:flex;gap:14px;margin-bottom:10px;flex-wrap:wrap;">
+            <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:rgba(27,73,101,.6);"><span style="width:14px;height:14px;background:rgba(27,73,101,.5);border-radius:3px;display:inline-block;"></span><span data-i18n="legend_ven_neerl">Venetië neerslag (mm)</span></span>
+            <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:rgba(98,182,203,.9);"><span style="width:14px;height:14px;background:rgba(98,182,203,.65);border-radius:3px;display:inline-block;"></span><span data-i18n="legend_galv_neerl">Galveston neerslag (mm)</span></span>
+          </div>
+          <canvas id="verg_neerslagChart" height="180"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand-name">Lagoon Tourist Centre</div>
+        <div class="footer-brand-sub" data-i18n="footer_sub">Venetiaanse Lagune & Galveston Bay</div>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="vergelijking.html">De lagoons</a>
+        <a href="activiteiten.html">Activiteiten</a>
+        <a href="over-ons.html">Over ons</a>
+      </div>
+    </div>
+    <div class="footer-bottom"><span data-i18n="footer_copy">© 2025 Lagoon Tourist Centre · Alle rechten voorbehouden</span></div>
+  </div>
+</footer>
+
+<script>
+  // Dropdown
+  document.querySelectorAll('.dd > a').forEach(trigger => {
+    trigger.addEventListener('click', function(e) {
+      const dd = this.parentElement;
+      const isOpen = dd.classList.contains('open');
+      document.querySelectorAll('.dd').forEach(d => d.classList.remove('open'));
+      if (!isOpen) { e.preventDefault(); dd.classList.add('open'); }
+    });
+  });
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.dd')) document.querySelectorAll('.dd').forEach(d => d.classList.remove('open'));
+  });
+
+  // Radar
+  new Chart(document.getElementById('radarChart').getContext('2d'), {
+    type: 'radar',
+    data: {
+      labels: ['Biodiversiteit','Strandkwaliteit','Waterkwaliteit','Cultuur & erfgoed','Toegankelijkheid','Watersport'],
+      datasets: [
+        { label: 'Venetiaanse Lagune', data: [7.0,3.0,5.0,9.5,8.0,6.0],
+          backgroundColor: 'rgba(27,73,101,.15)', borderColor: '#1B4965',
+          borderWidth: 2.5, pointBackgroundColor: '#1B4965', pointRadius: 4 },
+        { label: 'Galveston Bay', data: [8.8,8.4,7.5,5.2,7.2,8.2],
+          backgroundColor: 'rgba(98,182,203,.15)', borderColor: '#62B6CB',
+          borderWidth: 2.5, pointBackgroundColor: '#62B6CB', pointRadius: 4 }
+      ]
+    },
+    options: {
+      responsive: true,
+      scales: { r: {
+        min: 0, max: 10,
+        ticks: { stepSize: 2, color: 'rgba(27,73,101,.5)', font: { size: 10 }, backdropColor: 'transparent' },
+        grid: { color: 'rgba(27,73,101,.10)' },
+        angleLines: { color: 'rgba(27,73,101,.10)' },
+        pointLabels: { color: '#1B4965', font: { size: 12, weight: '600', family: 'DM Sans' } }
+      }},
+      plugins: {
+        legend: { display: false },
+        tooltip: { backgroundColor: 'rgba(27,73,101,.92)', titleFont: { family: 'DM Sans', weight: '700' }, bodyFont: { family: 'DM Sans' }, padding: 10 }
+      }
+    }
+  });
+
+  // Bar chart
+  const barData = [
+    {label:'Biodiversiteit',v:70,g:88}, {label:'Strandkwaliteit',v:30,g:84},
+    {label:'Waterkwaliteit',v:50,g:75}, {label:'Cultuur',v:95,g:52},
+    {label:'Toegankelijkheid',v:80,g:72}, {label:'Watersport',v:60,g:82}
+  ];
+  const bc = document.getElementById('barChart');
+  barData.forEach(({label,v,g}) => {
+    bc.innerHTML += `<div class="bar-row">
+      <div class="bar-label">${label}</div>
+      <div class="bar-group"><div class="bar-track"><div class="bar-fill v" style="width:${v}%"></div></div><div class="bar-val ${v>g?'best':''}">${(v/10).toFixed(1)}</div></div>
+      <div class="bar-group"><div class="bar-track"><div class="bar-fill g" style="width:${g}%"></div></div><div class="bar-val ${g>v?'best':''}">${(g/10).toFixed(1)}</div></div>
+    </div>`;
+  });
+
+  // Podium
+  [
+    {cat:'Strand & zwemmen',  winner:'Galveston Bay',      cls:'g', reason:'60 km breed zandstrand met goede waterkwaliteit en genormeerde zwemlocaties.'},
+    {cat:'Cultuur & sfeer',   winner:'Venetiaanse Lagune', cls:'v', reason:'UNESCO-erfgoed, unieke architectuur, rijke geschiedenis van meer dan 1.000 jaar.'},
+    {cat:'Wildlife & vogels', winner:'Galveston Bay',      cls:'g', reason:'300+ vogelsoorten langs de Great Texas Coastal Birding Trail.'},
+    {cat:'Watersport',        winner:'Galveston Bay',      cls:'g', reason:'Kitesurfen, diepzeevisserij en warm Golf-van-Mexico-water het hele jaar.'},
+    {cat:'Rustig vaarwater',  winner:'Venetiaanse Lagune', cls:'v', reason:'Bijna golfvrij lagunewater — ideaal voor kinderen en rustzoekende bezoekers.'},
+    {cat:'Culinair aanbod',   winner:'Venetiaanse Lagune', cls:'v', reason:'12 restaurants per 100 toeristen in een compacte, voetgangervriendelijke stad.'},
+  ].forEach(({cat,winner,cls,reason}) => {
+    document.getElementById('podium').innerHTML += `<div class="podium-card">
+      <div class="podium-cat">${cat}</div>
+      <div class="podium-winner ${cls}">${winner}</div>
+      <div class="podium-reason">${reason}</div>
+      <div class="podium-bar ${cls}"></div>
+    </div>`;
+  });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+(function(){
+  const maanden = ['Jan','Feb','Mrt','Apr','Mei','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];
+  const base = {
+    responsive:true,
+    interaction:{mode:'index',intersect:false},
+    plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(27,73,101,.92)',titleColor:'#BEE9E8',bodyColor:'#CAE9FF',borderColor:'rgba(190,233,232,.25)',borderWidth:1,padding:10}},
+    scales:{
+      x:{grid:{color:'rgba(27,73,101,.06)'},ticks:{color:'#5FA8D3',font:{size:10}}},
+      y:{grid:{color:'rgba(27,73,101,.06)'},ticks:{color:'#5FA8D3',font:{size:10}}}
+    }
+  };
+  const deep='#1B4965', aqua='#62B6CB';
+  new Chart(document.getElementById('verg_tempChart'),{type:'line',data:{labels:maanden,datasets:[
+    {label:'Venetië',data:[4,5,9,14,19,24,27,27,23,17,11,6],borderColor:deep,backgroundColor:'rgba(27,73,101,.08)',fill:true,tension:.4,pointRadius:3,borderWidth:2.5,pointBackgroundColor:deep},
+    {label:'Galveston',data:[13,15,19,23,27,30,32,32,29,24,18,14],borderColor:aqua,backgroundColor:'rgba(98,182,203,.08)',fill:true,tension:.4,pointRadius:3,borderWidth:2.5,pointBackgroundColor:aqua}
+  ]},options:{...base,scales:{...base.scales,y:{...base.scales.y,min:0,max:36,ticks:{...base.scales.y.ticks,callback:v=>v+'°C'}}}}});
+  new Chart(document.getElementById('verg_druktChart'),{type:'bar',data:{labels:maanden,datasets:[
+    {label:'Venetië',data:[30,35,55,65,75,90,100,95,70,60,40,45],backgroundColor:'rgba(27,73,101,.75)',borderColor:deep,borderWidth:1.5,borderRadius:5,borderSkipped:false},
+    {label:'Galveston',data:[40,42,60,70,80,85,75,78,72,65,45,42],backgroundColor:'rgba(98,182,203,.75)',borderColor:aqua,borderWidth:1.5,borderRadius:5,borderSkipped:false}
+  ]},options:{...base}});
+  new Chart(document.getElementById('verg_waterChart'),{type:'line',data:{labels:maanden,datasets:[
+    {label:'Venetië',data:[9,9,11,14,18,23,26,26,23,18,14,10],borderColor:deep,tension:.4,pointRadius:3,borderWidth:2.5,pointBackgroundColor:deep,fill:false},
+    {label:'Galveston',data:[15,16,19,22,26,29,30,30,28,24,20,16],borderColor:aqua,tension:.4,pointRadius:3,borderWidth:2.5,pointBackgroundColor:aqua,fill:false}
+  ]},options:{...base,scales:{...base.scales,y:{...base.scales.y,min:5,max:35,ticks:{...base.scales.y.ticks,callback:v=>v+'°C'}}}}});
+  new Chart(document.getElementById('verg_neerslagChart'),{type:'bar',data:{labels:maanden,datasets:[
+    {label:'Venetië',data:[58,50,57,60,67,60,38,45,60,70,65,55],backgroundColor:'rgba(27,73,101,.45)',borderRadius:4,borderSkipped:false},
+    {label:'Galveston',data:[85,80,75,80,115,130,110,120,145,120,90,80],backgroundColor:'rgba(98,182,203,.65)',borderRadius:4,borderSkipped:false}
+  ]},options:{...base,scales:{...base.scales,y:{...base.scales.y,min:0,ticks:{...base.scales.y.ticks,callback:v=>v+'mm'}}}}});
+})();
+</script>
+
+<script src="translations.js"></script>
+</body>
+</html>
